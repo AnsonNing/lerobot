@@ -1,0 +1,41 @@
+export HF_HOME=/scratch3/users/ningan/hf_home
+export HF_HUB_CACHE=/scratch3/users/ningan/hf_home/hub
+export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_home/datasets
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_cache
+
+cd /home/ningan/lerobot
+
+lerobot-train \
+  --policy.type=smolvla_sfp \
+  --policy.device=cuda \
+  --policy.use_amp=true \
+  --policy.push_to_hub=false \
+  --policy.load_vlm_weights=true \
+  --policy.vlm_model_name=HuggingFaceTB/SmolVLM2-500M-Video-Instruct \
+  --policy.n_obs_steps=1 \
+  --policy.chunk_size=16 \
+  --policy.n_action_steps=8 \
+  --policy.sfp_num_train_points=8 \
+  --policy.sfp_sigma0=0.4 \
+  --policy.sfp_k=1.0 \
+  --policy.sfp_use_adaptive_freq=true \
+  --policy.sfp_freq_min=0.2 \
+  --policy.sfp_freq_max=5.0 \
+  --policy.sfp_freq_reg_weight=0.0 \
+  --dataset.repo_id=lerobot/metaworld_mt50 \
+  --dataset.image_transforms.enable=true \
+  --env.type=metaworld \
+  --env.task=assembly-v3 \
+  --batch_size=64 \
+  --num_workers=16 \
+  --persistent_workers=true \
+  --prefetch_factor=4 \
+  --steps=50000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --eval.n_episodes=20 \
+  --eval.batch_size=4 \
+  --eval.use_async_envs=false \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/smolvla_sfp_metaworld_assembly_$(date +%Y%m%d_%H%M%S)

@@ -1,0 +1,64 @@
+conda activate smolvla
+cd /home/ningan/lerobot
+
+export MUJOCO_GL=egl
+export HF_HOME=/scratch3/users/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
+mkdir -p /scratch3/users/ningan/outputs/train
+
+SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=smolvla_sfp_v2 \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=true \
+  --policy.load_vlm_weights=true \
+  --policy.vlm_model_name=HuggingFaceTB/SmolVLM2-500M-Video-Instruct \
+  --policy.freeze_vision_encoder=true \
+  --policy.train_expert_only=true \
+  --policy.train_state_proj=true \
+  --policy.n_obs_steps=2 \
+  --policy.chunk_size=16 \
+  --policy.n_action_steps=8 \
+  --policy.sfp_num_train_points=8 \
+  --policy.sfp_sigma0=0.4 \
+  --policy.sfp_k=10.0 \
+  --policy.sfp_use_adaptive_freq=true \
+  --policy.sfp_freq_min=0.2 \
+  --policy.sfp_freq_max=5.0 \
+  --policy.sfp_freq_init=1.0 \
+  --policy.sfp_clamp_freq_during_training=false \
+  --policy.sfp_clamp_freq_during_eval=true \
+  --policy.sfp_freq_reg_weight=0.0 \
+  --policy.sfp_num_consistency_points=4 \
+  --policy.sfp_consistency_loss_weight=0.03 \
+  --policy.sfp_consistency_delta_multipliers='[1,2,4,8]' \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.video_backend=torchcodec \
+  --num_workers=16 \
+  --prefetch_factor=4 \
+  --persistent_workers=true \
+  --batch_size=32 \
+  --steps=100000 \
+  --eval_freq=0 \
+  --eval.use_async_envs=false \
+  --save_checkpoint=true \
+  --save_freq=10000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_smolvla_sfp_v2_freeze_vlm

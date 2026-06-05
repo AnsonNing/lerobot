@@ -1,0 +1,256 @@
+cd /home/ningan/lerobot
+
+source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate smolvla
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export TOKENIZERS_PARALLELISM=false
+
+SPATIAL_EPISODES=$(python -c "print(','.join(map(str, range(1261, 1693))))")
+
+lerobot-train \
+  --policy.type=dispo \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=false \
+  --policy.n_obs_steps=2 \
+  --policy.horizon=16 \
+  --policy.n_action_steps=8 \
+  --policy.pretrained_backbone_weights=null \
+  --policy.resize_shape='[96,96]' \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.video_backend=torchcodec \
+  --num_workers=4 \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/dispo_libero_spatial
+
+
+
+
+
+cd /home/ningan/lerobot
+
+source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate smolvla
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export TOKENIZERS_PARALLELISM=false
+
+SPATIAL_EPISODES=$(python -c "print(','.join(map(str, range(1261, 1693))))")
+
+lerobot-train \
+  --policy.type=dispo \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=false \
+  --policy.n_obs_steps=2 \
+  --policy.horizon=16 \
+  --policy.n_action_steps=8 \
+  --policy.pretrained_backbone_weights=null \
+  --policy.resize_shape='[96,96]' \
+  --policy.ssm_block_type=mamba3_gated_mimo \
+  --policy.mamba3_mimo_rank=4 \
+  --policy.mamba3_omega_min=0.05 \
+  --policy.mamba3_use_rotary_angle=true \
+  --policy.mamba3_use_complex_ssm=true \
+  --policy.mamba3_use_output_gate=true \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.video_backend=torchcodec \
+  --num_workers=4 \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/dispo_mamba3_libero_spatial
+
+
+
+
+cd /home/ningan/lerobot
+
+source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate smolvla
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export TOKENIZERS_PARALLELISM=false
+
+SPATIAL_EPISODES=$(python -c "print(','.join(map(str, range(1261, 1693))))")
+
+lerobot-train \
+  --policy.type=dispo_mamba3_flow \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=false \
+  --policy.n_obs_steps=2 \
+  --policy.horizon=16 \
+  --policy.n_action_steps=8 \
+  --policy.pretrained_backbone_weights=null \
+  --policy.resize_shape='[96,96]' \
+  --policy.mamba3_mimo_rank=4 \
+  --policy.mamba3_omega_min=0.05 \
+  --policy.mamba3_use_rotary_angle=true \
+  --policy.mamba3_use_complex_ssm=true \
+  --policy.mamba3_use_output_gate=true \
+  --policy.num_inference_steps=8 \
+  --policy.flow_num_timestep_buckets=1000 \
+  --policy.flow_noise_beta_alpha=1.5 \
+  --policy.flow_noise_beta_beta=1.0 \
+  --policy.flow_noise_s=0.999 \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.video_backend=torchcodec \
+  --num_workers=4 \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/dispo_mamba3_flow_libero_spatial
+
+
+
+
+
+cd /home/ningan/lerobot
+
+source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate smolvla
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export TOKENIZERS_PARALLELISM=false
+export MUJOCO_GL=egl
+export HF_HOME=/scratch3/users/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export TMPDIR=/scratch3/users/ningan/tmp
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
+mkdir -p /scratch3/users/ningan/outputs/train
+
+SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=dispo_mamba3_flow_clip \
+  --policy.use_amp=true
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=false \
+  --policy.n_obs_steps=2 \
+  --policy.horizon=16 \
+  --policy.n_action_steps=8 \
+  --policy.depth=4 \
+  --policy.hidden_dim=256 \
+  --policy.d_state=16 \
+  --policy.mamba3_mimo_rank=4 \
+  --policy.mamba3_omega_min=0.05 \
+  --policy.mamba3_use_rotary_angle=true \
+  --policy.mamba3_use_complex_ssm=true \
+  --policy.mamba3_use_output_gate=true \
+  --policy.num_inference_steps=8 \
+  --policy.flow_num_timestep_buckets=1000 \
+  --policy.flow_noise_beta_alpha=1.5 \
+  --policy.flow_noise_beta_beta=1.0 \
+  --policy.flow_noise_s=0.999 \
+  --policy.vision_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.text_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.clip_freeze_image_encoder=true \
+  --policy.clip_freeze_text_encoder=true \
+  --policy.clip_image_feature_dim=512 \
+  --policy.clip_text_projection_dim=256 \
+  --policy.clip_image_crop_shape="[224,224]" \
+  --policy.clip_image_crop_is_random=true \
+  --policy.tokenizer_max_length=77 \
+  --policy.tokenizer_padding=max_length \
+  --policy.tokenizer_padding_side=right \
+  --policy.tokenizer_truncation=true \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.video_backend=torchcodec \
+  --num_workers=8 \
+  --prefetch_factor=2 \
+  --persistent_workers=true \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/dispo_mamba3_flow_clip_libero_spatial
+
+
+
+tmux new -s libero_spatial_flow
+tmux attach -t libero_spatial_flow
+tmux attach -t libero_spatial
+tmux kill-session -t libero_spatial_flow
+
+
+
+cd /home/ningan/lerobot
+source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate smolvla
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export TOKENIZERS_PARALLELISM=false
+
+CUDA_VISIBLE_DEVICES=1 lerobot-eval \
+  --policy.path=/scratch3/users/ningan/outputs/train/dispo_mamba3_flow_libero_spatial/checkpoints/000200/pretrained_model \
+  --policy.device=cuda \
+  --policy.use_amp=false \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --eval.n_episodes=5 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --output_dir=/scratch3/users/ningan/outputs/eval/dispo_mamba3_flow_libero_spatial_200

@@ -1,0 +1,47 @@
+conda activate smolvla
+cd /home/ningan/lerobot
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=streaming_flow_v2 \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.chunk_size=16 \
+  --policy.n_obs_steps=2 \
+  --policy.n_action_steps=8 \
+  --policy.freeze_vision_encoder=true \
+  --policy.sfp_num_train_points=8 \
+  --policy.sfp_sigma0=0.4 \
+  --policy.sfp_k=10.0 \
+  --policy.sfp_use_adaptive_freq=true \
+  --policy.sfp_clamp_freq_during_training=false \
+  --policy.sfp_clamp_freq_during_eval=true \
+  --policy.down_dims="[256,512,1024]" \
+  --policy.embedding_dim=256 \
+  --policy.kernel_size=5 \
+  --policy.updownsample_type=linear \
+  --policy.vision_backbone=resnet18 \
+  --policy.image_feature_dim=512 \
+  --policy.image_dropout=0.1 \
+  --policy.use_group_norm=true \
+  --env.observation_width=96 \
+  --env.observation_height=96 \
+  --env.type=pusht \
+  --dataset.repo_id=lerobot/pusht_image \
+  --dataset.image_transforms.enable=false \
+  --num_workers=16 \
+  --prefetch_factor=4 \
+  --persistent_workers=true \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=10000 \
+  --eval.batch_size=1 \
+  --eval.n_episodes=10 \
+  --eval.use_async_envs=false \
+  --save_checkpoint=true \
+  --save_freq=10000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=//scratch3/users/ningan/outputs/train/pusht_streaming_flow_v2
+
+
+

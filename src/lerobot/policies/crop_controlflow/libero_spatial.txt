@@ -1,0 +1,219 @@
+conda activate smolvla
+cd /home/ningan/lerobot
+
+export MUJOCO_GL=egl
+export HF_HOME=/scratch3/users/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export TMPDIR=/scratch3/users/ningan/tmp
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
+mkdir -p "$TMPDIR"
+mkdir -p /scratch3/users/ningan/outputs/train
+
+SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=crop_controlflow \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=true \
+  --policy.chunk_size=16 \
+  --policy.n_obs_steps=2 \
+  --policy.n_action_steps=8 \
+  --policy.sfp_use_clip_text_conditioning=true \
+  --policy.sfp_freeze_clip=true \
+  --policy.sfp_finetune_clip_image=false \
+  --policy.vision_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.text_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.tokenizer_max_length=77 \
+  --policy.clip_image_resize_shape="[224,224]" \
+  --policy.clip_image_crop_shape="[224,224]" \
+  --policy.clip_image_crop_is_random=true \
+  --policy.clip_text_projection_dim=256 \
+  --policy.image_feature_dim=512 \
+  --policy.transformer_hidden_dim=768 \
+  --policy.transformer_num_layers=8 \
+  --policy.transformer_num_heads=12 \
+  --policy.transformer_ffn_dim=3072 \
+  --policy.transformer_visual_tokens_per_frame=64 \
+  --policy.sfp_num_train_points=8 \
+  --policy.sfp_sigma0=0.4 \
+  --policy.sfp_k=10.0 \
+  --policy.sfp_use_adaptive_freq=true \
+  --policy.sfp_freq_min=0.2 \
+  --policy.sfp_freq_max=5.0 \
+  --policy.sfp_freq_init=1.0 \
+  --policy.sfp_clamp_freq_during_training=false \
+  --policy.sfp_clamp_freq_during_eval=true \
+  --policy.sfp_freq_reg_weight=0.0 \
+  --policy.crop_controlflow_enabled=true \
+  --policy.crop_controlflow_use_crop_during_training=true \
+  --policy.crop_controlflow_use_crop_during_eval=true \
+  --policy.crop_controlflow_crop_size_ratio=0.5 \
+  --policy.crop_controlflow_crop_size_ratios="[0.35,0.5,0.7]" \
+  --policy.crop_controlflow_attention_camera_index=0 \
+  --policy.crop_controlflow_attention_obs_step=-1 \
+  --policy.crop_controlflow_detach_attention=true \
+  --policy.crop_controlflow_attention_num_layers=4 \
+  --policy.crop_controlflow_attention_normalization=contrast \
+  --policy.crop_controlflow_attention_contrast_eps=1e-6 \
+  --policy.crop_controlflow_attention_smoothing_kernel=3 \
+  --policy.crop_controlflow_fallback_to_center_on_low_confidence=true \
+  --policy.crop_controlflow_max_heatmap_entropy=0.98 \
+  --policy.crop_controlflow_min_window_mass_ratio=1.05 \
+  --policy.crop_controlflow_score_log_max=4.0 \
+  --policy.crop_controlflow_global_loss_weight=0.2 \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.video_backend=torchcodec \
+  --num_workers=16 \
+  --prefetch_factor=4 \
+  --persistent_workers=true \
+  --batch_size=32 \
+  --steps=100000 \
+  --eval_freq=0 \
+  --eval.use_async_envs=false \
+  --save_checkpoint=true \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow
+
+
+tmux new -s libero_spatial
+tmux attach -t libero_icra_deocde2
+tmux attach -t libero_spatial
+tmux kill-session -t libero_spatial
+
+
+conda activate smolvla
+cd /home/ningan/lerobot
+
+export MUJOCO_GL=egl
+export HF_HOME=/scratch3/users/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export TMPDIR=/scratch3/users/ningan/tmp
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
+
+CUDA_VISIBLE_DEVICES=1 lerobot-eval \
+  --policy.path=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow/checkpoints/100000/pretrained_model \
+  --policy.device=cuda \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --eval.batch_size=1 \
+  --eval.n_episodes=10 \
+  --eval.use_async_envs=false \
+  --output_dir=/scratch3/users/ningan/outputs/eval/libero_spatial_crop_controlflow_last_100000
+
+
+
+conda activate smolvla
+cd /home/ningan/lerobot
+
+export MUJOCO_GL=egl
+export HF_HOME=/scratch3/users/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export TMPDIR=/scratch3/users/ningan/tmp
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
+mkdir -p /scratch3/users/ningan/outputs/train
+
+SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=crop_controlflow_clip \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=true \
+  --policy.chunk_size=16 \
+  --policy.n_obs_steps=2 \
+  --policy.n_action_steps=8 \
+  --policy.sfp_use_clip_text_conditioning=true \
+  --policy.sfp_freeze_clip=true \
+  --policy.sfp_finetune_clip_image=false \
+  --policy.vision_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.text_encoder_name=openai/clip-vit-base-patch16 \
+  --policy.tokenizer_max_length=77 \
+  --policy.clip_image_resize_shape="[224,224]" \
+  --policy.clip_image_crop_shape="[224,224]" \
+  --policy.clip_image_crop_is_random=true \
+  --policy.clip_text_projection_dim=256 \
+  --policy.image_feature_dim=512 \
+  --policy.transformer_hidden_dim=768 \
+  --policy.transformer_num_layers=8 \
+  --policy.transformer_num_heads=12 \
+  --policy.transformer_ffn_dim=3072 \
+  --policy.transformer_visual_tokens_per_frame=64 \
+  --policy.sfp_num_train_points=8 \
+  --policy.sfp_sigma0=0.4 \
+  --policy.sfp_k=10.0 \
+  --policy.sfp_use_adaptive_freq=true \
+  --policy.sfp_freq_min=0.2 \
+  --policy.sfp_freq_max=5.0 \
+  --policy.sfp_freq_init=1.0 \
+  --policy.sfp_clamp_freq_during_training=false \
+  --policy.sfp_clamp_freq_during_eval=true \
+  --policy.sfp_freq_reg_weight=0.0 \
+  --policy.crop_controlflow_enabled=true \
+  --policy.crop_controlflow_use_crop_during_training=true \
+  --policy.crop_controlflow_use_crop_during_eval=true \
+  --policy.crop_controlflow_global_loss_weight=0.2 \
+  --policy.crop_controlflow_clip_schedule_enabled=true \
+  --policy.crop_controlflow_clip_stage1_global_steps=10000 \
+  --policy.crop_controlflow_clip_stage2_warmup_steps=10000 \
+  --policy.crop_controlflow_clip_stage2_global_loss_weight=0.8 \
+  --policy.crop_controlflow_clip_stage3_global_loss_weight=0.2 \
+  --policy.crop_controlflow_clip_stage2_train_last_n_velocity_layers=2 \
+  --policy.crop_controlflow_clip_roi_hidden_dim=256 \
+  --policy.crop_controlflow_clip_roi_temperature=1.0 \
+  --policy.crop_controlflow_clip_roi_min_crop_ratio=0.25 \
+  --policy.crop_controlflow_clip_roi_max_crop_ratio=0.75 \
+  --policy.crop_controlflow_clip_roi_init_crop_ratio=0.5 \
+  --policy.crop_controlflow_clip_roi_detach_clip_features=true \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.video_backend=torchcodec \
+  --num_workers=16 \
+  --prefetch_factor=4 \
+  --persistent_workers=true \
+  --batch_size=64 \
+  --steps=100000 \
+  --eval_freq=0 \
+  --eval.use_async_envs=false \
+  --save_checkpoint=true \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow_clip
+
+
+  
