@@ -1,5 +1,15 @@
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_cache/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
+
+mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$HF_DATASETS_CACHE" "$HF_LEROBOT_HOME" "$TMPDIR"
 
 CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.type=streaming_flow_v2 \
@@ -33,15 +43,15 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --persistent_workers=true \
   --batch_size=256 \
   --steps=20000 \
-  --eval_freq=10000 \
+  --eval_freq=20000 \
   --eval.batch_size=1 \
   --eval.n_episodes=10 \
   --eval.use_async_envs=false \
   --save_checkpoint=true \
-  --save_freq=10000 \
+  --save_freq=20000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=//scratch3/users/ningan/outputs/train/pusht_streaming_flow_v2
+  --output_dir=/home/ningan/outputs/train/pusht_streaming_flow_v2
 
 
 

@@ -1,16 +1,16 @@
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
 mkdir -p "$TMPDIR"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
 
@@ -72,10 +72,10 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.episodes="[$SPATIAL_EPISODES]" \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --dataset.video_backend=torchcodec \
   --num_workers=16 \
   --prefetch_factor=4 \
@@ -88,7 +88,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow
+  --output_dir=/home/ningan/outputs/train/libero_spatial_crop_controlflow
 
 
 tmux new -s libero_spatial
@@ -97,20 +97,20 @@ tmux attach -t libero_spatial
 tmux kill-session -t libero_spatial
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
 
 CUDA_VISIBLE_DEVICES=1 lerobot-eval \
-  --policy.path=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow/checkpoints/100000/pretrained_model \
+  --policy.path=/home/ningan/outputs/train/libero_spatial_crop_controlflow/checkpoints/100000/pretrained_model \
   --policy.device=cuda \
   --env.type=libero \
   --env.task=libero_spatial \
@@ -121,22 +121,22 @@ CUDA_VISIBLE_DEVICES=1 lerobot-eval \
   --eval.batch_size=1 \
   --eval.n_episodes=10 \
   --eval.use_async_envs=false \
-  --output_dir=/scratch3/users/ningan/outputs/eval/libero_spatial_crop_controlflow_last_100000
+  --output_dir=/home/ningan/outputs/eval/libero_spatial_crop_controlflow_last_100000
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
 
@@ -197,10 +197,10 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.episodes="[$SPATIAL_EPISODES]" \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --dataset.video_backend=torchcodec \
   --num_workers=16 \
   --prefetch_factor=4 \
@@ -213,7 +213,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_crop_controlflow_clip
+  --output_dir=/home/ningan/outputs/train/libero_spatial_crop_controlflow_clip
 
 
   

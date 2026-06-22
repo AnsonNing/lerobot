@@ -1,0 +1,14 @@
+# Usage:
+#   cd /home/ningan/lerobot
+#   python -m pip install --upgrade pip
+#   python -m pip install -r requirements-smolvla.txt
+#
+# Notes:
+# - Keep this small and let pyproject.toml resolve transitive versions.
+# - Install a CUDA-matched PyTorch wheel first if your system needs a specific CUDA build.
+# - LIBERO / PushT are included because most local training commands use those envs/datasets.
+
+-e .[training,smolvla,diffusion,peft,pusht,libero]
+
+# Used by the custom DiSPo-Mamba3 fast SSM path when available.
+triton>=3.0.0

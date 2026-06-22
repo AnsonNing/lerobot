@@ -447,8 +447,9 @@ if triton is not None:
     ) -> None:
         batch_idx = tl.program_id(0)
         state_idx = tl.program_id(1)
+        d_block_idx = tl.program_id(2)
 
-        d_offsets = tl.arange(0, BLOCK_D)
+        d_offsets = d_block_idx * BLOCK_D + tl.arange(0, BLOCK_D)
         d_mask = d_offsets < D_MODEL
 
         dH_real_carry = tl.zeros((BLOCK_D,), tl.float32)
@@ -467,7 +468,14 @@ if triton is not None:
         dB_imag_next_3 = tl.full((), 0.0, tl.float32)
         d_angle_state_carry = tl.full((), 0.0, tl.float32)
 
-        for step_idx in tl.static_range(SEQLEN - 1, -1, -1):
+        angle_state = tl.full((), 0.0, tl.float32)
+        for angle_idx in tl.static_range(0, SEQLEN):
+            angle_base = (batch_idx * SEQLEN + angle_idx) * D_STATE + state_idx
+            angle_state += tl.load(Delta + angle_base).to(tl.float32) * tl.load(
+                angle_velocity + angle_base
+            ).to(tl.float32)
+
+        for step_idx in tl.range(SEQLEN - 1, -1, -1):
             base_bln = (batch_idx * SEQLEN + step_idx) * D_STATE + state_idx
             Delta_t = tl.load(Delta + base_bln).to(tl.float32)
             A_t = tl.load(A + base_bln).to(tl.float32)
@@ -479,14 +487,6 @@ if triton is not None:
             alpha = tl.exp(alpha_arg)
             beta = (1.0 - lambda_t) * Delta_t * alpha
             gamma = lambda_t * Delta_t
-
-            angle_state = tl.full((), 0.0, tl.float32)
-            for angle_idx in tl.static_range(0, SEQLEN):
-                if angle_idx <= step_idx:
-                    angle_base = (batch_idx * SEQLEN + angle_idx) * D_STATE + state_idx
-                    angle_state += tl.load(Delta + angle_base).to(tl.float32) * tl.load(
-                        angle_velocity + angle_base
-                    ).to(tl.float32)
 
             angle_cos = tl.cos(angle_state)
             angle_sin = tl.sin(angle_state)
@@ -764,8 +764,8 @@ if triton is not None:
             dC_0 = dC_real_0 * angle_cos + dC_imag_0 * angle_sin
             d_angle_from_B = dB_real_0 * (-B_t_0 * angle_sin) + dB_imag_0 * (B_t_0 * angle_cos)
             d_angle_from_C = dC_real_0 * (-C_t_0 * angle_sin) + dC_imag_0 * (C_t_0 * angle_cos)
-            tl.store(dB + base_bl_nr, dB_0)
-            tl.store(dC + base_bl_nr, dC_0)
+            tl.atomic_add(dB + base_bl_nr, dB_0, sem="relaxed")
+            tl.atomic_add(dC + base_bl_nr, dC_0, sem="relaxed")
 
             if RANK == 4:
                 dB_1 = dB_real_1 * angle_cos + dB_imag_1 * angle_sin
@@ -790,12 +790,12 @@ if triton is not None:
                     + dC_real_3 * (-C_t_3 * angle_sin)
                     + dC_imag_3 * (C_t_3 * angle_cos)
                 )
-                tl.store(dB + base_bl_nr + 1, dB_1)
-                tl.store(dB + base_bl_nr + 2, dB_2)
-                tl.store(dB + base_bl_nr + 3, dB_3)
-                tl.store(dC + base_bl_nr + 1, dC_1)
-                tl.store(dC + base_bl_nr + 2, dC_2)
-                tl.store(dC + base_bl_nr + 3, dC_3)
+                tl.atomic_add(dB + base_bl_nr + 1, dB_1, sem="relaxed")
+                tl.atomic_add(dB + base_bl_nr + 2, dB_2, sem="relaxed")
+                tl.atomic_add(dB + base_bl_nr + 3, dB_3, sem="relaxed")
+                tl.atomic_add(dC + base_bl_nr + 1, dC_1, sem="relaxed")
+                tl.atomic_add(dC + base_bl_nr + 2, dC_2, sem="relaxed")
+                tl.atomic_add(dC + base_bl_nr + 3, dC_3, sem="relaxed")
 
             d_angle_state = d_angle_from_B + d_angle_from_C + d_angle_state_carry
             dH_prev_real = d_rotated_H_real * step_cos + d_rotated_H_imag * step_sin
@@ -819,14 +819,15 @@ if triton is not None:
             dDelta_t += d_alpha_arg * A_t
             dA_t = d_alpha_arg * Delta_t
 
-            tl.store(dDelta + base_bln, dDelta_t)
-            tl.store(dA + base_bln, dA_t)
-            tl.store(dlambd + base_bln, dlambda_t)
-            tl.store(dangle_velocity + base_bln, dangle_velocity_t)
+            tl.atomic_add(dDelta + base_bln, dDelta_t, sem="relaxed")
+            tl.atomic_add(dA + base_bln, dA_t, sem="relaxed")
+            tl.atomic_add(dlambd + base_bln, dlambda_t, sem="relaxed")
+            tl.atomic_add(dangle_velocity + base_bln, dangle_velocity_t, sem="relaxed")
 
             dH_real_carry = dH_prev_real
             dH_imag_carry = dH_prev_imag
             d_angle_state_carry = d_angle_state
+            angle_state = prev_angle_state
 
 
 def _run_complex_mimo_trapezoidal_ssm_cuda(
@@ -974,9 +975,9 @@ def _run_complex_mimo_trapezoidal_ssm_backward_cuda(
     if triton is None:
         raise RuntimeError("Triton is not available.")
 
-    block_d = 1 << (d_model - 1).bit_length()
-    if block_d > 1024:
-        raise RuntimeError(f"Triton backward only supports hidden_dim <= 1024. Got {d_model}.")
+    block_d = int(os.getenv("LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D", "16"))
+    if block_d <= 0 or block_d & (block_d - 1):
+        raise RuntimeError(f"`LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D` must be a power of two. Got {block_d}.")
 
     grad_y = grad_y.contiguous()
     X = X.contiguous()
@@ -991,17 +992,17 @@ def _run_complex_mimo_trapezoidal_ssm_backward_cuda(
     h_imag_cache = h_imag_cache.contiguous()
 
     dX = torch.zeros_like(X)
-    dDelta = torch.empty_like(Delta)
-    dA = torch.empty_like(A)
-    dB = torch.empty_like(B)
-    dC = torch.empty_like(C)
-    dlambd = torch.empty_like(lambd)
-    dangle_velocity = torch.empty_like(angle_velocity)
+    dDelta = torch.zeros_like(Delta)
+    dA = torch.zeros_like(A)
+    dB = torch.zeros_like(B)
+    dC = torch.zeros_like(C)
+    dlambd = torch.zeros_like(lambd)
+    dangle_velocity = torch.zeros_like(angle_velocity)
     dZ = torch.zeros_like(z_arg) if z is not None else torch.empty_like(grad_y)
 
     batch_size = X.shape[0]
     seqlen = X.shape[1]
-    grid = (batch_size, d_state)
+    grid = (batch_size, d_state, triton.cdiv(d_model, block_d))
     _complex_mimo_trapezoidal_ssm_bwd_kernel[grid](
         grad_y,
         X,
@@ -1028,7 +1029,7 @@ def _run_complex_mimo_trapezoidal_ssm_backward_cuda(
         RANK=rank,
         HAS_Z=z is not None,
         BLOCK_D=block_d,
-        num_warps=8,
+        num_warps=4,
     )
     return dX, dDelta, dA, dB, dC, dlambd, dangle_velocity, dZ if z is not None else None
 
@@ -1380,6 +1381,14 @@ class _ComplexMIMOTrapezoidalSSMFunction(torch.autograd.Function):
     def backward(ctx, grad_y: Tensor) -> tuple[Tensor | None, ...]:
         X, Delta, A, B, C, lambd, angle_velocity, z, h_real_cache, h_imag_cache = ctx.saved_tensors
         try:
+            fast_bwd_enabled = os.getenv("LEROBOT_DISPO_MAMBA3_FAST_BWD", "1").lower() not in {
+                "0",
+                "false",
+                "no",
+                "off",
+            }
+            if not fast_bwd_enabled:
+                raise RuntimeError("Triton Mamba3 SSM backward disabled by LEROBOT_DISPO_MAMBA3_FAST_BWD.")
             grads = _run_complex_mimo_trapezoidal_ssm_backward_cuda(
                 grad_y=grad_y,
                 X=X,

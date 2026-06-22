@@ -1,11 +1,11 @@
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
 mkdir -p "$TMPDIR"
@@ -73,7 +73,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/pusht_crop_controlflow
+  --output_dir=/home/ningan/outputs/train/pusht_crop_controlflow
 
 
 
@@ -88,19 +88,19 @@ tmux kill-session -t pusht
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
 
 CUDA_VISIBLE_DEVICES=0 lerobot-eval \
-  --policy.path=/scratch3/users/ningan/outputs/train/pusht_crop_controlflow/checkpoints/020000/pretrained_model \
+  --policy.path=/home/ningan/outputs/train/pusht_crop_controlflow/checkpoints/020000/pretrained_model \
   --policy.device=cuda \
   --env.type=pusht \
   --env.observation_width=96 \
@@ -108,23 +108,23 @@ CUDA_VISIBLE_DEVICES=0 lerobot-eval \
   --eval.batch_size=1 \
   --eval.n_episodes=20 \
   --eval.use_async_envs=false \
-  --output_dir=/scratch3/users/ningan/outputs/eval/pusht_crop_controlflow_last_20000
+  --output_dir=/home/ningan/outputs/eval/pusht_crop_controlflow_last_20000
 
 
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE" "$TMPDIR"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.type=crop_controlflow_clip \
@@ -188,4 +188,4 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/pusht_crop_controlflow_clip
+  --output_dir=/home/ningan/outputs/train/pusht_crop_controlflow_clip

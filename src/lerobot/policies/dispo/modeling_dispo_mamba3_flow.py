@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from collections import deque
 
 import torch
@@ -28,11 +29,18 @@ from .configuration_dispo import DiSPoMamba3FlowConfig
 from .modeling_dispo import DiSPoDiffusionModel, DiSPoPolicy, _state_feature_keys
 
 
+def _set_mamba3_triton_kernel_defaults() -> None:
+    os.environ.setdefault("LEROBOT_DISPO_MAMBA3_FAST_SSM", "1")
+    os.environ.setdefault("LEROBOT_DISPO_MAMBA3_FAST_BWD", "1")
+    os.environ.setdefault("LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D", "16")
+
+
 class DiSPoMamba3FlowPolicy(PreTrainedPolicy):
     config_class = DiSPoMamba3FlowConfig
     name = "dispo_mamba3_flow"
 
     def __init__(self, config: DiSPoMamba3FlowConfig, **kwargs):
+        _set_mamba3_triton_kernel_defaults()
         require_package("diffusers", extra="diffusion")
         super().__init__(config)
         config.validate_features()
@@ -107,6 +115,7 @@ class DiSPoMamba3FlowModel(DiSPoDiffusionModel):
     """GR00T-style flow matching action generator for DiSPo-Mamba3."""
 
     def __init__(self, config: DiSPoMamba3FlowConfig):
+        _set_mamba3_triton_kernel_defaults()
         if config.ssm_block_type != "mamba3_gated_mimo":
             raise ValueError("DiSPoMamba3FlowModel requires `ssm_block_type='mamba3_gated_mimo'`.")
         super().__init__(config)

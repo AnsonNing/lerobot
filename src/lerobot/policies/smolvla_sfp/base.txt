@@ -1,7 +1,7 @@
-export HF_HOME=/scratch3/users/ningan/hf_home
-export HF_HUB_CACHE=/scratch3/users/ningan/hf_home/hub
-export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_home/datasets
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_cache
+export HF_HOME=/home/ningan/hf_home
+export HF_HUB_CACHE=/home/ningan/hf_home/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_home/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_cache
 
 cd /home/ningan/lerobot
 
@@ -37,4 +37,4 @@ lerobot-train \
   --eval.batch_size=4 \
   --eval.use_async_envs=false \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/smolvla_sfp_pusht_amp_vlm_$(date +%Y%m%d_%H%M%S)
+  --output_dir=/home/ningan/outputs/train/smolvla_sfp_pusht_amp_vlm_$(date +%Y%m%d_%H%M%S)

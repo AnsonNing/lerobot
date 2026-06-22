@@ -1,16 +1,19 @@
 cd /home/ningan/lerobot
 
-source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
-conda activate smolvla
+source /home/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate vla
 
 export PYTHONPATH=/home/ningan/lerobot/src
 export TOKENIZERS_PARALLELISM=false
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_cache/datasets
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export LEROBOT_DISPO_MAMBA3_FAST_SSM=1
+export LEROBOT_DISPO_MAMBA3_FAST_BWD=1
+export LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D=16
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_cache/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$HF_DATASETS_CACHE" "$HF_LEROBOT_HOME" "$TMPDIR"
 
@@ -22,7 +25,6 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.n_obs_steps=2 \
   --policy.horizon=16 \
   --policy.n_action_steps=8 \
-  --policy.pretrained_backbone_weights=null \
   --policy.resize_shape='[96,96]' \
   --env.type=pusht \
   --env.observation_width=96 \
@@ -38,7 +40,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/dispo_pusht
+  --output_dir=/home/ningan/outputs/train/dispo_pusht
 
 
 
@@ -46,17 +48,20 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
 
 cd /home/ningan/lerobot
 
-source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
-conda activate smolvla
+source /home/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate vla
 
 export PYTHONPATH=/home/ningan/lerobot/src
 export TOKENIZERS_PARALLELISM=false
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_cache/datasets
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export LEROBOT_DISPO_MAMBA3_FAST_SSM=1
+export LEROBOT_DISPO_MAMBA3_FAST_BWD=1
+export LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D=16
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_cache/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$HF_DATASETS_CACHE" "$HF_LEROBOT_HOME" "$TMPDIR"
 
@@ -68,7 +73,6 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.n_obs_steps=2 \
   --policy.horizon=16 \
   --policy.n_action_steps=8 \
-  --policy.pretrained_backbone_weights=null \
   --policy.resize_shape='[96,96]' \
   --policy.ssm_block_type=mamba3_gated_mimo \
   --policy.mamba3_mimo_rank=4 \
@@ -90,7 +94,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/dispo_mamba3_pusht
+  --output_dir=/home/ningan/outputs/train/dispo_mamba3_pusht
 
 
 
@@ -98,17 +102,20 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
 
 cd /home/ningan/lerobot
 
-source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
-conda activate smolvla
+source /home/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate vla
 
 export PYTHONPATH=/home/ningan/lerobot/src
 export TOKENIZERS_PARALLELISM=false
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_cache/datasets
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export LEROBOT_DISPO_MAMBA3_FAST_SSM=1
+export LEROBOT_DISPO_MAMBA3_FAST_BWD=1
+export LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D=16
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_cache/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$HF_DATASETS_CACHE" "$HF_LEROBOT_HOME" "$TMPDIR"
 
@@ -120,7 +127,6 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.n_obs_steps=2 \
   --policy.horizon=16 \
   --policy.n_action_steps=8 \
-  --policy.pretrained_backbone_weights=null \
   --policy.resize_shape='[96,96]' \
   --policy.mamba3_mimo_rank=4 \
   --policy.mamba3_omega_min=0.05 \
@@ -146,7 +152,7 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/dispo_mamba3_flow_pusht
+  --output_dir=/home/ningan/outputs/train/dispo_mamba3_flow_pusht
 
 
 
@@ -158,26 +164,30 @@ tmux new -s dispo_mamba3_pusht
 tmux attach -t dispo_mamba3_pusht
 tmux new -s dispo_mamba3_flow_pusht
 tmux attach -t dispo_mamba3_flow_pusht
+tmux kill-session -t dispo_mamba3_pusht
 
 
 
 
 
 cd /home/ningan/lerobot
-source /scratch3/users/ningan/miniconda3/etc/profile.d/conda.sh
-conda activate smolvla
+source /home/ningan/miniconda3/etc/profile.d/conda.sh
+conda activate vla
 
 export PYTHONPATH=/home/ningan/lerobot/src
 export TOKENIZERS_PARALLELISM=false
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export HF_DATASETS_CACHE=/scratch3/users/ningan/hf_cache/datasets
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export TMPDIR=/scratch3/users/ningan/tmp
+export LEROBOT_DISPO_MAMBA3_FAST_SSM=1
+export LEROBOT_DISPO_MAMBA3_FAST_BWD=1
+export LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D=16
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_HUB_CACHE=/home/ningan/hf_cache/hub
+export HF_DATASETS_CACHE=/home/ningan/hf_cache/datasets
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export TMPDIR=/home/ningan/tmp
 
-CUDA_VISIBLE_DEVICES=1 lerobot-eval \
-  --policy.path=/scratch3/users/ningan/outputs/train/dispo_pusht/checkpoints/010000/pretrained_model \
+CUDA_VISIBLE_DEVICES=0 lerobot-eval \
+  --policy.path=/home/ningan/outputs/train/dispo_mamba3_pusht/checkpoints/020000/pretrained_model \
   --policy.device=cuda \
   --policy.use_amp=false \
   --env.type=pusht \
@@ -186,6 +196,5 @@ CUDA_VISIBLE_DEVICES=1 lerobot-eval \
   --eval.n_episodes=10 \
   --eval.batch_size=1 \
   --eval.use_async_envs=false \
-  --output_dir=/scratch3/users/ningan/outputs/eval/dispo_pusht_10000
-
+  --output_dir=/home/ningan/outputs/eval/dispo_mamba3_pusht_20000
 

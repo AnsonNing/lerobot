@@ -46,7 +46,7 @@ from .modeling_dispo_mamba3 import (
     PROPRIO_STREAM,
     TASK_TEXT_STREAM,
 )
-from .modeling_dispo_mamba3_flow import DiSPoMamba3FlowModel
+from .modeling_dispo_mamba3_flow import DiSPoMamba3FlowModel, _set_mamba3_triton_kernel_defaults
 
 if TYPE_CHECKING or _transformers_available:
     from transformers import CLIPTextModel, CLIPVisionModel
@@ -62,6 +62,7 @@ class DiSPoMamba3FlowClipPolicy(PreTrainedPolicy):
     name = "dispo_mamba3_flow_clip"
 
     def __init__(self, config: DiSPoMamba3FlowClipConfig, **kwargs):
+        _set_mamba3_triton_kernel_defaults()
         require_package("diffusers", extra="diffusion")
         require_package("transformers", extra="multi_task_dit")
         super().__init__(config)
@@ -142,6 +143,7 @@ class DiSPoMamba3FlowClipModel(DiSPoMamba3FlowModel):
     """Flow matching DiSPo-Mamba3 model using CLIP image and language streams."""
 
     def __init__(self, config: DiSPoMamba3FlowClipConfig):
+        _set_mamba3_triton_kernel_defaults()
         nn.Module.__init__(self)
         if config.ssm_block_type != "mamba3_gated_mimo":
             raise ValueError("DiSPoMamba3FlowClipModel requires `ssm_block_type='mamba3_gated_mimo'`.")

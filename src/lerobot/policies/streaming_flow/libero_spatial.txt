@@ -1,8 +1,8 @@
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
 SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
 
@@ -38,10 +38,10 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.episodes="[$SPATIAL_EPISODES]" \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --num_workers=16 \
   --prefetch_factor=4 \
   --persistent_workers=true \
@@ -72,14 +72,14 @@ tmux kill-session -t smolvla_sfp
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
 CUDA_VISIBLE_DEVICES=1 lerobot-eval \
-  --policy.path=/scratch3/users/ningan/outputs/train/libero_spatial_multi_task_dit_20k/checkpoints/020000/pretrained_model \
+  --policy.path=/home/ningan/outputs/train/libero_spatial_multi_task_dit_20k/checkpoints/020000/pretrained_model \
   --policy.device=cuda \
   --env.type=libero \
   --env.task=libero_spatial \
@@ -95,13 +95,13 @@ CUDA_VISIBLE_DEVICES=1 lerobot-eval \
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
-CHECKPOINT=/scratch3/users/ningan/outputs/train/libero_all_streaming_flow_v4_all/checkpoints/100000/pretrained_model
+CHECKPOINT=/home/ningan/outputs/train/libero_all_streaming_flow_v4_all/checkpoints/100000/pretrained_model
 STEP=100000
 
 SUITES=(libero_spatial libero_object libero_goal libero_10)
@@ -134,17 +134,17 @@ done
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
 
@@ -176,10 +176,10 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.episodes="[$SPATIAL_EPISODES]" \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --dataset.video_backend=torchcodec \
   --num_workers=16 \
   --prefetch_factor=4 \
@@ -197,17 +197,17 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 SPATIAL_EPISODES=$(python -c 'print(",".join(map(str, range(1261, 1693))))')
 
@@ -253,10 +253,10 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.episodes="[$SPATIAL_EPISODES]" \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --dataset.video_backend=torchcodec \
   --num_workers=8 \
   --prefetch_factor=2 \
@@ -268,24 +268,24 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/libero_spatial_streaming_flow_v5_freq
+  --output_dir=/home/ningan/outputs/train/libero_spatial_streaming_flow_v5_freq
 
 
 
 
 
 
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
 
 mkdir -p "$HF_HOME" "$HUGGINGFACE_HUB_CACHE" "$TRANSFORMERS_CACHE"
-mkdir -p /scratch3/users/ningan/outputs/train
+mkdir -p /home/ningan/outputs/train
 
 CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.type=streaming_flow_v4 \
@@ -326,9 +326,9 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --env.observation_width=256 \
   --env.observation_height=256 \
   --dataset.repo_id=HuggingFaceVLA/libero \
-  --dataset.root=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
   --dataset.image_transforms.enable=false \
-  --dataset.tensor_cache_dir=/scratch3/users/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache \
   --dataset.video_backend=torchcodec \
   --num_workers=8 \
   --prefetch_factor=2 \
@@ -340,23 +340,23 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=10000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/libero_all_streaming_flow_v4_all
+  --output_dir=/home/ningan/outputs/train/libero_all_streaming_flow_v4_all
 
 
 
   
-conda activate smolvla
+conda activate vla
 cd /home/ningan/lerobot
 
 export MUJOCO_GL=egl
-export HF_LEROBOT_HOME=/scratch3/users/ningan/lerobot_data
-export HF_HOME=/scratch3/users/ningan/hf_cache
-export HUGGINGFACE_HUB_CACHE=/scratch3/users/ningan/hf_cache/hub
-export TRANSFORMERS_CACHE=/scratch3/users/ningan/hf_cache/transformers
+export HF_LEROBOT_HOME=/home/ningan/lerobot_data
+export HF_HOME=/home/ningan/hf_cache
+export HUGGINGFACE_HUB_CACHE=/home/ningan/hf_cache/hub
+export TRANSFORMERS_CACHE=/home/ningan/hf_cache/transformers
 
 MODEL=streaming_flow_v5
 STEPS=60000
-DATA_ROOT=/scratch3/users/ningan/icra_lerobot_work/datasets/task2_cached256/lerobot
+DATA_ROOT=/home/ningan/icra_lerobot_work/datasets/task2_cached256/lerobot
 RUN=${MODEL}_task2_cached256_${STEPS}steps_cliptext
 
 CUDA_VISIBLE_DEVICES=0 lerobot-train \
@@ -409,4 +409,4 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --save_freq=5000 \
   --log_freq=100 \
   --wandb.enable=false \
-  --output_dir=/scratch3/users/ningan/outputs/train/$RUN
+  --output_dir=/home/ningan/outputs/train/$RUN
