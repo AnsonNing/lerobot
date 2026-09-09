@@ -18,7 +18,8 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --policy.chunk_size=16 \
   --policy.n_obs_steps=2 \
   --policy.n_action_steps=8 \
-  --policy.freeze_vision_encoder=true \
+  --policy.freeze_vision_encoder=false \
+  --policy.use_separate_rgb_encoder_per_camera=true \
   --policy.sfp_num_train_points=8 \
   --policy.sfp_sigma0=0.4 \
   --policy.sfp_k=10.0 \
@@ -52,6 +53,5 @@ CUDA_VISIBLE_DEVICES=0 lerobot-train \
   --log_freq=100 \
   --wandb.enable=false \
   --output_dir=/home/ningan/outputs/train/pusht_streaming_flow_v2
-
 
 

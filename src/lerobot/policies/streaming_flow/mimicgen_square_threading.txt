@@ -1,0 +1,119 @@
+# Square_D1 / Threading_D1: conversion, full ResNet training, and validation
+
+cd /home/ningan/lerobot
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export VIRTUAL_ENV=/mnt/data/ningan/lerobot_mimicgen/venv
+export PATH="$VIRTUAL_ENV/bin:$PATH"
+export MUJOCO_GL=egl
+export PYOPENGL_PLATFORM=egl
+export PYNPUT_BACKEND=dummy
+export HF_HOME=/mnt/data/ningan/lerobot_mimicgen/hf_cache
+export HF_LEROBOT_HOME=/mnt/data/ningan/lerobot_mimicgen/datasets
+export TORCH_HOME=/mnt/data/ningan/lerobot_mimicgen/torch_cache
+export WANDB_MODE=disabled
+
+# The converter requires h5py in the LeRobot Python environment.
+python -m lerobot.policies.streaming_flow.convert_mimicgen_hdf5_to_lerobot \
+  --hdf5-path=/home/ningan/internal-dispo/data/mimicgen/core/square_d1.hdf5 \
+  --repo-id=ningan/mimicgen_square_d1 \
+  --root=/mnt/data/ningan/lerobot_mimicgen/datasets/mimicgen_square_d1
+
+python -m lerobot.policies.streaming_flow.convert_mimicgen_hdf5_to_lerobot \
+  --hdf5-path=/home/ningan/internal-dispo/data/mimicgen/core/threading_d1.hdf5 \
+  --repo-id=ningan/mimicgen_threading_d1 \
+  --root=/mnt/data/ningan/lerobot_mimicgen/datasets/mimicgen_threading_d1
+
+# Square_D1: two independent, fully trainable ResNet18 camera encoders.
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=streaming_flow_v2 \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.n_obs_steps=2 \
+  --policy.chunk_size=16 \
+  --policy.n_action_steps=8 \
+  --policy.execution_horizon=1 \
+  --policy.use_previous_action_alignment=true \
+  --policy.rollout_initial_action_mode=constant \
+  --policy.rollout_initial_action='[0,0,0,0,0,0,-1]' \
+  --policy.resize_shape='[84,84]' \
+  --policy.crop_ratio=1.0 \
+  --policy.freeze_vision_encoder=false \
+  --policy.use_separate_rgb_encoder_per_camera=true \
+  --policy.sfp_num_train_points=8 \
+  --dataset.repo_id=ningan/mimicgen_square_d1 \
+  --dataset.root=/mnt/data/ningan/lerobot_mimicgen/datasets/mimicgen_square_d1 \
+  --dataset.image_transforms.enable=false \
+  --env.type=mimicgen \
+  --env.task=Square_D1 \
+  --env.dataset_path=/home/ningan/internal-dispo/data/mimicgen/core/square_d1.hdf5 \
+  --env.episode_length=400 \
+  --num_workers=8 \
+  --prefetch_factor=2 \
+  --persistent_workers=true \
+  --batch_size=128 \
+  --steps=300000 \
+  --eval_freq=50000 \
+  --eval.n_episodes=50 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --seed=100000 \
+  --save_checkpoint=true \
+  --save_freq=10000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/mnt/data/ningan/lerobot_mimicgen/outputs/mimicgen_square_d1_streaming_flow_v2_aligned_h1_full
+
+# Threading_D1: same controlled model/training settings as Square_D1.
+CUDA_VISIBLE_DEVICES=1 lerobot-train \
+  --policy.type=streaming_flow_v2 \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.n_obs_steps=2 \
+  --policy.chunk_size=16 \
+  --policy.n_action_steps=8 \
+  --policy.execution_horizon=1 \
+  --policy.use_previous_action_alignment=true \
+  --policy.rollout_initial_action_mode=constant \
+  --policy.rollout_initial_action='[0,0,0,0,0,0,-1]' \
+  --policy.resize_shape='[84,84]' \
+  --policy.crop_ratio=1.0 \
+  --policy.freeze_vision_encoder=false \
+  --policy.use_separate_rgb_encoder_per_camera=true \
+  --policy.sfp_num_train_points=8 \
+  --dataset.repo_id=ningan/mimicgen_threading_d1 \
+  --dataset.root=/mnt/data/ningan/lerobot_mimicgen/datasets/mimicgen_threading_d1 \
+  --dataset.image_transforms.enable=false \
+  --env.type=mimicgen \
+  --env.task=Threading_D1 \
+  --env.dataset_path=/home/ningan/internal-dispo/data/mimicgen/core/threading_d1.hdf5 \
+  --env.episode_length=400 \
+  --num_workers=8 \
+  --prefetch_factor=2 \
+  --persistent_workers=true \
+  --batch_size=128 \
+  --steps=300000 \
+  --eval_freq=50000 \
+  --eval.n_episodes=50 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --seed=100000 \
+  --save_checkpoint=true \
+  --save_freq=10000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/mnt/data/ningan/lerobot_mimicgen/outputs/mimicgen_threading_d1_streaming_flow_v2_aligned_h1_full
+
+# Standalone validation (replace POLICY_PATH with a pretrained_model directory).
+CUDA_VISIBLE_DEVICES=0 lerobot-eval \
+  --policy.path="$POLICY_PATH" \
+  --policy.device=cuda \
+  --env.type=mimicgen \
+  --env.task=Threading_D1 \
+  --env.dataset_path=/home/ningan/internal-dispo/data/mimicgen/core/threading_d1.hdf5 \
+  --env.episode_length=400 \
+  --eval.n_episodes=50 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --seed=100000 \
+  --output_dir=/mnt/data/ningan/lerobot_mimicgen/outputs/eval/mimicgen_threading_d1_streaming_flow

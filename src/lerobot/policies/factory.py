@@ -46,9 +46,12 @@ from lerobot.utils.feature_utils import dataset_to_policy_features
 
 from .act.configuration_act import ACTConfig
 from .crop_controlflow.configuration_crop_controlflow import CropControlFlowClipConfig, CropControlFlowConfig
-from .diffusion.configuration_diffusion import DiffusionConfig
-from .diffusion.configuration_diffusion import DiffusionV2Config
-from .dispo.configuration_dispo import DiSPoConfig, DiSPoMamba3FlowClipConfig, DiSPoMamba3FlowConfig
+from .diffusion.configuration_diffusion import DiffusionConfig, DiffusionV2Config
+from .dispo.configuration_dispo import (
+    DiSPoConfig,
+    DiSPoMamba3FlowClipConfig,
+    DiSPoMamba3FlowConfig,
+)
 from .eo1.configuration_eo1 import EO1Config
 from .gaussian_actor.configuration_gaussian_actor import GaussianActorConfig
 from .groot.configuration_groot import GrootConfig
@@ -61,6 +64,8 @@ from .smolvla.configuration_smolvla import SmolVLAConfig
 from .smolvla_sfp.configuration_smolvla_sfp import SmolVLASFPConfig, SmolVLASFPV2Config
 from .streaming_flow.configuration_streaming_flow import (
     StreamingFlowConfig,
+    StreamingFlowMambaConfig,
+    StreamingFlowMambaLiteConfig,
     StreamingFlowV2Config,
     StreamingFlowV3Config,
     StreamingFlowV4Config,
@@ -181,6 +186,14 @@ def get_policy_class(name: str) -> type[PreTrainedPolicy]:
         from .streaming_flow.modeling_streaming_flow_v5 import StreamingFlowPolicy
 
         return StreamingFlowPolicy
+    elif name == "streaming_flow_mamba":
+        from .streaming_flow.modeling_streaming_flow_mamba import StreamingFlowPolicy
+
+        return StreamingFlowPolicy
+    elif name == "streaming_flow_mamba_lite":
+        from .streaming_flow.modeling_streaming_flow_mamba_lite import StreamingFlowMambaLitePolicy
+
+        return StreamingFlowMambaLitePolicy
     elif name == "crop_controlflow":
         from .crop_controlflow.modeling_crop_controlflow import CropControlFlowPolicy
 
@@ -285,6 +298,10 @@ def make_policy_config(policy_type: str, **kwargs) -> PreTrainedConfig:
         return StreamingFlowV4Config(**kwargs)
     elif policy_type == "streaming_flow_v5":
         return StreamingFlowV5Config(**kwargs)
+    elif policy_type == "streaming_flow_mamba":
+        return StreamingFlowMambaConfig(**kwargs)
+    elif policy_type == "streaming_flow_mamba_lite":
+        return StreamingFlowMambaLiteConfig(**kwargs)
     elif policy_type == "crop_controlflow":
         return CropControlFlowConfig(**kwargs)
     elif policy_type == "crop_controlflow_clip":

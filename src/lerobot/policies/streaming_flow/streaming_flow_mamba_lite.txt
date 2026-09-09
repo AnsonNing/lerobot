@@ -1,0 +1,125 @@
+# streaming_flow_mamba_lite: Streaming Flow v2 train and rollout examples
+
+# The policy uses the native LeRobot streaming_flow_v2 data, processor, and
+# environment rollout contract.
+
+cd /home/ningan/lerobot
+
+export PYTHONPATH=/home/ningan/lerobot/src
+export LEROBOT_DISPO_MAMBA3_FAST_SSM=1
+export LEROBOT_DISPO_MAMBA3_FAST_BWD=1
+export LEROBOT_DISPO_MAMBA3_BWD_BLOCK_D=16
+
+# PushT training
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=streaming_flow_mamba_lite \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=true \
+  --policy.n_obs_steps=2 \
+  --policy.chunk_size=16 \
+  --policy.n_action_steps=8 \
+  --policy.freeze_vision_encoder=false \
+  --policy.use_separate_rgb_encoder_per_camera=true \
+  --policy.resize_shape='[96,96]' \
+  --policy.mamba_hidden_dim=192 \
+  --policy.mamba_current_depth=3 \
+  --policy.mamba_d_state=8 \
+  --policy.mamba_mimo_rank=4 \
+  --policy.mamba_history_depth=1 \
+  --policy.previous_tail_len=4 \
+  --policy.sfp_num_train_points=8 \
+  --policy.multi_point_mode=ordered_sequence \
+  --policy.inference_mode=incremental \
+  --policy.mamba_use_cuda_kernel=true \
+  --policy.lite_num_tasks=1 \
+  --env.type=pusht \
+  --env.observation_width=96 \
+  --env.observation_height=96 \
+  --dataset.repo_id=lerobot/pusht_image \
+  --dataset.image_transforms.enable=false \
+  --num_workers=16 \
+  --prefetch_factor=4 \
+  --persistent_workers=true \
+  --batch_size=256 \
+  --steps=20000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/home/ningan/outputs/train/streaming_flow_mamba_lite_pusht
+
+# PushT environment rollout
+CUDA_VISIBLE_DEVICES=0 lerobot-eval \
+  --policy.path=/home/ningan/outputs/train/streaming_flow_mamba_lite_pusht/checkpoints/020000/pretrained_model \
+  --policy.device=cuda \
+  --env.type=pusht \
+  --env.observation_width=96 \
+  --env.observation_height=96 \
+  --eval.n_episodes=10 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --output_dir=/home/ningan/outputs/eval/streaming_flow_mamba_lite_pusht
+
+# LIBERO Spatial training
+SPATIAL_EPISODES=$(python -c "print(','.join(map(str, range(1261, 1693))))")
+
+CUDA_VISIBLE_DEVICES=0 lerobot-train \
+  --policy.type=streaming_flow_mamba_lite \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --policy.use_amp=true \
+  --policy.n_obs_steps=2 \
+  --policy.chunk_size=9 \
+  --policy.n_action_steps=8 \
+  --policy.freeze_vision_encoder=false \
+  --policy.use_separate_rgb_encoder_per_camera=true \
+  --policy.resize_shape='[128,128]' \
+  --policy.mamba_hidden_dim=192 \
+  --policy.mamba_current_depth=3 \
+  --policy.mamba_d_state=8 \
+  --policy.mamba_mimo_rank=4 \
+  --policy.mamba_history_depth=1 \
+  --policy.previous_tail_len=4 \
+  --policy.sfp_num_train_points=8 \
+  --policy.multi_point_mode=ordered_sequence \
+  --policy.inference_mode=incremental \
+  --policy.mamba_use_cuda_kernel=true \
+  --policy.lite_num_tasks=256 \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --dataset.repo_id=HuggingFaceVLA/libero \
+  --dataset.root=/home/ningan/lerobot_data/HuggingFaceVLA/libero \
+  --dataset.tensor_cache_dir=/home/ningan/lerobot_data/HuggingFaceVLA/libero/tensor_cache_128 \
+  --dataset.episodes="[$SPATIAL_EPISODES]" \
+  --dataset.image_transforms.enable=false \
+  --dataset.video_backend=torchcodec \
+  --num_workers=12 \
+  --prefetch_factor=2 \
+  --persistent_workers=true \
+  --batch_size=128 \
+  --steps=30000 \
+  --eval_freq=0 \
+  --save_freq=5000 \
+  --log_freq=100 \
+  --wandb.enable=false \
+  --output_dir=/home/ningan/outputs/train/streaming_flow_mamba_lite_libero_spatial
+
+# LIBERO environment rollout
+CUDA_VISIBLE_DEVICES=0 lerobot-eval \
+  --policy.path=/home/ningan/outputs/train/streaming_flow_mamba_lite_libero_spatial/checkpoints/030000/pretrained_model \
+  --policy.device=cuda \
+  --env.type=libero \
+  --env.task=libero_spatial \
+  --env.control_mode=relative \
+  --env.max_parallel_tasks=1 \
+  --env.observation_width=256 \
+  --env.observation_height=256 \
+  --eval.n_episodes=10 \
+  --eval.batch_size=1 \
+  --eval.use_async_envs=false \
+  --output_dir=/home/ningan/outputs/eval/streaming_flow_mamba_lite_libero_spatial

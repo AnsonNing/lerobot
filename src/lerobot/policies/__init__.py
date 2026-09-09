@@ -17,13 +17,17 @@ from lerobot.utils.action_interpolator import ActionInterpolator as ActionInterp
 from .act.configuration_act import ACTConfig as ACTConfig
 from .crop_controlflow.configuration_crop_controlflow import (
     CropControlFlowClipConfig as CropControlFlowClipConfig,
+    CropControlFlowConfig as CropControlFlowConfig,
 )
-from .crop_controlflow.configuration_crop_controlflow import CropControlFlowConfig as CropControlFlowConfig
-from .diffusion.configuration_diffusion import DiffusionConfig as DiffusionConfig
-from .diffusion.configuration_diffusion import DiffusionV2Config as DiffusionV2Config
-from .dispo.configuration_dispo import DiSPoConfig as DiSPoConfig
-from .dispo.configuration_dispo import DiSPoMamba3FlowClipConfig as DiSPoMamba3FlowClipConfig
-from .dispo.configuration_dispo import DiSPoMamba3FlowConfig as DiSPoMamba3FlowConfig
+from .diffusion.configuration_diffusion import (
+    DiffusionConfig as DiffusionConfig,
+    DiffusionV2Config as DiffusionV2Config,
+)
+from .dispo.configuration_dispo import (
+    DiSPoConfig as DiSPoConfig,
+    DiSPoMamba3FlowClipConfig as DiSPoMamba3FlowClipConfig,
+    DiSPoMamba3FlowConfig as DiSPoMamba3FlowConfig,
+)
 from .eo1.configuration_eo1 import EO1Config as EO1Config
 from .factory import get_policy_class, make_policy, make_policy_config, make_pre_post_processors
 from .gaussian_actor.configuration_gaussian_actor import GaussianActorConfig as GaussianActorConfig
@@ -35,13 +39,19 @@ from .pi0_fast.configuration_pi0_fast import PI0FastConfig as PI0FastConfig
 from .pi05.configuration_pi05 import PI05Config as PI05Config
 from .pretrained import PreTrainedPolicy as PreTrainedPolicy
 from .smolvla.configuration_smolvla import SmolVLAConfig as SmolVLAConfig
-from .smolvla_sfp.configuration_smolvla_sfp import SmolVLASFPConfig as SmolVLASFPConfig
-from .smolvla_sfp.configuration_smolvla_sfp import SmolVLASFPV2Config as SmolVLASFPV2Config
-from .streaming_flow.configuration_streaming_flow import StreamingFlowConfig as StreamingFlowConfig
-from .streaming_flow.configuration_streaming_flow import StreamingFlowV2Config as StreamingFlowV2Config
-from .streaming_flow.configuration_streaming_flow import StreamingFlowV3Config as StreamingFlowV3Config
-from .streaming_flow.configuration_streaming_flow import StreamingFlowV4Config as StreamingFlowV4Config
-from .streaming_flow.configuration_streaming_flow import StreamingFlowV5Config as StreamingFlowV5Config
+from .smolvla_sfp.configuration_smolvla_sfp import (
+    SmolVLASFPConfig as SmolVLASFPConfig,
+    SmolVLASFPV2Config as SmolVLASFPV2Config,
+)
+from .streaming_flow.configuration_streaming_flow import (
+    StreamingFlowConfig as StreamingFlowConfig,
+    StreamingFlowMambaConfig as StreamingFlowMambaConfig,
+    StreamingFlowMambaLiteConfig as StreamingFlowMambaLiteConfig,
+    StreamingFlowV2Config as StreamingFlowV2Config,
+    StreamingFlowV3Config as StreamingFlowV3Config,
+    StreamingFlowV4Config as StreamingFlowV4Config,
+    StreamingFlowV5Config as StreamingFlowV5Config,
+)
 from .tdmpc.configuration_tdmpc import TDMPCConfig as TDMPCConfig
 from .utils import make_robot_action, prepare_observation_for_inference
 from .vqbet.configuration_vqbet import VQBeTConfig as VQBeTConfig
@@ -74,6 +84,8 @@ __all__ = [
     "SmolVLASFPConfig",
     "SmolVLASFPV2Config",
     "StreamingFlowConfig",
+    "StreamingFlowMambaConfig",
+    "StreamingFlowMambaLiteConfig",
     "StreamingFlowV2Config",
     "StreamingFlowV3Config",
     "StreamingFlowV4Config",

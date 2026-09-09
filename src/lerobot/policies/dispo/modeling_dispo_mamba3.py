@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# The recurrence follows the Mamba3 paper's X/Delta/A/B/C notation.
+# ruff: noqa: N803, N806
+
 import math
 import os
 
@@ -142,15 +145,9 @@ if triton is not None:
                 C_imag_2 = C_t_2 * angle_sin
                 C_imag_3 = C_t_3 * angle_sin
 
-                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
+                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(tl.float32)
 
                 prev_outer_real += (
                     prev_B_real_1[:, None] * prev_X_1[None, :]
@@ -200,15 +197,13 @@ if triton is not None:
                 Y_2 = tl.sum(C_real_2[:, None] * H_real + C_imag_2[:, None] * H_imag, axis=0)
                 Y_3 = tl.sum(C_real_3[:, None] * H_real + C_imag_3[:, None] * H_imag, axis=0)
                 if HAS_Z:
-                    z_1 = tl.load(z + out_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                    z_1 = tl.load(z + out_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                    z_2 = tl.load(z + out_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
                         tl.float32
                     )
-                    z_2 = tl.load(
-                        z + out_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    z_3 = tl.load(
-                        z + out_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
+                    z_3 = tl.load(z + out_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
                     Y_1 = Y_1 * z_1 * tl.sigmoid(z_1)
                     Y_2 = Y_2 * z_2 * tl.sigmoid(z_2)
                     Y_3 = Y_3 * z_3 * tl.sigmoid(z_3)
@@ -225,6 +220,185 @@ if triton is not None:
                 prev_B_real_3 = B_real_3
                 prev_B_imag_3 = B_imag_3
                 prev_X_3 = X_t_3
+
+    @triton.jit
+    def _complex_mimo_trapezoidal_ssm_step_kernel(
+        X,
+        Delta,
+        A,
+        B_param,
+        C_param,
+        lambd,
+        angle_velocity,
+        z,
+        h_real,
+        h_imag,
+        prev_b_real,
+        prev_b_imag,
+        prev_x,
+        angle_state,
+        out,
+        D_MODEL: tl.constexpr,
+        D_STATE: tl.constexpr,
+        RANK: tl.constexpr,
+        HAS_Z: tl.constexpr,
+        BLOCK_D: tl.constexpr,
+    ) -> None:
+        """One recurrent Mamba3 update with state resident in CUDA memory.
+
+        This kernel is used by streaming policies where launching a full scan for
+        every growing prefix would turn linear recurrence into quadratic work.
+        """
+        batch_idx = tl.program_id(0)
+        d_block_idx = tl.program_id(1)
+        d_offsets = d_block_idx * BLOCK_D + tl.arange(0, BLOCK_D)
+        d_mask = d_offsets < D_MODEL
+        n_offsets = tl.arange(0, D_STATE)
+
+        state_base = batch_idx * D_STATE * D_MODEL
+        state_ptrs = state_base + n_offsets[:, None] * D_MODEL + d_offsets[None, :]
+        H_real = tl.load(h_real + state_ptrs, mask=d_mask[None, :], other=0.0).to(tl.float32)
+        H_imag = tl.load(h_imag + state_ptrs, mask=d_mask[None, :], other=0.0).to(tl.float32)
+
+        param_base = batch_idx * D_STATE + n_offsets
+        Delta_t = tl.load(Delta + param_base).to(tl.float32)
+        A_t = tl.load(A + param_base).to(tl.float32)
+        lambda_t = tl.load(lambd + param_base).to(tl.float32)
+        theta_t = Delta_t * tl.load(angle_velocity + param_base).to(tl.float32)
+        alpha = tl.exp(tl.minimum(tl.maximum(Delta_t * A_t, -20.0), 20.0))
+        beta = (1.0 - lambda_t) * Delta_t * alpha
+        gamma = lambda_t * Delta_t
+
+        step_cos = tl.cos(theta_t)
+        step_sin = tl.sin(theta_t)
+        rotated_H_real = step_cos[:, None] * H_real - step_sin[:, None] * H_imag
+        rotated_H_imag = step_sin[:, None] * H_real + step_cos[:, None] * H_imag
+
+        old_angle = tl.load(angle_state + param_base).to(tl.float32)
+        new_angle = old_angle + theta_t
+        angle_cos = tl.cos(new_angle)
+        angle_sin = tl.sin(new_angle)
+
+        nr_base = batch_idx * D_STATE * RANK
+        dr_base = batch_idx * D_MODEL * RANK
+        B_t_0 = tl.load(B_param + nr_base + n_offsets * RANK).to(tl.float32)
+        C_t_0 = tl.load(C_param + nr_base + n_offsets * RANK).to(tl.float32)
+        B_real_0 = B_t_0 * angle_cos
+        B_imag_0 = B_t_0 * angle_sin
+        C_real_0 = C_t_0 * angle_cos
+        C_imag_0 = C_t_0 * angle_sin
+        X_t_0 = tl.load(X + dr_base + d_offsets * RANK, mask=d_mask, other=0.0).to(tl.float32)
+        prev_B_real_0 = tl.load(prev_b_real + nr_base + n_offsets * RANK).to(tl.float32)
+        prev_B_imag_0 = tl.load(prev_b_imag + nr_base + n_offsets * RANK).to(tl.float32)
+        prev_X_0 = tl.load(prev_x + dr_base + d_offsets * RANK, mask=d_mask, other=0.0).to(tl.float32)
+
+        prev_outer_real = prev_B_real_0[:, None] * prev_X_0[None, :]
+        prev_outer_imag = prev_B_imag_0[:, None] * prev_X_0[None, :]
+        curr_outer_real = B_real_0[:, None] * X_t_0[None, :]
+        curr_outer_imag = B_imag_0[:, None] * X_t_0[None, :]
+
+        if RANK == 4:
+            B_t_1 = tl.load(B_param + nr_base + n_offsets * RANK + 1).to(tl.float32)
+            B_t_2 = tl.load(B_param + nr_base + n_offsets * RANK + 2).to(tl.float32)
+            B_t_3 = tl.load(B_param + nr_base + n_offsets * RANK + 3).to(tl.float32)
+            C_t_1 = tl.load(C_param + nr_base + n_offsets * RANK + 1).to(tl.float32)
+            C_t_2 = tl.load(C_param + nr_base + n_offsets * RANK + 2).to(tl.float32)
+            C_t_3 = tl.load(C_param + nr_base + n_offsets * RANK + 3).to(tl.float32)
+            B_real_1 = B_t_1 * angle_cos
+            B_real_2 = B_t_2 * angle_cos
+            B_real_3 = B_t_3 * angle_cos
+            B_imag_1 = B_t_1 * angle_sin
+            B_imag_2 = B_t_2 * angle_sin
+            B_imag_3 = B_t_3 * angle_sin
+            C_real_1 = C_t_1 * angle_cos
+            C_real_2 = C_t_2 * angle_cos
+            C_real_3 = C_t_3 * angle_cos
+            C_imag_1 = C_t_1 * angle_sin
+            C_imag_2 = C_t_2 * angle_sin
+            C_imag_3 = C_t_3 * angle_sin
+            X_t_1 = tl.load(X + dr_base + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(tl.float32)
+            X_t_2 = tl.load(X + dr_base + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(tl.float32)
+            X_t_3 = tl.load(X + dr_base + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(tl.float32)
+            prev_B_real_1 = tl.load(prev_b_real + nr_base + n_offsets * RANK + 1).to(tl.float32)
+            prev_B_real_2 = tl.load(prev_b_real + nr_base + n_offsets * RANK + 2).to(tl.float32)
+            prev_B_real_3 = tl.load(prev_b_real + nr_base + n_offsets * RANK + 3).to(tl.float32)
+            prev_B_imag_1 = tl.load(prev_b_imag + nr_base + n_offsets * RANK + 1).to(tl.float32)
+            prev_B_imag_2 = tl.load(prev_b_imag + nr_base + n_offsets * RANK + 2).to(tl.float32)
+            prev_B_imag_3 = tl.load(prev_b_imag + nr_base + n_offsets * RANK + 3).to(tl.float32)
+            prev_X_1 = tl.load(prev_x + dr_base + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(tl.float32)
+            prev_X_2 = tl.load(prev_x + dr_base + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(tl.float32)
+            prev_X_3 = tl.load(prev_x + dr_base + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(tl.float32)
+            prev_outer_real += (
+                prev_B_real_1[:, None] * prev_X_1[None, :]
+                + prev_B_real_2[:, None] * prev_X_2[None, :]
+                + prev_B_real_3[:, None] * prev_X_3[None, :]
+            )
+            prev_outer_imag += (
+                prev_B_imag_1[:, None] * prev_X_1[None, :]
+                + prev_B_imag_2[:, None] * prev_X_2[None, :]
+                + prev_B_imag_3[:, None] * prev_X_3[None, :]
+            )
+            curr_outer_real += (
+                B_real_1[:, None] * X_t_1[None, :]
+                + B_real_2[:, None] * X_t_2[None, :]
+                + B_real_3[:, None] * X_t_3[None, :]
+            )
+            curr_outer_imag += (
+                B_imag_1[:, None] * X_t_1[None, :]
+                + B_imag_2[:, None] * X_t_2[None, :]
+                + B_imag_3[:, None] * X_t_3[None, :]
+            )
+
+        H_real = (
+            alpha[:, None] * rotated_H_real
+            + beta[:, None] * prev_outer_real
+            + gamma[:, None] * curr_outer_real
+        )
+        H_imag = (
+            alpha[:, None] * rotated_H_imag
+            + beta[:, None] * prev_outer_imag
+            + gamma[:, None] * curr_outer_imag
+        )
+        tl.store(h_real + state_ptrs, H_real, mask=d_mask[None, :])
+        tl.store(h_imag + state_ptrs, H_imag, mask=d_mask[None, :])
+
+        out_base = batch_idx * RANK * D_MODEL
+        Y_0 = tl.sum(C_real_0[:, None] * H_real + C_imag_0[:, None] * H_imag, axis=0)
+        if HAS_Z:
+            z_0 = tl.load(z + out_base + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+            Y_0 = Y_0 * z_0 * tl.sigmoid(z_0)
+        tl.store(out + out_base + d_offsets, Y_0, mask=d_mask)
+        tl.store(prev_x + dr_base + d_offsets * RANK, X_t_0, mask=d_mask)
+
+        if RANK == 4:
+            Y_1 = tl.sum(C_real_1[:, None] * H_real + C_imag_1[:, None] * H_imag, axis=0)
+            Y_2 = tl.sum(C_real_2[:, None] * H_real + C_imag_2[:, None] * H_imag, axis=0)
+            Y_3 = tl.sum(C_real_3[:, None] * H_real + C_imag_3[:, None] * H_imag, axis=0)
+            if HAS_Z:
+                z_1 = tl.load(z + out_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                z_2 = tl.load(z + out_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                z_3 = tl.load(z + out_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                Y_1 = Y_1 * z_1 * tl.sigmoid(z_1)
+                Y_2 = Y_2 * z_2 * tl.sigmoid(z_2)
+                Y_3 = Y_3 * z_3 * tl.sigmoid(z_3)
+            tl.store(out + out_base + D_MODEL + d_offsets, Y_1, mask=d_mask)
+            tl.store(out + out_base + 2 * D_MODEL + d_offsets, Y_2, mask=d_mask)
+            tl.store(out + out_base + 3 * D_MODEL + d_offsets, Y_3, mask=d_mask)
+            tl.store(prev_x + dr_base + d_offsets * RANK + 1, X_t_1, mask=d_mask)
+            tl.store(prev_x + dr_base + d_offsets * RANK + 2, X_t_2, mask=d_mask)
+            tl.store(prev_x + dr_base + d_offsets * RANK + 3, X_t_3, mask=d_mask)
+
+        first_block = d_block_idx == 0
+        tl.store(prev_b_real + nr_base + n_offsets * RANK, B_real_0, mask=first_block)
+        tl.store(prev_b_imag + nr_base + n_offsets * RANK, B_imag_0, mask=first_block)
+        tl.store(angle_state + param_base, new_angle, mask=first_block)
+        if RANK == 4:
+            tl.store(prev_b_real + nr_base + n_offsets * RANK + 1, B_real_1, mask=first_block)
+            tl.store(prev_b_real + nr_base + n_offsets * RANK + 2, B_real_2, mask=first_block)
+            tl.store(prev_b_real + nr_base + n_offsets * RANK + 3, B_real_3, mask=first_block)
+            tl.store(prev_b_imag + nr_base + n_offsets * RANK + 1, B_imag_1, mask=first_block)
+            tl.store(prev_b_imag + nr_base + n_offsets * RANK + 2, B_imag_2, mask=first_block)
+            tl.store(prev_b_imag + nr_base + n_offsets * RANK + 3, B_imag_3, mask=first_block)
 
     @triton.jit
     def _complex_mimo_trapezoidal_ssm_fwd_cache_kernel(
@@ -299,9 +473,7 @@ if triton is not None:
             C_imag_0 = C_t_0 * angle_sin
 
             base_bl_dr = (batch_idx * SEQLEN + step_idx) * D_MODEL * RANK
-            X_t_0 = tl.load(X + base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0).to(
-                tl.float32
-            )
+            X_t_0 = tl.load(X + base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0).to(tl.float32)
 
             prev_outer_real = prev_B_real_0[:, None] * prev_X_0[None, :]
             prev_outer_imag = prev_B_imag_0[:, None] * prev_X_0[None, :]
@@ -328,15 +500,9 @@ if triton is not None:
                 C_imag_2 = C_t_2 * angle_sin
                 C_imag_3 = C_t_3 * angle_sin
 
-                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
+                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(tl.float32)
 
                 prev_outer_real += (
                     prev_B_real_1[:, None] * prev_X_1[None, :]
@@ -391,15 +557,13 @@ if triton is not None:
                 Y_2 = tl.sum(C_real_2[:, None] * H_real + C_imag_2[:, None] * H_imag, axis=0)
                 Y_3 = tl.sum(C_real_3[:, None] * H_real + C_imag_3[:, None] * H_imag, axis=0)
                 if HAS_Z:
-                    z_1 = tl.load(z + out_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                    z_1 = tl.load(z + out_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                    z_2 = tl.load(z + out_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
                         tl.float32
                     )
-                    z_2 = tl.load(
-                        z + out_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    z_3 = tl.load(
-                        z + out_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
+                    z_3 = tl.load(z + out_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
                     Y_1 = Y_1 * z_1 * tl.sigmoid(z_1)
                     Y_2 = Y_2 * z_2 * tl.sigmoid(z_2)
                     Y_3 = Y_3 * z_3 * tl.sigmoid(z_3)
@@ -501,14 +665,14 @@ if triton is not None:
             H_imag = tl.load(h_imag_cache + cache_base + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
             if step_idx > 0:
                 prev_cache_base = (
-                    (batch_idx * SEQLEN + step_idx - 1) * D_STATE * D_MODEL + state_idx * D_MODEL
+                    batch_idx * SEQLEN + step_idx - 1
+                ) * D_STATE * D_MODEL + state_idx * D_MODEL
+                H_prev_real = tl.load(h_real_cache + prev_cache_base + d_offsets, mask=d_mask, other=0.0).to(
+                    tl.float32
                 )
-                H_prev_real = tl.load(
-                    h_real_cache + prev_cache_base + d_offsets, mask=d_mask, other=0.0
-                ).to(tl.float32)
-                H_prev_imag = tl.load(
-                    h_imag_cache + prev_cache_base + d_offsets, mask=d_mask, other=0.0
-                ).to(tl.float32)
+                H_prev_imag = tl.load(h_imag_cache + prev_cache_base + d_offsets, mask=d_mask, other=0.0).to(
+                    tl.float32
+                )
             else:
                 H_prev_real = tl.zeros((BLOCK_D,), tl.float32)
                 H_prev_imag = tl.zeros((BLOCK_D,), tl.float32)
@@ -525,9 +689,7 @@ if triton is not None:
             C_imag_0 = C_t_0 * angle_sin
 
             base_bl_dr = (batch_idx * SEQLEN + step_idx) * D_MODEL * RANK
-            X_t_0 = tl.load(X + base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0).to(
-                tl.float32
-            )
+            X_t_0 = tl.load(X + base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0).to(tl.float32)
 
             prev_B_real_0 = tl.full((), 0.0, tl.float32)
             prev_B_imag_0 = tl.full((), 0.0, tl.float32)
@@ -538,9 +700,9 @@ if triton is not None:
                 prev_B_t_0 = tl.load(B_param + prev_base_bl_nr).to(tl.float32)
                 prev_B_real_0 = prev_B_t_0 * prev_angle_cos
                 prev_B_imag_0 = prev_B_t_0 * prev_angle_sin
-                prev_X_0 = tl.load(
-                    X + prev_base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0
-                ).to(tl.float32)
+                prev_X_0 = tl.load(X + prev_base_bl_dr + d_offsets * RANK, mask=d_mask, other=0.0).to(
+                    tl.float32
+                )
 
             prev_outer_real = prev_B_real_0 * prev_X_0
             prev_outer_imag = prev_B_imag_0 * prev_X_0
@@ -567,15 +729,9 @@ if triton is not None:
                 C_imag_2 = C_t_2 * angle_sin
                 C_imag_3 = C_t_3 * angle_sin
 
-                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
-                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(
-                    tl.float32
-                )
+                X_t_1 = tl.load(X + base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_2 = tl.load(X + base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(tl.float32)
+                X_t_3 = tl.load(X + base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(tl.float32)
 
                 prev_B_real_1 = tl.full((), 0.0, tl.float32)
                 prev_B_imag_1 = tl.full((), 0.0, tl.float32)
@@ -587,9 +743,7 @@ if triton is not None:
                 prev_X_2 = tl.zeros((BLOCK_D,), tl.float32)
                 prev_X_3 = tl.zeros((BLOCK_D,), tl.float32)
                 if step_idx > 0:
-                    prev_base_bl_nr = (
-                        (batch_idx * SEQLEN + step_idx - 1) * D_STATE * RANK + state_idx * RANK
-                    )
+                    prev_base_bl_nr = (batch_idx * SEQLEN + step_idx - 1) * D_STATE * RANK + state_idx * RANK
                     prev_base_bl_dr = (batch_idx * SEQLEN + step_idx - 1) * D_MODEL * RANK
                     prev_B_t_1 = tl.load(B_param + prev_base_bl_nr + 1).to(tl.float32)
                     prev_B_t_2 = tl.load(B_param + prev_base_bl_nr + 2).to(tl.float32)
@@ -600,15 +754,15 @@ if triton is not None:
                     prev_B_imag_1 = prev_B_t_1 * prev_angle_sin
                     prev_B_imag_2 = prev_B_t_2 * prev_angle_sin
                     prev_B_imag_3 = prev_B_t_3 * prev_angle_sin
-                    prev_X_1 = tl.load(
-                        X + prev_base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    prev_X_2 = tl.load(
-                        X + prev_base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    prev_X_3 = tl.load(
-                        X + prev_base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0
-                    ).to(tl.float32)
+                    prev_X_1 = tl.load(X + prev_base_bl_dr + d_offsets * RANK + 1, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
+                    prev_X_2 = tl.load(X + prev_base_bl_dr + d_offsets * RANK + 2, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
+                    prev_X_3 = tl.load(X + prev_base_bl_dr + d_offsets * RANK + 3, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
 
                 prev_outer_real += (
                     prev_B_real_1 * prev_X_1 + prev_B_real_2 * prev_X_2 + prev_B_real_3 * prev_X_3
@@ -640,28 +794,26 @@ if triton is not None:
             dH_imag = dH_imag_carry + grad_Y_0 * C_imag_0
 
             if RANK == 4:
-                grad_out_1 = tl.load(
-                    grad_y + grad_base + D_MODEL + d_offsets, mask=d_mask, other=0.0
-                ).to(tl.float32)
-                grad_out_2 = tl.load(
-                    grad_y + grad_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                ).to(tl.float32)
-                grad_out_3 = tl.load(
-                    grad_y + grad_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                ).to(tl.float32)
+                grad_out_1 = tl.load(grad_y + grad_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                    tl.float32
+                )
+                grad_out_2 = tl.load(grad_y + grad_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                    tl.float32
+                )
+                grad_out_3 = tl.load(grad_y + grad_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                    tl.float32
+                )
                 grad_Y_1 = grad_out_1
                 grad_Y_2 = grad_out_2
                 grad_Y_3 = grad_out_3
                 if HAS_Z:
-                    z_1 = tl.load(
-                        z + grad_base + D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    z_2 = tl.load(
-                        z + grad_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
-                    z_3 = tl.load(
-                        z + grad_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0
-                    ).to(tl.float32)
+                    z_1 = tl.load(z + grad_base + D_MODEL + d_offsets, mask=d_mask, other=0.0).to(tl.float32)
+                    z_2 = tl.load(z + grad_base + 2 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
+                    z_3 = tl.load(z + grad_base + 3 * D_MODEL + d_offsets, mask=d_mask, other=0.0).to(
+                        tl.float32
+                    )
                     z_sigmoid_1 = tl.sigmoid(z_1)
                     z_sigmoid_2 = tl.sigmoid(z_2)
                     z_sigmoid_3 = tl.sigmoid(z_3)
@@ -885,6 +1037,81 @@ def _run_complex_mimo_trapezoidal_ssm_cuda(
         num_warps=4,
     )
     return y.flatten(start_dim=2)
+
+
+def run_complex_mimo_trapezoidal_ssm_step_cuda(
+    *,
+    X: Tensor,
+    Delta: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
+    lambd: Tensor,
+    angle_velocity: Tensor,
+    state: dict[str, Tensor],
+    z: Tensor | None = None,
+    d_model: int,
+    d_state: int,
+    rank: int,
+) -> Tensor:
+    """Run one inference-only complex Mamba3 recurrence update in-place.
+
+    Shapes omit the sequence axis: ``X`` is ``(B, D, R)`` and SSM parameters
+    are ``(B, N[, R])``. ``state`` is deliberately explicit so callers can keep
+    it local to one generated chunk rather than making it persistent policy state.
+    """
+    if triton is None:
+        raise RuntimeError("Triton is not available.")
+    if torch.is_grad_enabled():
+        raise RuntimeError("The recurrent CUDA step kernel is inference-only.")
+    required_state = {
+        "h_real",
+        "h_imag",
+        "prev_b_real",
+        "prev_b_imag",
+        "prev_x",
+        "angle",
+    }
+    missing = required_state.difference(state)
+    if missing:
+        raise ValueError(f"Missing recurrent Mamba3 state tensors: {sorted(missing)}.")
+
+    batch_size = X.shape[0]
+    X = X.contiguous().float()
+    Delta = Delta.contiguous().float()
+    A = A.contiguous().float()
+    B = B.contiguous().float()
+    C = C.contiguous().float()
+    lambd = lambd.contiguous().float()
+    angle_velocity = angle_velocity.contiguous().float()
+    z_arg = z.contiguous().float() if z is not None else X
+    y = torch.empty(batch_size, rank, d_model, device=X.device, dtype=torch.float32)
+    block_d = 16
+    grid = (batch_size, triton.cdiv(d_model, block_d))
+    _complex_mimo_trapezoidal_ssm_step_kernel[grid](
+        X,
+        Delta,
+        A,
+        B,
+        C,
+        lambd,
+        angle_velocity,
+        z_arg,
+        state["h_real"],
+        state["h_imag"],
+        state["prev_b_real"],
+        state["prev_b_imag"],
+        state["prev_x"],
+        state["angle"],
+        y,
+        D_MODEL=d_model,
+        D_STATE=d_state,
+        RANK=rank,
+        HAS_Z=z is not None,
+        BLOCK_D=block_d,
+        num_warps=4,
+    )
+    return y.flatten(start_dim=1)
 
 
 def _run_complex_mimo_trapezoidal_ssm_cuda_with_cache(
@@ -1292,9 +1519,8 @@ def _complex_mimo_trapezoidal_ssm_backward(
             prev_B_imag_t = b_imag_steps[idx - 1]
             dB_real_next = torch.einsum("bnd,bdr->bnr", d_prev_outer_real, prev_X_t)
             dB_imag_next = torch.einsum("bnd,bdr->bnr", d_prev_outer_imag, prev_X_t)
-            dX_next = (
-                torch.einsum("bnd,bnr->bdr", d_prev_outer_real, prev_B_real_t)
-                + torch.einsum("bnd,bnr->bdr", d_prev_outer_imag, prev_B_imag_t)
+            dX_next = torch.einsum("bnd,bnr->bdr", d_prev_outer_real, prev_B_real_t) + torch.einsum(
+                "bnd,bnr->bdr", d_prev_outer_imag, prev_B_imag_t
             )
         else:
             dB_real_next.zero_()
@@ -1571,8 +1797,7 @@ class GatedMIMOTrapezoidalSSMMixer(nn.Module):
 
         if value.shape != (batch_size, seqlen):
             raise ValueError(
-                f"`{name}` must have shape {(batch_size, seqlen)} after expansion. "
-                f"Got {tuple(value.shape)}."
+                f"`{name}` must have shape {(batch_size, seqlen)} after expansion. Got {tuple(value.shape)}."
             )
         return value.float()
 

@@ -96,7 +96,7 @@ class StreamingFlowPolicy(PreTrainedPolicy):
         return self.model
 
     def reset(self):
-        self._queues = {ACTION: deque(maxlen=self.config.n_action_steps)}
+        self._queues = {ACTION: deque(maxlen=self.config.effective_execution_horizon)}
         if self.config.robot_state_feature:
             self._queues[OBS_STATE] = deque(maxlen=self.config.n_obs_steps)
         if self.config.image_features:
@@ -104,6 +104,17 @@ class StreamingFlowPolicy(PreTrainedPolicy):
         self._prev_action_state = None
         self._rollout_chunk_index = -1
         self._last_rollout_info: dict[str, float | int | str] | None = None
+
+    def set_executed_action_state(self, action: Tensor) -> None:
+        """Use the last action actually returned to the environment for continuity."""
+        if action.ndim == 2:
+            action = action.unsqueeze(1)
+        action_dim = self.config.action_feature.shape[0]
+        if action.ndim != 3 or action.shape[-1] != action_dim:
+            raise ValueError(
+                f"Expected executed action with shape (B, T, {action_dim}), got {tuple(action.shape)}."
+            )
+        self._prev_action_state = action[:, -1:].detach()
 
     def get_rollout_info(self) -> dict[str, float | int | str] | None:
         """Return diagnostics for the action chunk currently being executed."""
@@ -304,7 +315,7 @@ class StreamingFlowPolicy(PreTrainedPolicy):
         queued_batch = self._queued_batch()
 
         # The first chunk uses the configured dataset-appropriate initial action;
-        # later chunks continue from the previous final action state.
+        # later chunks continue from the last action actually sent to the env.
         init_source = "prev_action_state"
         init_action = self._prev_action_state
 
@@ -334,9 +345,12 @@ class StreamingFlowPolicy(PreTrainedPolicy):
 
         chunk, final_action_state, info = self._predict_action_chunk_and_state(batch, noise=noise)
 
-        # Important: some rollout/eval code paths call predict_action_chunk instead
-        # of select_action. Keep streaming continuity in that path as well.
-        self._prev_action_state = final_action_state
+        # Direct chunk callers are expected to commit only the configured prefix.
+        # Carry the last action in that executed prefix, not an unexecuted tail.
+        del final_action_state
+        execution_horizon = self.config.effective_execution_horizon
+        self.set_executed_action_state(chunk[:, :execution_horizon])
+        info["execution_horizon"] = execution_horizon
         self._record_rollout_info(info)
         return chunk
 
@@ -352,11 +366,14 @@ class StreamingFlowPolicy(PreTrainedPolicy):
 
         if len(self._queues[ACTION]) == 0:
             actions, final_action_state, info = self._predict_action_chunk_and_state(batch, noise=noise)
-            self._prev_action_state = final_action_state
+            del final_action_state
+            execution_horizon = self.config.effective_execution_horizon
+            info["execution_horizon"] = execution_horizon
             self._record_rollout_info(info)
-            self._queues[ACTION].extend(actions.transpose(0, 1))
+            self._queues[ACTION].extend(actions[:, :execution_horizon].transpose(0, 1))
 
         action = self._queues[ACTION].popleft()
+        self.set_executed_action_state(action)
 
         # Return normalized action and let LeRobot's postprocessor unnormalize before env.step.
         return action
@@ -482,6 +499,16 @@ class StreamingFlowModel(nn.Module):
         freq = clamped_freq if clamp else raw_freq
         return raw_freq, freq, clamped_freq
 
+    def _integration_dt(self) -> float:
+        if self.config.use_previous_action_alignment:
+            return 1.0 / max(self.config.chunk_size - 1, 1)
+        return 1.0 / max(self.config.chunk_size - self.config.n_obs_steps, 1)
+
+    def _trajectory_start_index(self, action_sequence_length: int) -> int:
+        if self.config.use_previous_action_alignment:
+            return 0
+        return min(max(self.config.n_obs_steps - 1, 0), action_sequence_length - 1)
+
     def _initial_action(
         self,
         batch: dict[str, Tensor],
@@ -523,7 +550,9 @@ class StreamingFlowModel(nn.Module):
         )
         action = self._initial_action(batch, init_action=init_action)
 
-        dt = 1.0 / max(self.config.chunk_size - self.config.n_obs_steps, 1)
+        # The aligned length-``chunk_size`` path is [a_{t-1}, a_t, ...]. One
+        # Euler step advances by one of its N-1 intervals.
+        dt = self._integration_dt()
         action_chunk = []
         initial_action = action.detach()
         first_velocity_mean_abs = 0.0
@@ -579,7 +608,9 @@ class StreamingFlowModel(nn.Module):
             raw_cond, clamp=self.config.sfp_clamp_freq_during_training
         )
 
-        start_idx = min(max(self.config.n_obs_steps - 1, 0), batch[ACTION].shape[1] - 1)
+        # action_delta_indices starts at 1-n_obs_steps. In aligned mode this
+        # retains a_{t-1} at time zero, so Euler update 1 predicts a_t.
+        start_idx = self._trajectory_start_index(batch[ACTION].shape[1])
         trajectory = batch[ACTION][:, start_idx:, :]
         num_train_points = max(1, int(getattr(self.config, "sfp_num_train_points", 4)))
         time_shape = (trajectory.shape[0], num_train_points) if num_train_points > 1 else (trajectory.shape[0],)

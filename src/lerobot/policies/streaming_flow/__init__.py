@@ -14,6 +14,8 @@
 
 from .configuration_streaming_flow import (
     StreamingFlowConfig,
+    StreamingFlowMambaConfig,
+    StreamingFlowMambaLiteConfig,
     StreamingFlowV2Config,
     StreamingFlowV3Config,
     StreamingFlowV4Config,
@@ -24,6 +26,8 @@ from .processor_streaming_flow import make_streaming_flow_pre_post_processors
 
 __all__ = [
     "StreamingFlowConfig",
+    "StreamingFlowMambaConfig",
+    "StreamingFlowMambaLiteConfig",
     "StreamingFlowV2Config",
     "StreamingFlowV3Config",
     "StreamingFlowV4Config",

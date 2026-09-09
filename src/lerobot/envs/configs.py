@@ -443,6 +443,80 @@ class LiberoEnv(EnvConfig):
         )
 
 
+@EnvConfig.register_subclass("mimicgen")
+@dataclass
+class MimicGenEnv(EnvConfig):
+    """Square_D1 / Threading_D1 evaluation through robomimic and robosuite."""
+
+    task: str = "Threading_D1"
+    dataset_path: str | None = None
+    fps: int = 20
+    episode_length: int = 400
+    obs_type: str = "pixels_agent_pos"
+    render_mode: str = "rgb_array"
+    camera_name: str = "agentview_image,robot0_eye_in_hand_image"
+    observation_height: int = 84
+    observation_width: int = 84
+    features: dict[str, PolicyFeature] = field(
+        default_factory=lambda: {
+            ACTION: PolicyFeature(type=FeatureType.ACTION, shape=(7,)),
+        }
+    )
+    features_map: dict[str, str] = field(
+        default_factory=lambda: {
+            ACTION: ACTION,
+            "agent_pos": OBS_STATE,
+            "pixels/agentview_image": f"{OBS_IMAGES}.agentview_image",
+            "pixels/robot0_eye_in_hand_image": f"{OBS_IMAGES}.robot0_eye_in_hand_image",
+        }
+    )
+
+    def __post_init__(self):
+        if self.obs_type not in {"pixels", "pixels_agent_pos"}:
+            raise ValueError(f"Unsupported obs_type: {self.obs_type}")
+
+        cameras = [name.strip() for name in self.camera_name.split(",") if name.strip()]
+        if not cameras:
+            raise ValueError("MimicGenEnv requires at least one camera name.")
+        for camera in cameras:
+            feature_key = f"pixels/{camera}"
+            self.features[feature_key] = PolicyFeature(
+                type=FeatureType.VISUAL,
+                shape=(self.observation_height, self.observation_width, 3),
+            )
+            self.features_map[feature_key] = f"{OBS_IMAGES}.{camera}"
+
+        if self.obs_type == "pixels_agent_pos":
+            self.features["agent_pos"] = PolicyFeature(type=FeatureType.STATE, shape=(9,))
+
+    @property
+    def gym_kwargs(self) -> dict:
+        return {
+            "obs_type": self.obs_type,
+            "render_mode": self.render_mode,
+            "observation_height": self.observation_height,
+            "observation_width": self.observation_width,
+        }
+
+    def create_envs(self, n_envs: int, use_async_envs: bool = False):
+        from .mimicgen import create_mimicgen_envs
+
+        if self.task is None:
+            raise ValueError("MimicGenEnv requires a task to be specified.")
+        if self.dataset_path is None:
+            raise ValueError("MimicGenEnv requires a dataset path.")
+        env_cls = _make_vec_env_cls(use_async_envs, n_envs)
+        return create_mimicgen_envs(
+            task=self.task,
+            dataset_path=self.dataset_path,
+            n_envs=n_envs,
+            camera_name=self.camera_name,
+            episode_length=self.episode_length,
+            gym_kwargs=self.gym_kwargs,
+            env_cls=env_cls,
+        )
+
+
 @EnvConfig.register_subclass("metaworld")
 @dataclass
 class MetaworldEnv(EnvConfig):
