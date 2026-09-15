@@ -19,6 +19,7 @@ from __future__ import annotations
 import abc
 import logging
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import draccus
 
@@ -196,6 +197,8 @@ class RolloutConfig:
     interpolation_multiplier: int = 1
     device: str | None = None
     task: str = ""
+    # Optional CSV path for recording each action actually sent to the robot.
+    output_action_csv: Path | None = None
     display_data: bool = False
     # Display data on a remote Rerun server
     display_ip: str | None = None

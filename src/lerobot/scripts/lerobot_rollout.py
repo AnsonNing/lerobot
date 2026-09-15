@@ -212,7 +212,11 @@ def rollout(cfg: RolloutConfig):
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
     finally:
-        strategy.teardown(ctx)
+        try:
+            strategy.teardown(ctx)
+        finally:
+            if ctx.runtime.action_logger is not None:
+                ctx.runtime.action_logger.close()
 
     logger.info("Rollout finished")
 

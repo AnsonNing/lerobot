@@ -87,6 +87,28 @@ FRONT_CAMERA=4 SIDE_CAMERA=6 ./run_ningan_inference.sh
 `pretrained_model_8_1` 預測 8 steps、每 1 step 重規劃；
 `pretrained_model_16_8` 預測 16 steps、每執行 8 steps 重規劃。
 
+## 將每一步 action 記錄成 CSV
+
+加上 `--output_each_step_action`：
+
+```bash
+PYTHON_BIN=/home/allenchou0708/miniconda3/envs/NingAn/bin/python \
+DEVICE=cuda ./run_ningan_inference.sh --output_each_step_action
+```
+
+CSV 會儲存在 `NingAn_Inference/action_logs/`，例如：
+
+```text
+pretrained_model_8_1_202609151410.csv
+```
+
+每一列是經過 unnormalize、action clip 與 `max_relative_target` 限制後，實際送給
+follower 的 action。六個欄位依序是：
+
+```text
+shoulder_pan.pos,shoulder_lift.pos,elbow_flex.pos,wrist_flex.pos,wrist_roll.pos,gripper.pos
+```
+
 這個 V2 checkpoint 沒有 text conditioning，所以 `--task="Push the button"`
 不會改變模型輸出；保留它是為了 rollout metadata 與未來相容性。
 

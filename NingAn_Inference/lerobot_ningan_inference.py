@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 from lerobot.cameras.opencv import OpenCVCameraConfig
@@ -41,6 +42,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--side-camera", type=int, default=6)
     parser.add_argument("--max-relative-target", type=float, default=5.0)
     parser.add_argument("--task", default="Push the button")
+    parser.add_argument(
+        "--output_each_step_action",
+        "--output-each-step-action",
+        action="store_true",
+        help="Write every action actually sent to the six motors into a CSV file.",
+    )
     parser.add_argument(
         "--inspect-only",
         action="store_true",
@@ -127,6 +134,17 @@ def main() -> None:
                 follower.disconnect()
         return
 
+    output_action_csv = None
+    if args.output_each_step_action:
+        log_dir = Path(__file__).resolve().parent / "action_logs"
+        timestamp = datetime.now().strftime("%Y%m%d%H%M")
+        output_action_csv = log_dir / f"{checkpoint.name}_{timestamp}.csv"
+        collision_index = 2
+        while output_action_csv.exists():
+            output_action_csv = log_dir / f"{checkpoint.name}_{timestamp}_{collision_index}.csv"
+            collision_index += 1
+        print(f"Actions will be recorded in: {output_action_csv}")
+
     config = RolloutConfig(
         robot=robot,
         policy=policy,
@@ -136,6 +154,7 @@ def main() -> None:
         duration=args.duration,
         fps=args.fps,
         task=args.task,
+        output_action_csv=output_action_csv,
         return_to_initial_position=not args.leave_final_pose,
     )
 

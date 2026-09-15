@@ -21,9 +21,12 @@ and :class:`DatasetContext` — assembled into :class:`RolloutContext`.
 
 from __future__ import annotations
 
+import csv
 import logging
 from dataclasses import dataclass, field
+from pathlib import Path
 from threading import Event
+from typing import TextIO
 
 import torch
 
@@ -60,6 +63,29 @@ from .robot_wrapper import ThreadSafeRobot
 logger = logging.getLogger(__name__)
 
 
+class ActionCSVLogger:
+    """Line-buffered writer for robot actions, with one motor value per column."""
+
+    def __init__(self, path: Path):
+        self.path = path
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._file: TextIO | None = None
+        self._writer: csv.DictWriter | None = None
+
+    def write(self, action: dict[str, float]) -> None:
+        if self._file is None:
+            self._file = self.path.open("x", newline="", buffering=1)
+            self._writer = csv.DictWriter(self._file, fieldnames=list(action))
+            self._writer.writeheader()
+        self._writer.writerow(action)
+
+    def close(self) -> None:
+        if self._file is not None:
+            self._file.close()
+            self._file = None
+            self._writer = None
+
+
 def _resolve_action_key_order(
     policy_action_names: list[str] | None, dataset_action_names: list[str]
 ) -> list[str]:
@@ -91,6 +117,7 @@ class RuntimeContext:
 
     cfg: RolloutConfig
     shutdown_event: Event
+    action_logger: ActionCSVLogger | None = None
 
 
 @dataclass
@@ -429,8 +456,12 @@ def build_rollout_context(
 
     # --- 8. Assemble ---------------------------------------------------
     logger.info("Rollout context assembled successfully")
+    action_logger = ActionCSVLogger(cfg.output_action_csv) if cfg.output_action_csv is not None else None
+    if action_logger is not None:
+        logger.info("Each sent action will be recorded in '%s'", action_logger.path)
+
     return RolloutContext(
-        runtime=RuntimeContext(cfg=cfg, shutdown_event=shutdown_event),
+        runtime=RuntimeContext(cfg=cfg, shutdown_event=shutdown_event, action_logger=action_logger),
         hardware=HardwareContext(
             robot_wrapper=robot_wrapper, teleop=teleop, initial_position=initial_position
         ),
