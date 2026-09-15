@@ -41,12 +41,16 @@ from .configuration_streaming_flow import StreamingFlowConfig
 def _stats_with_notebook_action_bounds(
     dataset_stats: dict[str, dict[str, torch.Tensor]] | None,
     action_dim: int,
+    action_normalization_mode: str,
 ) -> dict[str, dict[str, torch.Tensor]] | None:
     if dataset_stats is None:
         return None
 
     action_stats = dataset_stats.get(ACTION)
     if action_stats is None or "min" not in action_stats or "max" not in action_stats:
+        return dataset_stats
+
+    if action_normalization_mode == "per_dim":
         return dataset_stats
 
     stats = dict(dataset_stats)
@@ -130,6 +134,7 @@ def make_streaming_flow_pre_post_processors(
     dataset_stats = _stats_with_notebook_action_bounds(
         dataset_stats,
         action_dim=config.action_feature.shape[0],
+        action_normalization_mode=config.action_normalization_mode,
     )
     input_steps = [
         RenameObservationsProcessorStep(rename_map={}),

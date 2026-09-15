@@ -127,6 +127,12 @@ class StreamingFlowConfig(PreTrainedConfig):
     ema_min_decay: float = 0.0
     ema_update_after_step: int = 0
 
+    # Controls how action min/max statistics are reduced when creating new
+    # policy processors.  Saved checkpoints already contain their processor
+    # statistics, but this field must remain part of the config so checkpoints
+    # trained with per-dimension normalization can be deserialized.
+    action_normalization_mode: str = "global"  # "global" or "per_dim"
+
     def __post_init__(self):
         super().__post_init__()
 
@@ -188,6 +194,11 @@ class StreamingFlowConfig(PreTrainedConfig):
         if self.clip_text_projection_dim <= 0:
             raise ValueError(
                 f"`clip_text_projection_dim` must be positive. Got {self.clip_text_projection_dim}."
+            )
+        if self.action_normalization_mode not in {"global", "per_dim"}:
+            raise ValueError(
+                "`action_normalization_mode` must be one of ['global', 'per_dim']. "
+                f"Got {self.action_normalization_mode}."
             )
 
         self.drop_n_last_frames = self.chunk_size - self.n_action_steps - self.n_obs_steps + 1
