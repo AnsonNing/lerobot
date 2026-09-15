@@ -18,7 +18,7 @@ if [[ ! -f "${checkpoint}/config.json" || ! -f "${checkpoint}/model.safetensors"
     exit 2
 fi
 
-"${python_bin}" -c 'import sys; assert sys.version_info >= (3, 12), "NingAn LeRobot requires Python >= 3.12"'
+"${python_bin}" -c 'import sys; assert sys.version_info >= (3, 10), "NingAn inference requires Python >= 3.10"'
 
 if [[ "${device}" == cuda* ]]; then
     "${python_bin}" -c 'import torch; assert torch.cuda.is_available(), "CUDA was requested but torch.cuda.is_available() is false"'

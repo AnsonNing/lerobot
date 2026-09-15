@@ -6,7 +6,9 @@ teleoperator，沒有 policy inference 路徑。
 
 ## 執行前檢查
 
-1. 使用 Python 3.12 以上、並安裝這個 LeRobot fork 所需套件的環境。
+1. 此 inference launcher 已相容 Python 3.10 以上。它透過 `PYTHONPATH` 直接使用
+   repo source，因此不需要把整個（metadata 仍標示 Python 3.12）的 LeRobot
+   package 重新安裝進 Python 3.10 環境。
 2. 確認 `/dev/ttyACM0`、camera index 4 與 6 是正確裝置。
 3. 必須使用蒐集訓練資料時同一套 SO-101 calibration。
 4. 先觀察 follower 回報的第六維 gripper position。checkpoint 的訓練範圍約為
@@ -17,7 +19,7 @@ teleoperator，沒有 policy inference 路徑。
 只連接硬體、讀取 joint positions、不載入 policy 且不送 action：
 
 ```bash
-PYTHON_BIN=/path/to/python3.12 DEVICE=cpu ./run_ningan_inference.sh --inspect-only
+PYTHON_BIN=/path/to/python3.10 DEVICE=cpu ./run_ningan_inference.sh --inspect-only
 ```
 
 ## 執行
@@ -28,6 +30,13 @@ PYTHON_BIN=/path/to/python3.12 DEVICE=cpu ./run_ningan_inference.sh --inspect-on
 ```bash
 cd /path/to/NingAn/lerobot/NingAn_Inference
 ./run_ningan_inference.sh
+```
+
+這台電腦現有的 Python 3.10 NingAn environment 可明確指定為：
+
+```bash
+PYTHON_BIN=/home/allenchou0708/miniconda3/envs/NingAn/bin/python \
+DEVICE=cuda ./run_ningan_inference.sh
 ```
 
 目前若 console command 尚未安裝，腳本會直接以 repo source 和 typed config
@@ -44,7 +53,7 @@ CHECKPOINT=../../checkpoint/pretrained_model_16_8 \
 常用覆寫：
 
 ```bash
-PYTHON_BIN=/path/to/python3.12 DEVICE=cuda DURATION=30 \
+PYTHON_BIN=/path/to/python3.10 DEVICE=cuda DURATION=30 \
 MAX_RELATIVE_TARGET=3 ROBOT_PORT=/dev/ttyACM0 \
 FRONT_CAMERA=4 SIDE_CAMERA=6 ./run_ningan_inference.sh
 ```
