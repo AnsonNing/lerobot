@@ -31,7 +31,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--duration", type=float, default=10.0)
     parser.add_argument("--fps", type=float, default=30.0)
     parser.add_argument("--robot-port", default="/dev/ttyACM0")
-    parser.add_argument("--robot-id", default="my_awesome_follower_right_arm")
+    parser.add_argument("--robot-id")
+    parser.add_argument(
+        "--calibration-file",
+        type=Path,
+        help="Existing SO-101 motor calibration JSON to use explicitly.",
+    )
     parser.add_argument("--front-camera", type=int, default=4)
     parser.add_argument("--side-camera", type=int, default=6)
     parser.add_argument("--max-relative-target", type=float, default=5.0)
@@ -68,9 +73,26 @@ def main() -> None:
     policy.device = args.device
     policy.pretrained_path = checkpoint
 
+    calibration_dir = None
+    robot_id = args.robot_id or "my_awesome_follower_right_arm"
+    if args.calibration_file is not None:
+        calibration_file = args.calibration_file.expanduser().resolve()
+        if not calibration_file.is_file():
+            raise FileNotFoundError(f"Calibration file does not exist: {calibration_file}")
+        if calibration_file.suffix.lower() != ".json":
+            raise ValueError(f"Calibration file must be JSON: {calibration_file}")
+        if args.robot_id is not None and args.robot_id != calibration_file.stem:
+            raise ValueError(
+                "When --calibration-file is used, --robot-id must be omitted or match "
+                f"the filename stem ({calibration_file.stem!r})."
+            )
+        calibration_dir = calibration_file.parent
+        robot_id = calibration_file.stem
+
     robot = NingAnSO101FollowerConfig(
         port=args.robot_port,
-        id=args.robot_id,
+        id=robot_id,
+        calibration_dir=calibration_dir,
         use_degrees=True,
         max_relative_target=args.max_relative_target,
         cameras={

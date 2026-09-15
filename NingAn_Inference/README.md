@@ -16,6 +16,32 @@ teleoperator，沒有 policy inference 路徑。
    需先找回訓練資料使用的 gripper calibration/表示方式。
 5. 清空手臂周圍，準備好斷電或急停。第一次只跑 10 秒。
 
+## 選擇或更換 calibration JSON
+
+這裡使用的是馬達 calibration JSON，不是 checkpoint 的模型 `config.json`。
+若不指定檔案，LeRobot 會依 `--robot-id` 從下列位置載入：
+
+```text
+~/.cache/huggingface/lerobot/calibration/robots/so_follower/<robot-id>.json
+```
+
+要明確換成另一個 calibration 檔，先用 inspect mode 驗證：
+
+```bash
+PYTHON_BIN=/home/allenchou0708/miniconda3/envs/NingAn/bin/python \
+DEVICE=cpu ./run_ningan_inference.sh \
+  --inspect-only \
+  --calibration-file=/完整路徑/my_right_arm.json
+```
+
+程式會自動把 `my_right_arm.json` 的檔名 `my_right_arm` 當成 robot ID。
+連線時若出現 calibration 提示：
+
+- 按 `Enter`：把選定 JSON 的 calibration 寫入馬達並使用它。
+- 輸入 `c` 再按 `Enter`：重新做 calibration，完成後會覆寫選定 JSON。
+
+建議要保留舊設定時，先備份 JSON，再執行重新 calibration。
+
 只連接硬體、讀取 joint positions、不載入 policy 且不送 action：
 
 ```bash
