@@ -22,6 +22,35 @@ ROOT = Path("/mnt/data/ningan/screw_datasets/cut_pull_screw_hover5_gripper10_ass
 REPO_ID = "ningan/cut_pull_screw_hover5_gripper10_assemble_episode"
 
 
+def parse_episode_selection(value: str, total_episodes: int) -> list[int]:
+    """Parse ``all``, ``1,4,7`` or inclusive ranges such as ``0-20,25``."""
+    value = value.strip().lower()
+    if value == "all":
+        return list(range(total_episodes))
+    if not value:
+        raise ValueError("Episode selection must not be empty.")
+
+    episodes: list[int] = []
+    for item in value.split(","):
+        item = item.strip()
+        if not item:
+            raise ValueError(f"Invalid empty item in episode selection: {value!r}")
+        if "-" in item:
+            start_text, end_text = item.split("-", maxsplit=1)
+            start, end = int(start_text), int(end_text)
+            if end < start:
+                raise ValueError(f"Invalid descending episode range: {item!r}")
+            episodes.extend(range(start, end + 1))
+        else:
+            episodes.append(int(item))
+
+    if len(set(episodes)) != len(episodes):
+        raise ValueError(f"Duplicate episode in selection: {value!r}")
+    if not all(0 <= episode < total_episodes for episode in episodes):
+        raise ValueError(f"Episode selection is outside 0..{total_episodes - 1}: {value!r}")
+    return episodes
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("checkpoint", type=Path)
@@ -34,18 +63,33 @@ def main() -> None:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--repo-id", default=REPO_ID)
     parser.add_argument("--split-file", default="screw_split_260930.json")
+    parser.add_argument(
+        "--episodes",
+        default=None,
+        help=(
+            "Optional explicit episode selection: `all`, `0-300`, or `0,2,5-8`. "
+            "When set, this replaces split-file validation episodes. Use only as a "
+            "diagnostic when it overlaps training episodes."
+        ),
+    )
     args = parser.parse_args()
 
-    split = json.loads((args.root / "meta" / args.split_file).read_text())
     cfg = PreTrainedConfig.from_pretrained(args.checkpoint)
     if cfg.type != "streaming_flow_v2":
         raise ValueError(f"Expected streaming_flow_v2, got {cfg.type}")
     cfg.device = args.device
     meta = LeRobotDatasetMetadata(args.repo_id, root=args.root)
+    if args.episodes is None:
+        split = json.loads((args.root / "meta" / args.split_file).read_text())
+        selected_episodes = split["validation"]
+        episode_source = f"validation split: {args.split_file}"
+    else:
+        selected_episodes = parse_episode_selection(args.episodes, meta.total_episodes)
+        episode_source = f"explicit selection: {args.episodes}"
     dataset = LeRobotDataset(
         args.repo_id,
         root=args.root,
-        episodes=split["validation"],
+        episodes=selected_episodes,
         delta_timestamps=resolve_delta_timestamps(cfg, meta),
         return_uint8=True,
     )
@@ -56,7 +100,7 @@ def main() -> None:
     gripper = np.asarray(action_table["action"].to_pylist(), dtype=np.float32)[:, -1]
     episode_table = pq.read_table(args.root / "meta/episodes/chunk-000/file-000.parquet")
     early_close_cutoffs = {}
-    for episode in split["validation"]:
+    for episode in selected_episodes:
         start = int(episode_table["dataset_from_index"][episode].as_py())
         end = int(episode_table["dataset_to_index"][episode].as_py())
         commands = gripper[start:end]
@@ -219,7 +263,8 @@ def main() -> None:
                 {
                     "checkpoint": str(args.checkpoint),
                     "metric": "teacher_forced_ema_flow_loss",
-                    "episodes": len(split["validation"]),
+                    "episodes": len(selected_episodes),
+                    "episode_source": episode_source,
                     "frames": frames,
                     "flow_loss": metrics["flow_loss_sum"] / frames,
                     "by_task_index": by_task_result,
@@ -231,7 +276,8 @@ def main() -> None:
     result = {
         "checkpoint": str(args.checkpoint),
         "metric": "teacher_forced_ema_flow_and_first_action",
-        "episodes": len(split["validation"]),
+        "episodes": len(selected_episodes),
+        "episode_source": episode_source,
         "frames": frames,
         "flow_loss": metrics["flow_loss_sum"] / frames,
         "by_task_index": by_task_result,
