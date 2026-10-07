@@ -1,0 +1,1425 @@
+{
+  "source_root": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode",
+  "merged_root": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_merged_20261005",
+  "episodes": 200,
+  "frames": 21845,
+  "source_episode_mapping": [
+    {
+      "merged_episode": 0,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_000",
+      "task_index": 0,
+      "frames": 144,
+      "action_state_sha256": "df04227d9e8b799277019ec3a337153cf97e1bfb123a407443ef68ead82e5925"
+    },
+    {
+      "merged_episode": 1,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_001",
+      "task_index": 0,
+      "frames": 128,
+      "action_state_sha256": "8dcb2e18eb5f5be96df56f5988d44dde7fb6eda37e81b06812a9dbe4423dc42d"
+    },
+    {
+      "merged_episode": 2,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_002",
+      "task_index": 0,
+      "frames": 163,
+      "action_state_sha256": "3b4711d37922c4866e1981a82c0551e99fe435be0f8c845eb55c91bb2e30df87"
+    },
+    {
+      "merged_episode": 3,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_003",
+      "task_index": 0,
+      "frames": 123,
+      "action_state_sha256": "932a07e2c6cd2e2e1a71c5dc80dec21d09c2a4fbd721b4d719967801835b9441"
+    },
+    {
+      "merged_episode": 4,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_004",
+      "task_index": 0,
+      "frames": 137,
+      "action_state_sha256": "8cc56b7eb5aa2fa6d540a993f89714e69c8527d4d8652ae6959099cbe12712ab"
+    },
+    {
+      "merged_episode": 5,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_005",
+      "task_index": 0,
+      "frames": 152,
+      "action_state_sha256": "57550c6566cf42c3b07388adfc4930aa5cb91f17a331cfe6c15277e3896eeae6"
+    },
+    {
+      "merged_episode": 6,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_006",
+      "task_index": 0,
+      "frames": 132,
+      "action_state_sha256": "b6563930091994d4e915ab92da15e1462830a2e8b8e86fd4f0e94b203ae355a2"
+    },
+    {
+      "merged_episode": 7,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_007",
+      "task_index": 0,
+      "frames": 120,
+      "action_state_sha256": "28914d7e291bd5050223d7add944b797fcbdf545727a05193ee2d57c1e494518"
+    },
+    {
+      "merged_episode": 8,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_008",
+      "task_index": 0,
+      "frames": 139,
+      "action_state_sha256": "3e456abea1c851900dd5ab218a80bd610d2c9dec84b90f62d0009d90abb171fa"
+    },
+    {
+      "merged_episode": 9,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_009",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "28bb220a0c53e4787fe06762947012c0e798ff872ede0d143c6ec737cec7aed2"
+    },
+    {
+      "merged_episode": 10,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_010",
+      "task_index": 0,
+      "frames": 115,
+      "action_state_sha256": "2b07039be711b2d1adaf8227dc21463792619b7711393cbaeee74abacaa522be"
+    },
+    {
+      "merged_episode": 11,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_011",
+      "task_index": 0,
+      "frames": 137,
+      "action_state_sha256": "053b3ccd2fb784ad370722485b5554b90509927b852eff1ca1401576e68b9e4e"
+    },
+    {
+      "merged_episode": 12,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_012",
+      "task_index": 0,
+      "frames": 137,
+      "action_state_sha256": "cb35dc85c9810bb8656af94692d90e39359656a3b12990291ad5cb89ea4354be"
+    },
+    {
+      "merged_episode": 13,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_013",
+      "task_index": 0,
+      "frames": 128,
+      "action_state_sha256": "dcaffa8a7b389e9f1d542e1db4301d67a694e65377461217ba031a109ef7b0c7"
+    },
+    {
+      "merged_episode": 14,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_014",
+      "task_index": 0,
+      "frames": 111,
+      "action_state_sha256": "5f1f863705fb9480c40b79c542df427d08bf45ab5dac54bb498eba2538d22a6e"
+    },
+    {
+      "merged_episode": 15,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_015",
+      "task_index": 0,
+      "frames": 124,
+      "action_state_sha256": "7ac620d00b8ffc2cb2e730ea95ed929c38075dd2cf5361b42358e6c01de2ae4c"
+    },
+    {
+      "merged_episode": 16,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_016",
+      "task_index": 0,
+      "frames": 125,
+      "action_state_sha256": "249b219712a24b9aee3e4de09343b39e9f31eec2f5b8170155650bdceb5432b7"
+    },
+    {
+      "merged_episode": 17,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_017",
+      "task_index": 0,
+      "frames": 137,
+      "action_state_sha256": "25abbe34dffbeb0d6c10d5b61e70c1d2bcf630d3504a53928c44d562b53a4812"
+    },
+    {
+      "merged_episode": 18,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_018",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "8a3e736531eabb3b27253a6011c6d6ab0617a84a3c0ccec0467027a8775b7e60"
+    },
+    {
+      "merged_episode": 19,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_019",
+      "task_index": 0,
+      "frames": 120,
+      "action_state_sha256": "822a1793bf29d27cc08e4234c04fc581cdd7204180a05190d9c0534b5517c7b2"
+    },
+    {
+      "merged_episode": 20,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_020",
+      "task_index": 0,
+      "frames": 123,
+      "action_state_sha256": "da945a8df815808feefed9373237e900a21f0988ed4203fc7137fc34e31256f9"
+    },
+    {
+      "merged_episode": 21,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_021",
+      "task_index": 0,
+      "frames": 144,
+      "action_state_sha256": "11b1477b198ed27b32a593f5769df22239d1cce77e1e970fd19fa366f1fa6f16"
+    },
+    {
+      "merged_episode": 22,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_022",
+      "task_index": 0,
+      "frames": 121,
+      "action_state_sha256": "969480b0c6627be77dceea4af43f8ce88ef120b1c701a3a2248beb28f0593549"
+    },
+    {
+      "merged_episode": 23,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_023",
+      "task_index": 0,
+      "frames": 145,
+      "action_state_sha256": "1d4f21abaf4bf9ca70b557804d380f726edf7dfdbae523e51a0052f597b0c0d6"
+    },
+    {
+      "merged_episode": 24,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_024",
+      "task_index": 0,
+      "frames": 108,
+      "action_state_sha256": "191b70b24849b4d21c900f878af9e4fc089cd28c36f2ae94c21eb12a4ddb99f7"
+    },
+    {
+      "merged_episode": 25,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_025",
+      "task_index": 0,
+      "frames": 121,
+      "action_state_sha256": "6739793521aa86b8e895a9dcf3ded8f5bc7ade25f1b007a2b2f0f97514b79a6a"
+    },
+    {
+      "merged_episode": 26,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_026",
+      "task_index": 0,
+      "frames": 135,
+      "action_state_sha256": "bc4ca53df614ec1d45b25c8ad4329332c351584cbfd5ce38139581c5572b72b2"
+    },
+    {
+      "merged_episode": 27,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_027",
+      "task_index": 0,
+      "frames": 133,
+      "action_state_sha256": "c6d6b4fb4ac883b6f3951f5308a93fdc64edabda884932bd859cde3db39d682b"
+    },
+    {
+      "merged_episode": 28,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_028",
+      "task_index": 0,
+      "frames": 117,
+      "action_state_sha256": "b59379a8cfa32b3a94e9a8916430809e50b51e6fe3fb7d8c787d46d0212263bf"
+    },
+    {
+      "merged_episode": 29,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_029",
+      "task_index": 0,
+      "frames": 140,
+      "action_state_sha256": "468d437c8cc3e44e760d596e75ec51a9edf9caf2d2a39169ba055e99f4b1059d"
+    },
+    {
+      "merged_episode": 30,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_030",
+      "task_index": 0,
+      "frames": 119,
+      "action_state_sha256": "e794168e7e715afee28628505ebf39e8a1b0eb84cea3469925f5357fcaca4d45"
+    },
+    {
+      "merged_episode": 31,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_031",
+      "task_index": 0,
+      "frames": 136,
+      "action_state_sha256": "64eee29261a6ac8bcd75f81b1a68a4f3bb9997f5245abcf0c9f8f0d4e6a9bdf7"
+    },
+    {
+      "merged_episode": 32,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_032",
+      "task_index": 0,
+      "frames": 120,
+      "action_state_sha256": "f47d0d2241febb688e0fae2cdc71b562c63ee7acae10e664489f52607dfa69a5"
+    },
+    {
+      "merged_episode": 33,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_033",
+      "task_index": 0,
+      "frames": 121,
+      "action_state_sha256": "282e975aade26ef368055e2010ca2a2bfa7dfc0215f10126c7676904cf290b37"
+    },
+    {
+      "merged_episode": 34,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_034",
+      "task_index": 0,
+      "frames": 136,
+      "action_state_sha256": "911f1403bd4f3aa8ad43bf60b19c7a80c52aa6f55616f5d2a0440652fcad7eb8"
+    },
+    {
+      "merged_episode": 35,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_035",
+      "task_index": 0,
+      "frames": 120,
+      "action_state_sha256": "779807e161e03618f8f3a3df0e6b05a69b7a649740c2e40548b32e10be9f2177"
+    },
+    {
+      "merged_episode": 36,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_036",
+      "task_index": 0,
+      "frames": 144,
+      "action_state_sha256": "7c74c413d2ac0cf9672040a806c54950571ca852d4ab9042d77c8bea3a9c3ef6"
+    },
+    {
+      "merged_episode": 37,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_037",
+      "task_index": 0,
+      "frames": 124,
+      "action_state_sha256": "f49615111efe9883a7734c3caefc54d0a32f42461cb10f65aab07cdec864df04"
+    },
+    {
+      "merged_episode": 38,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_038",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "4dc094fecfac522243521409be1141457a7c2e06aefa06149e63e2bdcc9c81a0"
+    },
+    {
+      "merged_episode": 39,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_039",
+      "task_index": 0,
+      "frames": 144,
+      "action_state_sha256": "64b8302456d04a9043af9e245100d3d286c7db3c9d1a4517c3888114b59f0386"
+    },
+    {
+      "merged_episode": 40,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_040",
+      "task_index": 0,
+      "frames": 115,
+      "action_state_sha256": "02ec1b4a5b4291088c74bcb5accdecf8f2e2778d86d74830ca98375dc52cf75a"
+    },
+    {
+      "merged_episode": 41,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_041",
+      "task_index": 0,
+      "frames": 115,
+      "action_state_sha256": "3ddab479a688db077bd604ee425673df25179fd4cd9dc9bd11ce5c4077a707e3"
+    },
+    {
+      "merged_episode": 42,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_042",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "74b074a118c7150f31a8976292e63c021c184ed7a838d2358c9c40555c191245"
+    },
+    {
+      "merged_episode": 43,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_043",
+      "task_index": 0,
+      "frames": 131,
+      "action_state_sha256": "38a205981411470b098b1dcd89f981ead59ac07c625e5822a88ba0f9841210b6"
+    },
+    {
+      "merged_episode": 44,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_044",
+      "task_index": 0,
+      "frames": 123,
+      "action_state_sha256": "4dc85591ac549a79f91ea6d189ffde40e457ec4fe9d48bfcc5e83591edfb176c"
+    },
+    {
+      "merged_episode": 45,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_045",
+      "task_index": 0,
+      "frames": 136,
+      "action_state_sha256": "e9a23c1dbf3e218c1e19d100b6937770ebf3a8948e3a4421683dca169847c4bb"
+    },
+    {
+      "merged_episode": 46,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_046",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "595d136da3a1bf7faff429901e87f121db47cf8c78faed5a415026594a37d70c"
+    },
+    {
+      "merged_episode": 47,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_047",
+      "task_index": 0,
+      "frames": 113,
+      "action_state_sha256": "5e27d4fdee8336b217e237c6411b5ab3287bf7887961e3ea547541088da2467e"
+    },
+    {
+      "merged_episode": 48,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_048",
+      "task_index": 0,
+      "frames": 117,
+      "action_state_sha256": "9e91bf5c96e311afe045d3a8f83c2f49c6c43e51593613479775bc6a77fb3cc6"
+    },
+    {
+      "merged_episode": 49,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_049",
+      "task_index": 0,
+      "frames": 99,
+      "action_state_sha256": "558d2eb437e2c593b33d9cfde8efe7bb0efd63be27a8f3489f72964eb8035636"
+    },
+    {
+      "merged_episode": 50,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_050",
+      "task_index": 0,
+      "frames": 125,
+      "action_state_sha256": "fa7945f6f70900dd3b378fa8fa700129106d4c5e3184bd383d17a8a98f62bbdb"
+    },
+    {
+      "merged_episode": 51,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_051",
+      "task_index": 0,
+      "frames": 113,
+      "action_state_sha256": "575ac96626012fe27f65a0b805004229073a651d17dd577c4234f210f83016c9"
+    },
+    {
+      "merged_episode": 52,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_052",
+      "task_index": 0,
+      "frames": 153,
+      "action_state_sha256": "5886d50af7e804be75e3ed34fefac5137eacf8bdcb68ad6a4382bae35eae71ac"
+    },
+    {
+      "merged_episode": 53,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_053",
+      "task_index": 0,
+      "frames": 128,
+      "action_state_sha256": "8b7bb9a674c838029476014b1f74c4a70b792e4ce7ca4d3de1fe6737e5fe500e"
+    },
+    {
+      "merged_episode": 54,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_054",
+      "task_index": 0,
+      "frames": 113,
+      "action_state_sha256": "cbab2a83ea185917633ee535cdfda0b44807f16fb8c03c3b4522fcc42c7fe98b"
+    },
+    {
+      "merged_episode": 55,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_055",
+      "task_index": 0,
+      "frames": 163,
+      "action_state_sha256": "d710392a953440f15cb08180436c615c80958709e7e0b7b21372e628d78b7c9d"
+    },
+    {
+      "merged_episode": 56,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_056",
+      "task_index": 0,
+      "frames": 107,
+      "action_state_sha256": "e8710b8fc8509fe5f02c659dbbe4bb3fc023270cac3c50fbe43ac3d91f5fc3e5"
+    },
+    {
+      "merged_episode": 57,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_057",
+      "task_index": 0,
+      "frames": 155,
+      "action_state_sha256": "11bb2dcc257c1f513d806ee48cbc2ef8440e6762e5da177dc77006411b9cd9b3"
+    },
+    {
+      "merged_episode": 58,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_058",
+      "task_index": 0,
+      "frames": 144,
+      "action_state_sha256": "649b986b0bd855437887e5555e1c31f8fcfdf3306c98637ee4f66d2bc43614cf"
+    },
+    {
+      "merged_episode": 59,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_059",
+      "task_index": 0,
+      "frames": 140,
+      "action_state_sha256": "18c878698ed760b3d20229603fa9dac133bcc10b243b2b79826b4b69ea6cd064"
+    },
+    {
+      "merged_episode": 60,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_060",
+      "task_index": 0,
+      "frames": 109,
+      "action_state_sha256": "e279fa0cb64fd9595eb11b2698cbe74c5709694bb9f0f0dd1b56c38bb18aabd8"
+    },
+    {
+      "merged_episode": 61,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_061",
+      "task_index": 0,
+      "frames": 131,
+      "action_state_sha256": "fef814ab0145ff1e908ff6cd2f84def27326614fa69cfcbe01e975ac9891dc0b"
+    },
+    {
+      "merged_episode": 62,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_062",
+      "task_index": 0,
+      "frames": 135,
+      "action_state_sha256": "28c0792d6e42129fab7d85b6ff7acc57885d0a8b4c1328e0f63afed0121ecb3d"
+    },
+    {
+      "merged_episode": 63,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_063",
+      "task_index": 0,
+      "frames": 167,
+      "action_state_sha256": "bf35c2b1b31cca73b688cfc4e5c2242bbfd57f342ed919f6711632749b4bab42"
+    },
+    {
+      "merged_episode": 64,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_064",
+      "task_index": 0,
+      "frames": 123,
+      "action_state_sha256": "cac06e2fe7d306efc6d005086b5c054219902c76e49d7ba3c4b5c0467265f295"
+    },
+    {
+      "merged_episode": 65,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_065",
+      "task_index": 0,
+      "frames": 129,
+      "action_state_sha256": "03fc74c3a1d0ebd4ec2912332571eca845f525461a74e7290aa25e4a94e890f3"
+    },
+    {
+      "merged_episode": 66,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_066",
+      "task_index": 0,
+      "frames": 155,
+      "action_state_sha256": "855f56814183fac5bda2c331c9477c9cbad749c1f2621c88626360009228404a"
+    },
+    {
+      "merged_episode": 67,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_067",
+      "task_index": 0,
+      "frames": 137,
+      "action_state_sha256": "b8102c49175a71936e0e2ee3b0cac4c3bf28ef1be37c056e40f2601388b13a49"
+    },
+    {
+      "merged_episode": 68,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_068",
+      "task_index": 0,
+      "frames": 155,
+      "action_state_sha256": "4257a77ab6558c849be5eae8597e3a3e1d34bee4d27c48030287eb4410a1cce7"
+    },
+    {
+      "merged_episode": 69,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_069",
+      "task_index": 0,
+      "frames": 121,
+      "action_state_sha256": "15e8c2c5f653f3e97492a6b3477329d97ef690f693da3adbea2aba649fd0600f"
+    },
+    {
+      "merged_episode": 70,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_070",
+      "task_index": 0,
+      "frames": 113,
+      "action_state_sha256": "3461c3dac89b2e8ba29daf05d54e394cfd8db2ebfa2255ffc03a4b7edaad9ca2"
+    },
+    {
+      "merged_episode": 71,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_071",
+      "task_index": 0,
+      "frames": 171,
+      "action_state_sha256": "1e6e902948ccfbdb3487e212e97153bfa199f1b89d5dcd270aac16f1d27f6147"
+    },
+    {
+      "merged_episode": 72,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_072",
+      "task_index": 0,
+      "frames": 128,
+      "action_state_sha256": "404072e6227ec26e2fb355dcf3acaf1ad22eb85e1e3f5f1c9a67e1aa406e5792"
+    },
+    {
+      "merged_episode": 73,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_073",
+      "task_index": 0,
+      "frames": 129,
+      "action_state_sha256": "1d399b95e071a3f7cbcc5203cb508c687baddd1bd65e6fd80af01908c6823f1f"
+    },
+    {
+      "merged_episode": 74,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_074",
+      "task_index": 0,
+      "frames": 127,
+      "action_state_sha256": "79d281fa898f65dc3a7b8c084762698c6c40e0cf78b8d5873d7f7cc683b4cb0c"
+    },
+    {
+      "merged_episode": 75,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_075",
+      "task_index": 0,
+      "frames": 109,
+      "action_state_sha256": "b34a0a2caff2b31ef287fd9ad46f8383afea838aa721fe79aad485d51d66462b"
+    },
+    {
+      "merged_episode": 76,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_076",
+      "task_index": 0,
+      "frames": 97,
+      "action_state_sha256": "9213c7547187afa8ac2df0571361d79983f0e8b8fc8008496f41438d93b80855"
+    },
+    {
+      "merged_episode": 77,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_077",
+      "task_index": 0,
+      "frames": 136,
+      "action_state_sha256": "39ec4fb2e28fe90970ecd3ab65f5674990957949dadbf8c4b670465d04054c1f"
+    },
+    {
+      "merged_episode": 78,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_078",
+      "task_index": 0,
+      "frames": 119,
+      "action_state_sha256": "3628d274bada0454063beda2f6530df1a8860f665781c1742c781c588959f951"
+    },
+    {
+      "merged_episode": 79,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_079",
+      "task_index": 0,
+      "frames": 132,
+      "action_state_sha256": "99a782abb5ed60e0bcaf6d68ac4838f96b411880cde41630cc6fe6f404f7d108"
+    },
+    {
+      "merged_episode": 80,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_080",
+      "task_index": 0,
+      "frames": 116,
+      "action_state_sha256": "f198540a786b16cd6baee15283091ae8aba5c2ed2f45a8ec33db8f43bd6b859a"
+    },
+    {
+      "merged_episode": 81,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_081",
+      "task_index": 0,
+      "frames": 119,
+      "action_state_sha256": "02a9b9ce7484a06832196753dfab7164d003592acd385067adf0e076730c5c51"
+    },
+    {
+      "merged_episode": 82,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_082",
+      "task_index": 0,
+      "frames": 155,
+      "action_state_sha256": "6f380e8b0e8034d1fd38d45fdfebcb2c0ad4d24fbc207700bf818edd01f89fe9"
+    },
+    {
+      "merged_episode": 83,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_083",
+      "task_index": 0,
+      "frames": 115,
+      "action_state_sha256": "418b82dede059d81d20231735c374e517bfe91eb50380f1fd170655b81905e4d"
+    },
+    {
+      "merged_episode": 84,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_084",
+      "task_index": 0,
+      "frames": 125,
+      "action_state_sha256": "8f4c38432c37fa737094b2cbf335a8c559ecab0f25411d57600443b6b01472e4"
+    },
+    {
+      "merged_episode": 85,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_085",
+      "task_index": 0,
+      "frames": 140,
+      "action_state_sha256": "f2f9527d1396edd7413bd241413f8fd89903affc86750bb737188266bf959251"
+    },
+    {
+      "merged_episode": 86,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_086",
+      "task_index": 0,
+      "frames": 121,
+      "action_state_sha256": "d832558b61c83b671b22626dda45c3e8a414c5a1c17e78cd194e0e357830d001"
+    },
+    {
+      "merged_episode": 87,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_087",
+      "task_index": 0,
+      "frames": 116,
+      "action_state_sha256": "0f7fcf6b42daf80a81c95400f696e9405eda2a72258d0cfbb529b35473cad6df"
+    },
+    {
+      "merged_episode": 88,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_088",
+      "task_index": 0,
+      "frames": 107,
+      "action_state_sha256": "268fb37358a5f83bfdf0bacbd350c81a2bcd3b0ce6d20a790f912ffba3f05c57"
+    },
+    {
+      "merged_episode": 89,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_089",
+      "task_index": 0,
+      "frames": 135,
+      "action_state_sha256": "a0a31fe12f3552b599a5420dbe170f5c10892c09140b0ae0797ee0f779edf7a4"
+    },
+    {
+      "merged_episode": 90,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_090",
+      "task_index": 0,
+      "frames": 103,
+      "action_state_sha256": "03f81121e35dd052eeee3be93ad14a9b6141f45a7ee4f09b01dd3ec4fadb8b38"
+    },
+    {
+      "merged_episode": 91,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_091",
+      "task_index": 0,
+      "frames": 101,
+      "action_state_sha256": "4028e9e0ad03c4e0a57d540146ae534e40dc87697f8aeb9366747816da9ff698"
+    },
+    {
+      "merged_episode": 92,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_092",
+      "task_index": 0,
+      "frames": 105,
+      "action_state_sha256": "85086f29d6bd96e70bc206d495485ebc44fad90faab6e6b718cd4d5101e3eb10"
+    },
+    {
+      "merged_episode": 93,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_093",
+      "task_index": 0,
+      "frames": 132,
+      "action_state_sha256": "a52f74d16be4d89a2eb1db8f69559cf9ae12bb2709429bbeede546dd8bca0892"
+    },
+    {
+      "merged_episode": 94,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_094",
+      "task_index": 0,
+      "frames": 131,
+      "action_state_sha256": "cbbb9e8a4ea5bf30d55ce14ae5bb13e02fd18356964c7cc39170cb86bca951d3"
+    },
+    {
+      "merged_episode": 95,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_095",
+      "task_index": 0,
+      "frames": 117,
+      "action_state_sha256": "ab0251e151a873fd00e8952c55014b9bf8f1f6a446ad1687a229c12dd033b9d1"
+    },
+    {
+      "merged_episode": 96,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_096",
+      "task_index": 0,
+      "frames": 129,
+      "action_state_sha256": "db42b080144758789bb6ccf543faf5d814b8dc51d97c0a75942dced011a01e1b"
+    },
+    {
+      "merged_episode": 97,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_097",
+      "task_index": 0,
+      "frames": 120,
+      "action_state_sha256": "c824d3e678a9648fdd04eb0e77cafa7b6a5accdf596dabd1b439f6dd217d808b"
+    },
+    {
+      "merged_episode": 98,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_098",
+      "task_index": 0,
+      "frames": 128,
+      "action_state_sha256": "1e64feaa2415df75a519fbf9b8f3af59e9285933190ecc676659fa16a3de6c6e"
+    },
+    {
+      "merged_episode": 99,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_099",
+      "task_index": 0,
+      "frames": 145,
+      "action_state_sha256": "16ff041eb36e323d61ec1c0b22f0cdd05c886d8f21bcf7002fcd0c6c99b409a1"
+    },
+    {
+      "merged_episode": 100,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_100",
+      "task_index": 1,
+      "frames": 119,
+      "action_state_sha256": "1e35669194af6a7e6b0fab48d58886c395744df99f1bfd07d6ff91e71eedd2ae"
+    },
+    {
+      "merged_episode": 101,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_101",
+      "task_index": 1,
+      "frames": 120,
+      "action_state_sha256": "33952d5cbb25e76fc3996f94b3f9d82c3a9ada492ae9ff014b36fc03443fe953"
+    },
+    {
+      "merged_episode": 102,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_102",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "8dc980b6903c9944410618fe657a15b62fb5bb61b232b4498fa21a0580345925"
+    },
+    {
+      "merged_episode": 103,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_103",
+      "task_index": 1,
+      "frames": 95,
+      "action_state_sha256": "eab82d7fa0fe2c4eee03ec35910d3bc52a8ff2d3c45aec3dd495575715ff17ef"
+    },
+    {
+      "merged_episode": 104,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_104",
+      "task_index": 1,
+      "frames": 112,
+      "action_state_sha256": "0fee77c5488ee622b50eb87a0a5bcbae9baf6b8d0e18dfdb63ce263b33d46a57"
+    },
+    {
+      "merged_episode": 105,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_105",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "4c3b0778bd0b2d58e14f15627e98a3b59839c9121afbfe97b93bacffb8a58def"
+    },
+    {
+      "merged_episode": 106,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_106",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "ef643426d286f3adf7e897143b350cca0edb9028e90f859dab7b008adc5a5920"
+    },
+    {
+      "merged_episode": 107,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_107",
+      "task_index": 1,
+      "frames": 101,
+      "action_state_sha256": "53dd31a96f3f9fc51839a4e2f16c0481cfe9759c66e823b271a60bbd0f69ae83"
+    },
+    {
+      "merged_episode": 108,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_108",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "29525217384aa8e930f1d3019ca36617605c17918a0ed8f34df895f85ef3b328"
+    },
+    {
+      "merged_episode": 109,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_109",
+      "task_index": 1,
+      "frames": 93,
+      "action_state_sha256": "5d53ee88f496f8f7aa7e234f4e6c53047990686e60da3a9f9e3518bc3596f96f"
+    },
+    {
+      "merged_episode": 110,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_110",
+      "task_index": 1,
+      "frames": 111,
+      "action_state_sha256": "068c55efcec3a6d30310ae8e8f4d881857c6bafdda241e31e4ff5ec95738da36"
+    },
+    {
+      "merged_episode": 111,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_111",
+      "task_index": 1,
+      "frames": 109,
+      "action_state_sha256": "887e8fd39a376a44317f883e0218ec9090af69d514ce9f2b1bdc149ecc5688c2"
+    },
+    {
+      "merged_episode": 112,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_112",
+      "task_index": 1,
+      "frames": 109,
+      "action_state_sha256": "656a1c71a36214e4024693a741184f59d7ad94b4009f25133391065a7c34b32d"
+    },
+    {
+      "merged_episode": 113,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_113",
+      "task_index": 1,
+      "frames": 107,
+      "action_state_sha256": "3561f92ca4f478c5ad9d0d90e5bfde407d99254f27c865e796dc27d3d946e78f"
+    },
+    {
+      "merged_episode": 114,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_114",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "28925bd91e49ef6007c69e0c7f87c3a0e3bc020295eb4dc9c4f87cf8a6f4cc4a"
+    },
+    {
+      "merged_episode": 115,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_115",
+      "task_index": 1,
+      "frames": 93,
+      "action_state_sha256": "f2248a5ac6208281d16ddd48383b1c43e9d6d5a378a0ee97dd8a4198d1f1cdf4"
+    },
+    {
+      "merged_episode": 116,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_116",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "9ecc0c2b0535299a899844e1d31bc1280a5c90f08e2d2a5c01db6e742fb6f92a"
+    },
+    {
+      "merged_episode": 117,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_117",
+      "task_index": 1,
+      "frames": 95,
+      "action_state_sha256": "6d3096ccb8c133ae2bb646f5f2aea7abedf603cfa595780c285f1f4d46bd6ba6"
+    },
+    {
+      "merged_episode": 118,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_118",
+      "task_index": 1,
+      "frames": 101,
+      "action_state_sha256": "15a0d7e8172460b970677d2e5e94bf3fa607f5b916e2f43affaa63f881339992"
+    },
+    {
+      "merged_episode": 119,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_119",
+      "task_index": 1,
+      "frames": 93,
+      "action_state_sha256": "d551a1b48d65a228f9640859719097c847bcf3cc323d4e3b93205e575164d6d8"
+    },
+    {
+      "merged_episode": 120,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_120",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "269812a9f2f28b5d45bb51f31f4696b08ed4ad45bc9e7037b11ab54fedaf6522"
+    },
+    {
+      "merged_episode": 121,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_121",
+      "task_index": 1,
+      "frames": 81,
+      "action_state_sha256": "f662fc0702d6ef4cb6b44649524ede34a452f0eebe56df1bd2b8ce32c74fb18c"
+    },
+    {
+      "merged_episode": 122,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_122",
+      "task_index": 1,
+      "frames": 77,
+      "action_state_sha256": "c262b1561798bf4854c6451fddd3fac7e5b830b10dd2015363e5a978c3aa4ba6"
+    },
+    {
+      "merged_episode": 123,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_123",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "5700c522ae299ac7e1a7ca79603b6ac894f25d7acde988dc1ee7a68373e1fb8f"
+    },
+    {
+      "merged_episode": 124,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_124",
+      "task_index": 1,
+      "frames": 100,
+      "action_state_sha256": "6bcbaa33d7a64d806c032cf45c8c5ab3517f1fd7f622d199aa393b89b14bf047"
+    },
+    {
+      "merged_episode": 125,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_125",
+      "task_index": 1,
+      "frames": 88,
+      "action_state_sha256": "232ef789c38844aaff1824c961cd49f0ac6743925d60ab59e18f22cee86869a3"
+    },
+    {
+      "merged_episode": 126,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_126",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "10354a75ca2636fbf316fad9e404d330f2f58138e9219bc3c81992e3383e9c3b"
+    },
+    {
+      "merged_episode": 127,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_127",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "ac4af6d1231aed6c7c9d319d3dd610de1c48cf0a343f59423780fad945ce95b4"
+    },
+    {
+      "merged_episode": 128,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_128",
+      "task_index": 1,
+      "frames": 100,
+      "action_state_sha256": "552fc29217721875e291847daf045159c092142b0d186b1d52e321e2414ef378"
+    },
+    {
+      "merged_episode": 129,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_129",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "9d36f1f759adad0f939cb33d46b9dbfc102ccb156f10b2997ff3bef86bfbfb3a"
+    },
+    {
+      "merged_episode": 130,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_130",
+      "task_index": 1,
+      "frames": 73,
+      "action_state_sha256": "4b997167d9e7d78d4b3b46c79fa2cbd5dd86e76edef2b300ec1a6e9a7931a00b"
+    },
+    {
+      "merged_episode": 131,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_131",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "9a90b91cc1cd8c63d2ef41ef8d416168cfe562d415c35c43a8d074809bbf5ec9"
+    },
+    {
+      "merged_episode": 132,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_132",
+      "task_index": 1,
+      "frames": 72,
+      "action_state_sha256": "9574569bf2add754a89b3e3bb2228bc4a484a2d537e720ab79289ee11e7b8625"
+    },
+    {
+      "merged_episode": 133,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_133",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "12d1d755a5ac0985c2d3ce7f6a112846abab7e1ad454ca7b2b4059c8d6a24d4e"
+    },
+    {
+      "merged_episode": 134,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_134",
+      "task_index": 1,
+      "frames": 77,
+      "action_state_sha256": "4e3cd12022b52d961b04ce19f331f93eb0be87b94ddc68932417dcbf9521f0fc"
+    },
+    {
+      "merged_episode": 135,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_135",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "fc2bd4d96f53f87935b958f5cb1bd06de823dede8b71c7efa67256e7735d1d67"
+    },
+    {
+      "merged_episode": 136,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_136",
+      "task_index": 1,
+      "frames": 72,
+      "action_state_sha256": "e3bb637f37a03e483de6c66f4b2b4d3f79df11f57ceed47c9a481a36212a4bc4"
+    },
+    {
+      "merged_episode": 137,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_137",
+      "task_index": 1,
+      "frames": 80,
+      "action_state_sha256": "86cf41f3f6f5cc456177b4e86f694bfdca2eeb17f26686726d6f9433b862f2f3"
+    },
+    {
+      "merged_episode": 138,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_138",
+      "task_index": 1,
+      "frames": 71,
+      "action_state_sha256": "c707dda82ba2f5f245f8208c1825ef656ac63d04fff326ab4c6ab3b2191d7ca5"
+    },
+    {
+      "merged_episode": 139,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_139",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "98e7bda34c428351d91da4607bce633e06a824ace22357a38760797736aa7189"
+    },
+    {
+      "merged_episode": 140,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_140",
+      "task_index": 1,
+      "frames": 79,
+      "action_state_sha256": "f80a363e1255da71564e9807edeeffeb4ac17929b0d077d36ee4814e084fb4dd"
+    },
+    {
+      "merged_episode": 141,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_141",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "796f192754b6854b843afcdad3a34c078f0222ed5bdae91010e9ac7c29ace34d"
+    },
+    {
+      "merged_episode": 142,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_142",
+      "task_index": 1,
+      "frames": 88,
+      "action_state_sha256": "d791e90d0d4e494c4cbd5f335e6c7354846c7e2235d2aaa7c293a5720509a710"
+    },
+    {
+      "merged_episode": 143,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_143",
+      "task_index": 1,
+      "frames": 80,
+      "action_state_sha256": "662d3f7638acedf997eb068f1e18b4a01dbb3ffad3cb53f51e89288b122d8d2a"
+    },
+    {
+      "merged_episode": 144,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_144",
+      "task_index": 1,
+      "frames": 87,
+      "action_state_sha256": "9945237034a424f787076f2cbef73942e43b82f096aa5882dd9f3c20cbba10b6"
+    },
+    {
+      "merged_episode": 145,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_145",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "2c8e6cdeba358f573524f6cb9697849bbf7d670cbb86969143179441657b3cbd"
+    },
+    {
+      "merged_episode": 146,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_146",
+      "task_index": 1,
+      "frames": 103,
+      "action_state_sha256": "ab5eb61a61b4332ec8351e5c50f47f3a4657a29a4398cfa5f411c147e1a872b5"
+    },
+    {
+      "merged_episode": 147,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_147",
+      "task_index": 1,
+      "frames": 104,
+      "action_state_sha256": "30a318db27723023eec98e382918ff558c136281fc6ed5efb7a99876528aca61"
+    },
+    {
+      "merged_episode": 148,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_148",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "96cababd4d797b48cfc4bc37c6ff335bdea2b5e32d6d84001a7ece8e8ac06aae"
+    },
+    {
+      "merged_episode": 149,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_149",
+      "task_index": 1,
+      "frames": 99,
+      "action_state_sha256": "0219d41f19e3dea52b5de522adfcfe2017ecf207496b9394fc7ba7c801c2e968"
+    },
+    {
+      "merged_episode": 150,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_150",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "2527570388020626c3f98c00f1213feea23bafe66170113e6470c534bbb71bfd"
+    },
+    {
+      "merged_episode": 151,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_151",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "fd9afc7b76ea5590236491aa13507e7a919e27710fdb2b1be033264880c7d4fd"
+    },
+    {
+      "merged_episode": 152,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_152",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "df3d27ad0605aaa87ea9e0db052c3045bb235ff8ebf041cb90d57cc32aef5d24"
+    },
+    {
+      "merged_episode": 153,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_153",
+      "task_index": 1,
+      "frames": 83,
+      "action_state_sha256": "0fe4d66a9cb347452a36a137bd9bb74438067b3eae1ed8be011da5398b1485a1"
+    },
+    {
+      "merged_episode": 154,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_154",
+      "task_index": 1,
+      "frames": 88,
+      "action_state_sha256": "1acbfb8966f0f3d161aaf1f9f21d22e2d6257ae9bee8ee43b26a068a2e5990b1"
+    },
+    {
+      "merged_episode": 155,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_155",
+      "task_index": 1,
+      "frames": 99,
+      "action_state_sha256": "f1da3790467c6dce004d61b511f9318962e9c371031bf4a75dfc82e3c8825e15"
+    },
+    {
+      "merged_episode": 156,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_156",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "1a6d071eb1ff7255d9126a85438be72c72a47ef5f31c3f9eae6500877f468a62"
+    },
+    {
+      "merged_episode": 157,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_157",
+      "task_index": 1,
+      "frames": 87,
+      "action_state_sha256": "ac941fe66d04b9b39ab0f47f47d1765d45761c9b120895328485e5e909c3f181"
+    },
+    {
+      "merged_episode": 158,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_158",
+      "task_index": 1,
+      "frames": 79,
+      "action_state_sha256": "9df994b75bc8d1f3cadfc5b2ecd37ff11d5579f2d70532cbd74dea8c404d9fcd"
+    },
+    {
+      "merged_episode": 159,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_159",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "253672d86804c845738e576dcf2300f7fe191bae4381b71e90475f42a0a43156"
+    },
+    {
+      "merged_episode": 160,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_160",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "09d077dcaf20d07903303166a62c372fd08ce9b09b6cd7c1413b6081f0cb1395"
+    },
+    {
+      "merged_episode": 161,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_161",
+      "task_index": 1,
+      "frames": 93,
+      "action_state_sha256": "bb9e29e0f4b7586e68b99278bad334295fa147a239fd3a51c06eb0f7466b4433"
+    },
+    {
+      "merged_episode": 162,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_162",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "60a2de0f5cc807fcb67c3a4ecdd1cc7f445e8c8770b48b6ec310c2fb2af9f73b"
+    },
+    {
+      "merged_episode": 163,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_163",
+      "task_index": 1,
+      "frames": 81,
+      "action_state_sha256": "18aca9f66fff2117921d05470b92d7727b983f1210f9d752a716b5c0b0e98ed9"
+    },
+    {
+      "merged_episode": 164,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_164",
+      "task_index": 1,
+      "frames": 103,
+      "action_state_sha256": "0fcb035c0ea102923a51fb6cf02bfedd415f030bc0bf0608415c1cb6a36a8e33"
+    },
+    {
+      "merged_episode": 165,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_165",
+      "task_index": 1,
+      "frames": 87,
+      "action_state_sha256": "e3cf9f3bde7d9bc82307c30da5feae975bb46362a0445ab829516e4c6b20631e"
+    },
+    {
+      "merged_episode": 166,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_166",
+      "task_index": 1,
+      "frames": 80,
+      "action_state_sha256": "e0cb19ce9d923041fe502b508df6412e90d294e344d011e34b3be506241eda49"
+    },
+    {
+      "merged_episode": 167,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_167",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "16e043e92a9b908895c071fae33c4aa64c8a1406b1d1a18cb3c189d0115e2b48"
+    },
+    {
+      "merged_episode": 168,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_168",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "0e8fff80d876ea33aa5ece3479d242665a2c48ccf1caee3797fec3a042526272"
+    },
+    {
+      "merged_episode": 169,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_169",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "f499b84d6dacaa8d17b25f6de99249a5c38ccce51999980e832b085e35c5e9c1"
+    },
+    {
+      "merged_episode": 170,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_170",
+      "task_index": 1,
+      "frames": 84,
+      "action_state_sha256": "f4368b150224d4168075e0f8a58f04b7c18fb3b94688bee63933ea3e5ab143b9"
+    },
+    {
+      "merged_episode": 171,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_171",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "110b202fe7efd4d53c8709386a90a99dab2a8e3764916846f15a3720cd3b0403"
+    },
+    {
+      "merged_episode": 172,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_172",
+      "task_index": 1,
+      "frames": 87,
+      "action_state_sha256": "f5b6648ed24aaf0ab8132b907e6dba122175c0dd1834fb2fcdeeddbc11ce8791"
+    },
+    {
+      "merged_episode": 173,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_173",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "ecf6e239add1c861dd35e80f83f130169ff01b739f8f44c88a8e150a72e71a8f"
+    },
+    {
+      "merged_episode": 174,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_174",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "64d31b7c786e48e365159ae3e2e2d8fe195344cad6989327f1c48fa72aa360b2"
+    },
+    {
+      "merged_episode": 175,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_175",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "7698b1f797a12aab510019be97f91bc7b30d152621d3df5b3a45475151314cba"
+    },
+    {
+      "merged_episode": 176,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_176",
+      "task_index": 1,
+      "frames": 80,
+      "action_state_sha256": "1bd6b959298e4327479ac257a062692c66ef38971240e276d53bf30b3c9cb2d4"
+    },
+    {
+      "merged_episode": 177,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_177",
+      "task_index": 1,
+      "frames": 84,
+      "action_state_sha256": "f39faf3c85cf5092b9ab166ec1a235bd72632169eaa2a1fefae6b56385a3efeb"
+    },
+    {
+      "merged_episode": 178,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_178",
+      "task_index": 1,
+      "frames": 79,
+      "action_state_sha256": "7e65aed454418b14a30b4212040fecc6daac1ae43c22c4fc97f3a3b10e491c7b"
+    },
+    {
+      "merged_episode": 179,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_179",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "b3f5a6f08189bcb08fc3f2580e036786458a113ca572d460d8dc221e842009b5"
+    },
+    {
+      "merged_episode": 180,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_180",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "86aeba437f4743a50b7ff81e3f5325b0aa1c11075275035c9027b42e7ffae830"
+    },
+    {
+      "merged_episode": 181,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_181",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "5a4bf4ec0ea68736efcfd11babbc094b8568d8e2ee0a850dd8a80a3a9dd61e1e"
+    },
+    {
+      "merged_episode": 182,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_182",
+      "task_index": 1,
+      "frames": 88,
+      "action_state_sha256": "b4c651e87bccc9fc227ada6d4611aaaf95e70595fe767ea6cf85dcaf9c85ea4d"
+    },
+    {
+      "merged_episode": 183,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_183",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "7a274bead546b85857a101bb1a0cbdb5b5b2959b3bcb30f9168e2836e3cf9b07"
+    },
+    {
+      "merged_episode": 184,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_184",
+      "task_index": 1,
+      "frames": 79,
+      "action_state_sha256": "19520cf9a086faa446fa36ea0a28a2b2c8cd6fdd4a25cb7a81882793440ae44c"
+    },
+    {
+      "merged_episode": 185,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_185",
+      "task_index": 1,
+      "frames": 89,
+      "action_state_sha256": "3b49b4ddb83a893f95b61fa186d8fb81075eac6ab31af58b85dddeff708f0b83"
+    },
+    {
+      "merged_episode": 186,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_186",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "746248e923fd90c21ffeea4f3b035a4d5242ec8721601465b1d546f921105a1a"
+    },
+    {
+      "merged_episode": 187,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_187",
+      "task_index": 1,
+      "frames": 77,
+      "action_state_sha256": "11f78ece975949db4acad1a518fe0c42dac784b4b83786bf0797d482937ffc1f"
+    },
+    {
+      "merged_episode": 188,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_188",
+      "task_index": 1,
+      "frames": 77,
+      "action_state_sha256": "8af7b90d7c63a6dc7712e24b2b6b4744dab496a666f74532f4160b79d5e6b574"
+    },
+    {
+      "merged_episode": 189,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_189",
+      "task_index": 1,
+      "frames": 81,
+      "action_state_sha256": "2d1e13dcc15dde5bd60699be38a45be682fec98e54d957c419e23f89cbf30020"
+    },
+    {
+      "merged_episode": 190,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_190",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "3fc67cc74aa66a2a734f37af86ff3a0730178bda9245e7121a961ebf146cc814"
+    },
+    {
+      "merged_episode": 191,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_191",
+      "task_index": 1,
+      "frames": 91,
+      "action_state_sha256": "66c16d9142a0eebe77ae007b7c20f63126414717c3f176ff587ae1d813da5a33"
+    },
+    {
+      "merged_episode": 192,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_192",
+      "task_index": 1,
+      "frames": 95,
+      "action_state_sha256": "591b25ac2f8488715333099918df43a81c8d5a80c2bf41edf773af93f4e7fbc3"
+    },
+    {
+      "merged_episode": 193,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_193",
+      "task_index": 1,
+      "frames": 92,
+      "action_state_sha256": "b760d32b582cf06c63d0c81c6d2bf1052c07a3e39b7832e62f64e753d74cb75d"
+    },
+    {
+      "merged_episode": 194,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_194",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "7268eb0bea530522f25f58338b94b66bf10803dbcc3a58c8cd97fdfd3f75e208"
+    },
+    {
+      "merged_episode": 195,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_195",
+      "task_index": 1,
+      "frames": 103,
+      "action_state_sha256": "7aa9b8ca1e96e0a70123318a5f75689b2ca7904aa8c3e4ac97cd5183c47f0c80"
+    },
+    {
+      "merged_episode": 196,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_196",
+      "task_index": 1,
+      "frames": 80,
+      "action_state_sha256": "7e0675a392aa1ebe103b1de1c05feba007dce16588b6e6de47270e5795ee9f52"
+    },
+    {
+      "merged_episode": 197,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_197",
+      "task_index": 1,
+      "frames": 85,
+      "action_state_sha256": "11c8bc942951967069764c8c7ddad408072b3edd9a98af51c3dab5f2a19d6f89"
+    },
+    {
+      "merged_episode": 198,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_198",
+      "task_index": 1,
+      "frames": 96,
+      "action_state_sha256": "5f1aa1f6bfaf3e1be7716d01434cc4fa70cf442c0c1eedf30876438c0fd16cc6"
+    },
+    {
+      "merged_episode": 199,
+      "source_episode_dir": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_source_20261005/cut_pull_screw_all_hover_gripper_25_each_episode/episode_199",
+      "task_index": 1,
+      "frames": 99,
+      "action_state_sha256": "7236b02226c074e2c36251a111a2d4684458f138d8dd67bfdc5130382e8aefe0"
+    }
+  ],
+  "task_labels": [
+    "Pull the screwer",
+    "Pull the screw"
+  ],
+  "all_low_dim_values_preserved": true,
+  "video_merge": "H264 packet stream copy, no decoding/re-encoding or temporal edits",
+  "original_metadata_codec": "av1",
+  "actual_metadata_codec": "h264",
+  "prior_histbalance_comparison": {
+    "exact_action_state_matches": 200,
+    "episodes_compared": 200
+  },
+  "closing_percent_actual_min_mean_max": [
+    24.65753424657534,
+    25.01021566999106,
+    25.35211267605634
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "prior_dataset": "/mnt/data/ningan/screw_datasets/histogram_balance_cut_pull_screw_all_hover_gripper_25_assemble_episode",
+  "current_dataset": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_merged_20261005",
+  "action_state_exact_episodes": 200,
+  "camera_comparison": {
+    "front": {
+      "frames_current": 21845,
+      "frames_prior": 21845,
+      "all_decoded_frame_hashes_equal": false,
+      "first_difference_frame": 0,
+      "current_frame_hash_sequence_sha256": "5b7957c8fd3d98cd5cf82608f9b934fb7ee8ff973d4d140632c04565f4bf5c58",
+      "first_rgb_frame_exact_equal": false,
+      "first_rgb_frame_mean_absolute_pixel_difference": 40.190434027777776,
+      "first_rgb_frame_channel_mean_current": [
+        143.51737955729166,
+        142.93385416666666,
+        140.45311197916666
+      ],
+      "first_rgb_frame_channel_mean_prior": [
+        125.47730794270834,
+        124.68758138020833,
+        123.43921549479167
+      ]
+    },
+    "side": {
+      "frames_current": 21845,
+      "frames_prior": 21845,
+      "all_decoded_frame_hashes_equal": false,
+      "first_difference_frame": 0,
+      "current_frame_hash_sequence_sha256": "ba1dc590405c618ff9e99289305fde59f314ff976cf89e3d13c9ceed2b057c85",
+      "first_rgb_frame_exact_equal": false,
+      "first_rgb_frame_mean_absolute_pixel_difference": 25.816457248263887,
+      "first_rgb_frame_channel_mean_current": [
+        131.69269856770833,
+        130.87540364583333,
+        130.565419921875
+      ],
+      "first_rgb_frame_channel_mean_prior": [
+        121.80336263020833,
+        121.00609700520833,
+        121.85741861979167
+      ]
+    }
+  },
+  "conclusion": "All 200 action/state episodes match; decoded image content differs. This is a new image-domain training experiment, not a different action dataset."
+}

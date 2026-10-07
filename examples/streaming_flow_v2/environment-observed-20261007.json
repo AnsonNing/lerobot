@@ -1,0 +1,24 @@
+{
+  "observed_at": "2026-10-07",
+  "python": "3.12.12",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "torchcodec": "0.11.1",
+    "numpy": "2.2.6",
+    "pyarrow": "24.0.0",
+    "pandas": "2.3.3",
+    "av": "15.1.0",
+    "draccus": "0.10.0",
+    "accelerate": "1.13.0",
+    "datasets": "4.8.5",
+    "huggingface-hub": "1.14.0",
+    "safetensors": "0.7.0",
+    "einops": "0.8.2",
+    "opencv-python-headless": "4.13.0.92",
+    "wandb": "0.24.2",
+    "pytest": "8.4.2"
+  },
+  "note": "Live handoff environment; this is not a complete lockfile or proof of the original training environment. Use pyproject.toml/uv.lock to resolve the complete installation.",
+  "ffmpeg": "ffmpeg version 4.4.2-0ubuntu0.22.04.1+esm16 Copyright (c) 2000-2021 the FFmpeg developers"
+}

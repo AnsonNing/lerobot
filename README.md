@@ -27,6 +27,9 @@
 
 ## Quick Start
 
+For this fork's Streaming Flow V2 real-robot training recipes, exact experiment
+settings and deployment handoff, see [Streaming Flow V2 training handoff](examples/streaming_flow_v2/README.md).
+
 LeRobot can be installed directly from PyPI.
 
 ```bash

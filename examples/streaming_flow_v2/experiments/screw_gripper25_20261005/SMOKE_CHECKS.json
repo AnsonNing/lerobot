@@ -1,0 +1,28 @@
+{
+  "8_1": {
+    "camera_keys": [
+      "observation.images.front",
+      "observation.images.side"
+    ],
+    "independent_parameter_storage": true,
+    "all_visual_parameters_trainable": true,
+    "chunk_size": 9,
+    "n_action_steps": 8,
+    "execution_horizon": 1,
+    "use_previous_action_alignment": true,
+    "finite_one_step_loss": 0.8571869134902954
+  },
+  "16_1": {
+    "camera_keys": [
+      "observation.images.front",
+      "observation.images.side"
+    ],
+    "independent_parameter_storage": true,
+    "all_visual_parameters_trainable": true,
+    "chunk_size": 17,
+    "n_action_steps": 16,
+    "execution_horizon": 1,
+    "use_previous_action_alignment": true,
+    "finite_one_step_loss": 0.8986863493919373
+  }
+}

@@ -81,6 +81,9 @@ class StreamingFlowConfig(PreTrainedConfig):
     sfp_k: float = 10.0
     sfp_num_train_points: int = 4
     sfp_use_adaptive_freq: bool = True
+    # False removes the learned step-scaling gate on UNet residual blocks, matching the
+    # original Streaming Flow UNet (used with a fixed lambda). Honored by the v2 UNet.
+    sfp_use_step_scaling: bool = True
     sfp_freq_min: float = 0.2
     sfp_freq_max: float = 5.0
     sfp_clamp_freq_during_training: bool = False
@@ -170,6 +173,8 @@ class StreamingFlowConfig(PreTrainedConfig):
             raise ValueError(f"`sfp_k` must be non-negative. Got {self.sfp_k}.")
         if self.sfp_num_train_points <= 0:
             raise ValueError(f"`sfp_num_train_points` must be positive. Got {self.sfp_num_train_points}.")
+        if not self.sfp_use_step_scaling and self.type != "streaming_flow_v2":
+            raise ValueError("`sfp_use_step_scaling=False` is currently supported only by streaming_flow_v2.")
         if self.sfp_freq_min <= 0.0:
             raise ValueError(f"`sfp_freq_min` must be > 0. Got {self.sfp_freq_min}.")
         if self.sfp_freq_max < self.sfp_freq_min:
@@ -249,6 +254,22 @@ class StreamingFlowConfig(PreTrainedConfig):
 @dataclass
 class StreamingFlowV2Config(StreamingFlowConfig):
     """Streaming Flow variant with multi-point SFP supervision during training."""
+
+    # The notebook used one scalar action range for every dimension. Joint-position
+    # datasets with a small-range gripper can instead preserve each dimension's scale.
+    action_normalization_mode: str = "global"  # "global" or "per_dim"
+
+    def __post_init__(self):
+        super().__post_init__()
+        if self.action_normalization_mode not in {"global", "per_dim"}:
+            raise ValueError(
+                "`action_normalization_mode` must be 'global' or 'per_dim'. "
+                f"Got {self.action_normalization_mode}."
+            )
+        if self.action_normalization_mode == "per_dim" and self.type != "streaming_flow_v2":
+            raise ValueError(
+                "Per-dimension action normalization is currently supported only by streaming_flow_v2."
+            )
 
 
 @PreTrainedConfig.register_subclass("streaming_flow_v3")
@@ -568,8 +589,7 @@ class StreamingFlowMambaLiteConfig(StreamingFlowV2Config):
                 f"`sfp_freq_init` must lie in the configured frequency range. Got {self.sfp_freq_init}."
             )
         if self.mamba_use_cuda_kernel and (
-            self.mamba_mimo_rank not in {1, 4}
-            or self.mamba_d_state not in {1, 2, 4, 8, 16, 32, 64}
+            self.mamba_mimo_rank not in {1, 4} or self.mamba_d_state not in {1, 2, 4, 8, 16, 32, 64}
         ):
             raise ValueError(
                 "The fused Mamba3 CUDA step requires `mamba_mimo_rank` in {1, 4} "

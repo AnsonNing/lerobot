@@ -1,0 +1,130 @@
+{
+    "type": "streaming_flow_v2",
+    "n_obs_steps": 2,
+    "input_features": {
+        "observation.state": {
+            "type": "STATE",
+            "shape": [
+                6
+            ]
+        },
+        "observation.images.front": {
+            "type": "VISUAL",
+            "shape": [
+                3,
+                480,
+                640
+            ]
+        },
+        "observation.images.side": {
+            "type": "VISUAL",
+            "shape": [
+                3,
+                480,
+                640
+            ]
+        }
+    },
+    "output_features": {
+        "action": {
+            "type": "ACTION",
+            "shape": [
+                6
+            ]
+        }
+    },
+    "device": "cuda",
+    "use_amp": true,
+    "use_peft": false,
+    "push_to_hub": false,
+    "repo_id": null,
+    "private": null,
+    "tags": null,
+    "license": null,
+    "pretrained_path": null,
+    "chunk_size": 17,
+    "n_action_steps": 16,
+    "execution_horizon": 1,
+    "use_previous_action_alignment": true,
+    "normalization_mapping": {
+        "VISUAL": "IDENTITY",
+        "STATE": "MIN_MAX",
+        "ACTION": "MIN_MAX"
+    },
+    "drop_n_last_frames": 0,
+    "vision_backbone": "resnet18",
+    "resize_shape": [
+        240,
+        320
+    ],
+    "crop_ratio": 0.95,
+    "crop_shape": [
+        228,
+        304
+    ],
+    "crop_is_random": true,
+    "pretrained_backbone_weights": "ResNet18_Weights.IMAGENET1K_V1",
+    "freeze_vision_encoder": false,
+    "use_group_norm": true,
+    "image_feature_dim": 512,
+    "image_dropout": 0.1,
+    "use_separate_rgb_encoder_per_camera": true,
+    "sfp_use_imagenet_visual_norm": true,
+    "down_dims": [
+        256,
+        512,
+        1024
+    ],
+    "kernel_size": 5,
+    "n_groups": 8,
+    "embedding_dim": 256,
+    "updownsample_type": "linear",
+    "timestep_embedding_scale": 100.0,
+    "frequency_embedding_scale": 0.1,
+    "sfp_sigma0": 0.4,
+    "sfp_k": 10.0,
+    "sfp_num_train_points": 4,
+    "sfp_use_adaptive_freq": true,
+    "sfp_use_step_scaling": true,
+    "sfp_freq_min": 0.2,
+    "sfp_freq_max": 5.0,
+    "sfp_clamp_freq_during_training": false,
+    "sfp_clamp_freq_during_eval": true,
+    "sfp_freq_reg_weight": 0.0,
+    "rollout_initial_action_mode": "state",
+    "rollout_initial_action": null,
+    "sfp_use_clip_image_conditioning": false,
+    "sfp_use_clip_text_conditioning": false,
+    "sfp_freeze_clip": true,
+    "vision_encoder_name": "openai/clip-vit-base-patch16",
+    "text_encoder_name": "openai/clip-vit-base-patch16",
+    "tokenizer_max_length": 77,
+    "tokenizer_padding": "max_length",
+    "tokenizer_padding_side": "right",
+    "tokenizer_truncation": true,
+    "clip_image_resize_shape": null,
+    "clip_image_crop_shape": [
+        224,
+        224
+    ],
+    "clip_image_crop_is_random": true,
+    "clip_text_projection_dim": 256,
+    "do_mask_loss_for_padding": false,
+    "compile_model": false,
+    "compile_mode": "reduce-overhead",
+    "optimizer_lr": 0.0001,
+    "optimizer_betas": [
+        0.9,
+        0.999
+    ],
+    "optimizer_eps": 1e-08,
+    "optimizer_weight_decay": 1e-06,
+    "optimizer_grad_clip_norm": 1.0,
+    "scheduler_name": "cosine",
+    "scheduler_warmup_steps": 500,
+    "use_ema": true,
+    "ema_decay": 0.9999,
+    "ema_min_decay": 0.0,
+    "ema_update_after_step": 0,
+    "action_normalization_mode": "per_dim"
+}

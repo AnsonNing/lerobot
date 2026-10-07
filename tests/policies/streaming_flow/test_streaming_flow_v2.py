@@ -24,7 +24,12 @@ from lerobot.policies.streaming_flow.configuration_streaming_flow import (
     StreamingFlowV2Config,
     StreamingFlowV3Config,
 )
-from lerobot.policies.streaming_flow.modeling_streaming_flow_v2 import StreamingFlowModel, StreamingFlowPolicy
+from lerobot.policies.streaming_flow.modeling_streaming_flow_v2 import (
+    AdaptiveStreamingFlowUnet,
+    StreamingFlowModel,
+    StreamingFlowPolicy,
+)
+from lerobot.policies.streaming_flow.processor_streaming_flow import _stats_with_notebook_action_bounds
 from lerobot.utils.constants import ACTION, OBS_IMAGES, OBS_STATE
 
 
@@ -105,6 +110,29 @@ def test_constant_mode_requires_an_initial_action() -> None:
         StreamingFlowV2Config(rollout_initial_action_mode="constant")
 
 
+def test_per_dim_action_normalization_preserves_small_gripper_range() -> None:
+    stats = {ACTION: {"min": torch.tensor([-100.0, 0.5]), "max": torch.tensor([100.0, 1.5])}}
+    cfg = StreamingFlowV2Config(action_normalization_mode="per_dim")
+    processed_stats = _stats_with_notebook_action_bounds(
+        stats, action_dim=2, mode=cfg.action_normalization_mode
+    )
+    policy = _policy_for_initialization(2)
+    policy.config.action_normalization_mode = cfg.action_normalization_mode
+    policy._init_normalization_buffers(processed_stats)
+
+    torch.testing.assert_close(policy._action_min, stats[ACTION]["min"])
+    torch.testing.assert_close(policy._action_max, stats[ACTION]["max"])
+    torch.testing.assert_close(policy._normalize_action(torch.tensor([[0.0, 1.0]])), torch.zeros(1, 2))
+    torch.testing.assert_close(
+        policy._unnormalize_action(torch.tensor([[0.0, 1.0]])), torch.tensor([[0.0, 1.5]])
+    )
+
+
+def test_per_dim_action_normalization_rejects_other_streaming_flow_variants() -> None:
+    with pytest.raises(ValueError, match="only by streaming_flow_v2"):
+        StreamingFlowV3Config(action_normalization_mode="per_dim")
+
+
 def test_v2_can_align_previous_action_and_execute_a_single_predicted_step() -> None:
     config = StreamingFlowV2Config(
         use_previous_action_alignment=True,
@@ -172,14 +200,31 @@ def test_resnet_variants_default_to_separate_full_camera_encoders() -> None:
     assert clip_config.effective_execution_horizon == clip_config.n_action_steps
 
 
+def test_step_scaling_can_be_disabled_to_match_the_original_unet() -> None:
+    assert StreamingFlowV2Config().sfp_use_step_scaling is True
+
+    for use_step_scaling in (True, False):
+        config = StreamingFlowV2Config(
+            down_dims=(16, 32),
+            embedding_dim=16,
+            n_groups=4,
+            sfp_use_adaptive_freq=False,
+            sfp_use_step_scaling=use_step_scaling,
+        )
+        config.output_features = {ACTION: PolicyFeature(type=FeatureType.ACTION, shape=(2,))}
+        unet = AdaptiveStreamingFlowUnet(config, global_cond_dim=8)
+
+        assert (unet.step_scaling is not None) is use_step_scaling
+        velocity = unet(torch.zeros(3, 1, 2), torch.zeros(3), torch.zeros(3, 8), freq=torch.ones(3))
+        assert velocity.shape == (3, 1, 2)
+
+
 def test_direct_frequency_prediction_reports_raw_and_eval_clamped_values() -> None:
     config = SimpleNamespace(sfp_use_adaptive_freq=True, sfp_freq_min=0.2, sfp_freq_max=5.0)
     model = StreamingFlowModel.__new__(StreamingFlowModel)
     nn.Module.__init__(model)
     model.config = config
-    model.velocity_model = SimpleNamespace(
-        granularity_predictor=lambda _cond: torch.tensor([-1.0, 3.0, 8.0])
-    )
+    model.velocity_model = SimpleNamespace(granularity_predictor=lambda _cond: torch.tensor([-1.0, 3.0, 8.0]))
     raw_cond = torch.zeros(3, 2)
 
     raw_freq, training_freq, clamped_freq = model._predict_frequency(raw_cond, clamp=False)
@@ -197,9 +242,7 @@ def test_rollout_frequency_diagnostics_are_exposed_to_eval() -> None:
     policy._rollout_chunk_index = -1
     policy._last_rollout_info = None
 
-    policy._record_rollout_info(
-        {"pred_freq": 0.2, "raw_pred_freq": -0.4, "clamped_pred_freq": 0.2}
-    )
+    policy._record_rollout_info({"pred_freq": 0.2, "raw_pred_freq": -0.4, "clamped_pred_freq": 0.2})
 
     assert policy.get_rollout_info() == {
         "pred_freq": 0.2,

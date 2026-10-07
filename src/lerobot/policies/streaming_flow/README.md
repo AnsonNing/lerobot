@@ -2,6 +2,11 @@
 
 This policy integrates an image-based Streaming Flow Policy into LeRobot.
 
+For the real-robot **Streaming Flow V2 training handoff**, including portable
+8/1 and 16/1 launch commands, exact experiment configs/splits, preprocessing,
+offline selection and LeRobot deployment, see
+[examples/streaming_flow_v2/README.md](../../../../examples/streaming_flow_v2/README.md).
+
 The ResNet-based variants (`streaming_flow`, `streaming_flow_v2`, and
 `streaming_flow_mamba_lite`) default to a separate, fully trainable encoder for
 each camera. V3 and V4 use a shared, frozen CLIP vision encoder by default. V5
@@ -64,6 +69,10 @@ It also supports:
   `[a_{t-1}, a_t, ...]` and makes the first Euler update predict `a_t`;
 - `execution_horizon`, which decouples the number of predicted actions from the
   number actually executed before the next observation.
+- `action_normalization_mode=per_dim` for joint-position actions whose dimensions
+  have different numeric ranges, such as an arm and gripper. The default `global`
+  preserves the existing notebook/checkpoint contract. Changing this mode requires
+  a fresh training run and matching saved pre/post-processors for inference.
 
 For relative-OSC control, use the aligned mode and set the execution horizon
 explicitly. Continuity is then updated from the last action actually returned

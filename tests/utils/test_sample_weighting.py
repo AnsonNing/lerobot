@@ -25,11 +25,35 @@ pytest.importorskip("pandas", reason="pandas is required (install lerobot[datase
 import torch
 
 from lerobot.utils.sample_weighting import (
+    GripperCloseWeighter,
     SampleWeighter,
     SampleWeightingConfig,
     UniformWeighter,
     make_sample_weighter,
 )
+
+
+def test_gripper_close_weighter_boosts_only_current_closing_command():
+    weighter = GripperCloseWeighter(torch.device("cpu"), threshold=0.02, boost=2.5)
+    actions = torch.zeros(3, 9, 6)
+    actions[0, 1, -1] = -0.03
+    actions[1, 2, -1] = -0.5  # A future close should not change the current sample weight.
+    actions[2, 1, -1] = 0.04
+    weights, stats = weighter.compute_batch_weights({"action": actions})
+    assert weights.tolist() == [2.5, 1.0, 1.0]
+    assert stats["closing_fraction"] == pytest.approx(1 / 3)
+    assert weighter.get_stats()["closing_fraction"] == pytest.approx(1 / 3)
+
+
+def test_gripper_close_factory_requires_aligned_actions():
+    config = SampleWeightingConfig(type="gripper_close", extra_params={"boost": 2.5})
+    policy = Mock()
+    policy.config.use_previous_action_alignment = False
+    with pytest.raises(ValueError, match="previous-action alignment"):
+        make_sample_weighter(config, policy, torch.device("cpu"))
+    policy.config.use_previous_action_alignment = True
+    assert isinstance(make_sample_weighter(config, policy, torch.device("cpu")), GripperCloseWeighter)
+
 
 # =============================================================================
 # Fixtures

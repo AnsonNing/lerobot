@@ -1,0 +1,16 @@
+{
+  "checkpoint": "/home/ningan/training_outputs/screw_histbalance_20261004/8_1/checkpoints/020000/pretrained_model",
+  "device": "cuda",
+  "trials": 30,
+  "pipeline_ms_median": 19.431100983638316,
+  "pipeline_ms_p95": 19.577615952584893,
+  "action_shape": [
+    1,
+    6
+  ],
+  "camera_keys": [
+    "observation.images.front",
+    "observation.images.side"
+  ],
+  "hardware_loop_included": false
+}

@@ -1,0 +1,51 @@
+{
+  "checkpoint": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/8_1/checkpoints/015000/pretrained_model",
+  "metric": "teacher_forced_ema_flow_and_first_action",
+  "episodes": 20,
+  "frames": 2131,
+  "flow_loss": 0.07789825035957511,
+  "by_task_index": {
+    "0": {
+      "frames": 1390,
+      "flow_loss": 0.07277296362898067,
+      "first_action_mae_per_normalized_joint": 0.03938258564729485,
+      "gripper_closing_frames": 75,
+      "gripper_close_abs_error_normalized": 0.15698231458663942,
+      "gripper_early_strong_decrease_fraction": 0.38203592814371257
+    },
+    "1": {
+      "frames": 741,
+      "flow_loss": 0.08751248229702234,
+      "first_action_mae_per_normalized_joint": 0.04093458876516494,
+      "gripper_closing_frames": 70,
+      "gripper_close_abs_error_normalized": 0.14411970802715846,
+      "gripper_early_strong_decrease_fraction": 0.29708222811671087
+    }
+  },
+  "first_action_mae_per_normalized_joint": 0.039922254479082465,
+  "gripper_closing_frames": 145,
+  "first_action_mae_on_gripper_closing": 0.048862678724630126,
+  "gripper_close_abs_error_normalized": 0.15077278038551067,
+  "gripper_close_signed_error_normalized": 0.07241143687018033,
+  "gripper_close_predicted_decrease_fraction": 0.6827586206896552,
+  "gripper_close_true_mean_delta_normalized": -0.15368790297672666,
+  "gripper_close_pred_mean_delta_normalized": -0.08127646610654633,
+  "gripper_close_strong_decrease_recall": 0.6275862068965518,
+  "gripper_false_strong_decrease_fraction_of_nonclosing": 0.34441087613293053,
+  "gripper_early_open_frames": 1212,
+  "gripper_early_strong_decrease_fraction": 0.3556105610561056,
+  "gripper_predicted_decrease_count": 1125,
+  "gripper_false_decrease_fraction_of_nonclosing": 0.5166163141993958,
+  "gripper_predicted_decrease_precision": 0.088,
+  "moving_frames": 1237,
+  "predicted_still_given_moving_fraction": 0.0,
+  "target_flat_chunk_fraction": 0.02017832003754106,
+  "predicted_flat_chunk_fraction": 0.0004692632566870014,
+  "thresholds": {
+    "moving_action_max_abs_delta": 0.02,
+    "predicted_still_max_abs_delta": 0.005,
+    "flat_chunk_max_joint_range": 0.02,
+    "strong_gripper_decrease_delta": -0.02,
+    "early_open_phase": "Before 10% of the final gripper command closing excursion, minus five frames"
+  }
+}

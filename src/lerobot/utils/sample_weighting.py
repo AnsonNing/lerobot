@@ -129,7 +129,56 @@ def make_sample_weighter(
         # No-op weighter that returns uniform weights
         return UniformWeighter(device=device)
 
-    raise ValueError(f"Unknown sample weighting type: '{config.type}'. Supported types: 'rabc', 'uniform'")
+    if config.type == "gripper_close":
+        if not getattr(policy.config, "use_previous_action_alignment", False):
+            raise ValueError("gripper_close weighting requires previous-action alignment")
+        return GripperCloseWeighter(device=device, **config.extra_params)
+
+    raise ValueError(
+        f"Unknown sample weighting type: '{config.type}'. Supported types: 'rabc', 'uniform', 'gripper_close'"
+    )
+
+
+class GripperCloseWeighter(SampleWeighter):
+    """Increase the loss weight when the current normalized gripper target closes.
+
+    Aligned action index 0 is the previous command and index 1 is the
+    command at the current observation. The trajectory loss remains unchanged.
+    """
+
+    def __init__(self, device: torch.device, threshold: float = 0.02, boost: float = 2.5):
+        if threshold <= 0 or boost < 1:
+            raise ValueError("threshold must be positive and boost must be at least 1")
+        self.device = device
+        self.threshold = threshold
+        self.boost = boost
+        self.sample_count = 0
+        self.closing_count = 0
+
+    def compute_batch_weights(self, batch: dict) -> tuple[torch.Tensor, dict]:
+        action = batch.get("action")
+        if action is None or action.ndim != 3 or action.shape[1] < 2:
+            raise ValueError("gripper_close weighting requires aligned action with at least two steps")
+        closing = (action[:, 1, -1] - action[:, 0, -1]) < -self.threshold
+        weights = torch.where(
+            closing,
+            torch.full_like(action[:, 0, -1], self.boost),
+            torch.ones_like(action[:, 0, -1]),
+        ).to(self.device)
+        count = int(closing.sum().item())
+        self.sample_count += len(closing)
+        self.closing_count += count
+        return weights, {
+            "closing_fraction": count / len(closing),
+            "mean_weight": float(weights.mean().item()),
+        }
+
+    def get_stats(self) -> dict:
+        return {
+            "closing_fraction": self.closing_count / self.sample_count if self.sample_count else 0.0,
+            "boost": self.boost,
+            "threshold": self.threshold,
+        }
 
 
 def _make_rabc_weighter(

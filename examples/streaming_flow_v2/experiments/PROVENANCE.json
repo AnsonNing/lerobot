@@ -1,0 +1,287 @@
+{
+  "created_at": "2026-10-07",
+  "training_base_commit": "d011631afbec1fc033158ef47a1c6e499e49cf79",
+  "note": "Historical files copied byte-for-byte. Absolute paths refer to the original host. Weights, videos and optimizer states are distributed separately. Runtime versions were observed during handoff, not captured during the original run.",
+  "experiments": {
+    "screw_gripper25_20261005": {
+      "TRAINING_RESULT.md": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/TRAINING_RESULT.md",
+        "sha256": "b2415d066cadcb61ad09dc6384a1561ee532a2aa83cfcd94c60798c24a6305a1"
+      },
+      "DATASET_REPORT.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/DATASET_REPORT.json",
+        "sha256": "b24a1e7cd4205728e9e8635717c077fe1e473ee47bf4c38d301b57ed64fb814b"
+      },
+      "DATASET_SPLIT.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/DATASET_SPLIT.json",
+        "sha256": "b309b53fc003cf89f58d6377c29f8985f09fa5d425eb7397e890292c73113dec"
+      },
+      "DATASET_MERGE_REPORT.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/DATASET_MERGE_REPORT.json",
+        "sha256": "946b74c824977be70d52fcc0ca76c125d25eece036643fbdd60b737aec17c3c6"
+      },
+      "PRIOR_DATASET_COMPARISON.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/PRIOR_DATASET_COMPARISON.json",
+        "sha256": "06b0ad7a646140b9d913a25d27bbc648cc8f094c2ff1d92d83d7871a3bf96c70"
+      },
+      "RUN_CONTRACT.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/RUN_CONTRACT.json",
+        "sha256": "ed7d306f98bc5696b9ced3cf6930bd5edae613be34cc293ec5d7508a3447892d"
+      },
+      "CHECKSUMS.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/CHECKSUMS.json",
+        "sha256": "c2e98c88014e58be87684ec65ca0a8f5151db7019f2766e217f1d09a71b91af5"
+      },
+      "SMOKE_CHECKS.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/SMOKE_CHECKS.json",
+        "sha256": "03f0a51d89b9136ce12cc08211159693387f17fae38ad87853d695826453b248"
+      },
+      "INDEX_STATISTICS_REPAIR.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/INDEX_STATISTICS_REPAIR.json",
+        "sha256": "1c4ff70b5a02d8dcfbcd4f71955bfec01fd2d5668246288a8edb65324a0fd804"
+      },
+      "validation_8_1.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/validation_8_1.json",
+        "sha256": "7f58462a477b4516a2af2f544326d50297622268c4b981412f126f55266695f0"
+      },
+      "validation_16_1.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/validation_16_1.json",
+        "sha256": "5a4bded8f3efdd5b9d69ac07927476e5a5843609070b160eaa971f8d0f40d43d"
+      },
+      "inference_benchmark_8_1.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/inference_benchmark_8_1.json",
+        "sha256": "7651c8e8a874774c2644536b6b7a6f457b693f686efdebf49b0011d6a9fddd22"
+      },
+      "inference_benchmark_16_1.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/inference_benchmark_16_1.json",
+        "sha256": "96d76bf5ee7d5ec2aa8acf103435bd34b5c405a6d42ef90978f1e188d046fc0a"
+      },
+      "lerobot_base_commit.txt": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/lerobot_base_commit.txt",
+        "sha256": "d7b0a0e9283a40ab80fe2f9aec096852e482616422151f1c45f2b6ea7b6191c2"
+      },
+      "8_1/train_config.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/8_1/train_config.json",
+        "sha256": "b808583fd814884700b9ea6de5e9471077fa65587d426b8c4819c50f1fe568d8"
+      },
+      "8_1/config.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/8_1/config.json",
+        "sha256": "d2a230fea73e34901021bf0d04fe430340e95821c47cd163e98f16fc5ecd3763"
+      },
+      "8_1/policy_preprocessor.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/8_1/policy_preprocessor.json",
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "8_1/policy_postprocessor.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/8_1/policy_postprocessor.json",
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "8_1/train_metrics.jsonl": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/8_1/train_metrics.jsonl",
+        "sha256": "aa4bd77553a53e529719c55d70e492d986472647fe2a5bd16641d55a97f326a8"
+      },
+      "16_1/train_config.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/16_1/train_config.json",
+        "sha256": "cd5d08f33c5fb71dc5b28a90cd173f3056c9bae2f7c5cc9461bc081dbf902374"
+      },
+      "16_1/config.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/16_1/config.json",
+        "sha256": "01fbd71815a080ad544151c35f9e1a8b743602497b0efab3c6adcf7de7ac3d7e"
+      },
+      "16_1/policy_preprocessor.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/16_1/policy_preprocessor.json",
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "16_1/policy_postprocessor.json": {
+        "source": "/home/ningan/screw_gripper25_streaming_flow_v2_checkpoints_20261005/16_1/policy_postprocessor.json",
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "16_1/train_metrics.jsonl": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/16_1/train_metrics.jsonl",
+        "sha256": "78e00bacf3134d9b2ea6fa389db9f12f061712408abff59cebf239c64f04640e"
+      },
+      "8_1/validation_005000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_8_1_005000.json",
+        "sha256": "45ec14bd2606e475d04d5047dc0d7e18a27e3b7fcb258e4e2ac1ddb74061230c"
+      },
+      "8_1/validation_010000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_8_1_010000.json",
+        "sha256": "76a799cbefdcaa166c5438cb7907f14ae2a1c1dda05750352876ff32f9a26668"
+      },
+      "8_1/validation_015000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_8_1_015000.json",
+        "sha256": "c7792a0d93af1bec7b93d775d99b991c4e5733031d3cd572c440c596d8a0ded2"
+      },
+      "8_1/validation_020000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_8_1_020000.json",
+        "sha256": "7f58462a477b4516a2af2f544326d50297622268c4b981412f126f55266695f0"
+      },
+      "16_1/validation_005000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_16_1_005000.json",
+        "sha256": "ffbdfed4f7256138571dc6d7cf069ae6699bb4b43bb701406e3e30e8113b73d7"
+      },
+      "16_1/validation_010000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_16_1_010000.json",
+        "sha256": "80530d7ef8e509a01de7880cf25836a7820516b0486a2886102a3ae8c9f074d3"
+      },
+      "16_1/validation_015000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_16_1_015000.json",
+        "sha256": "5a4bded8f3efdd5b9d69ac07927476e5a5843609070b160eaa971f8d0f40d43d"
+      },
+      "16_1/validation_020000.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_gripper25_20261005/val_16_1_020000.json",
+        "sha256": "a3cc48a8b83ed086ec1e1a08b9042dde7ec02e7f7e990fc1047a906d8fa1bfc9"
+      }
+    },
+    "screw_histbalance_20261004": {
+      "TRAINING_RESULT.md": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/TRAINING_RESULT.md",
+        "sha256": "66c5cf0c8ff6e024803f06a61c369245ba263d7facb7c71fda281168c11ffab2"
+      },
+      "DATASET_REPORT.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/DATASET_REPORT.json",
+        "sha256": "0c21b95f854ef7d955278c772696e9113c879339d3b157b1d67fca78f029cc20"
+      },
+      "DATASET_SPLIT.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/DATASET_SPLIT.json",
+        "sha256": "b309b53fc003cf89f58d6377c29f8985f09fa5d425eb7397e890292c73113dec"
+      },
+      "CHECKSUMS.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/CHECKSUMS.json",
+        "sha256": "bb14c387af4c9cdbccb6d70f4a01c46db083f26da14dd353513ed57330729323"
+      },
+      "validation_8_1.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/validation_8_1.json",
+        "sha256": "d853b2df3efb12acf6006f076c221a0f43aa80a08ff8ed58b7aac1c66a7b9ba6"
+      },
+      "validation_16_1.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/validation_16_1.json",
+        "sha256": "cd7632b67925052ccddb816ac1980b07b96112168ebf7aca4d2aa7f67cb035ec"
+      },
+      "inference_benchmark_8_1.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/inference_benchmark_8_1.json",
+        "sha256": "4089bb601ad5ab1133fc4fabcc2c18e1c9aacaf9b9afe10f7807d5608344f509"
+      },
+      "inference_benchmark_16_1.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/inference_benchmark_16_1.json",
+        "sha256": "fe2f5629d582e1b1ed52eadbad7189524a6025c939236541d568e466173f92a2"
+      },
+      "lerobot_base_commit.txt": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/lerobot_base_commit.txt",
+        "sha256": "d7b0a0e9283a40ab80fe2f9aec096852e482616422151f1c45f2b6ea7b6191c2"
+      },
+      "8_1/train_config.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/8_1/train_config.json",
+        "sha256": "55d091dfb7b13664e0643a88c3a60b7ef89a8b6a83d0130a1e6a5cdd6ba3d26f"
+      },
+      "8_1/config.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/8_1/config.json",
+        "sha256": "d2a230fea73e34901021bf0d04fe430340e95821c47cd163e98f16fc5ecd3763"
+      },
+      "8_1/policy_preprocessor.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/8_1/policy_preprocessor.json",
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "8_1/policy_postprocessor.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/8_1/policy_postprocessor.json",
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "8_1/train_metrics.jsonl": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/8_1/train_metrics.jsonl",
+        "sha256": "1d2d10df0f8b076df5240628eb9618f11d9e3da1e7edf5b6f0c1c610174680aa"
+      },
+      "16_1/train_config.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/16_1/train_config.json",
+        "sha256": "3c0659b38108fdc164abd4763cb76c575b76f76d097af4bcda0c78c6451bbe11"
+      },
+      "16_1/config.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/16_1/config.json",
+        "sha256": "01fbd71815a080ad544151c35f9e1a8b743602497b0efab3c6adcf7de7ac3d7e"
+      },
+      "16_1/policy_preprocessor.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/16_1/policy_preprocessor.json",
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "16_1/policy_postprocessor.json": {
+        "source": "/home/ningan/screw_histbalance_streaming_flow_v2_checkpoints_20261004/16_1/policy_postprocessor.json",
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "16_1/train_metrics.jsonl": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/16_1/train_metrics.jsonl",
+        "sha256": "fee5ae2f45165995680190e608f91456acb253245fa1ece2746b181babfa9a80"
+      },
+      "8_1/validation_005000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_8_1_005000.json",
+        "sha256": "6e5f67b69e6bd48f03d02caab65bfae7b87862a3ea948187fa960faa2fe44f86"
+      },
+      "8_1/validation_010000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_8_1_010000.json",
+        "sha256": "f64ee6cb53aba98cc8e07fefbdf17029eff47b75e7e08be6012539eda0e16bb2"
+      },
+      "8_1/validation_015000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_8_1_015000.json",
+        "sha256": "4018ef7c72aa3eebc4129c09355c894c33c297db016ab7bcb9254d0deb23d9a6"
+      },
+      "8_1/validation_020000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_8_1_020000.json",
+        "sha256": "d853b2df3efb12acf6006f076c221a0f43aa80a08ff8ed58b7aac1c66a7b9ba6"
+      },
+      "16_1/validation_005000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_16_1_005000.json",
+        "sha256": "a35d0de01b1e3e858937c62c7c844cb44b6fdf70686e30ca30285f810b56f916"
+      },
+      "16_1/validation_010000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_16_1_010000.json",
+        "sha256": "315097a0c922375c4abdd981af8accd94535c9265aedac9a0bf1691fb6bc56ce"
+      },
+      "16_1/validation_015000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_16_1_015000.json",
+        "sha256": "cd7632b67925052ccddb816ac1980b07b96112168ebf7aca4d2aa7f67cb035ec"
+      },
+      "16_1/validation_020000.json": {
+        "source": "/home/ningan/training_outputs/screw_histbalance_20261004/val_16_1_020000.json",
+        "sha256": "6878a290d937f59053f9c15a50131c313bb7671cbcb3825d1ae58048a5f4182e"
+      }
+    },
+    "screw_hover5_20260930": {
+      "8_1/train_config.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_hover5_8_1_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "d1c33503d98c71225500507fe0e3cb525db51b5838076158c9f0ea2685c7ae81"
+      },
+      "16_1/train_config.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_hover5_16_1_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "05e4b30b7923ac5123270ce5dbe988ba1acfcb52bfe66d93a242320a545f19b2"
+      },
+      "8_1_close_weighted/train_config.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_hover5_8_1_close_weighted_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "e1e2355e78ab027c0db4badc1524031e97a87123af13502453bbb5118e62cfb3"
+      },
+      "16_1_close_weighted/train_config.json": {
+        "source": "/mnt/data/ningan/screw_datasets/outputs/streaming_flow_v2_screw_hover5_16_1_close_weighted_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "1267d468efb8b697efd41d52dfef5f78288db57bd64161f3aed212fffb6bd7dc"
+      },
+      "DATASET_SPLIT.json": {
+        "source": "/mnt/data/ningan/screw_datasets/cut_pull_screw_hover5_gripper10_assemble_episode/meta/screw_split_260930.json",
+        "sha256": "575c00c21d39a190438ffec0f24968b6dfbd27e4154dfac25fea47d131252f02"
+      }
+    },
+    "push_button_20260914": {
+      "8_1/train_config.json": {
+        "source": "/mnt/data/ningan/button_datasets/outputs/streaming_flow_v2_button_8_1_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "13d04e741a6edfdc94d53674ec2866b35a8f63c7d8675c596ec59a3e0f82503a"
+      },
+      "16_8/train_config.json": {
+        "source": "/mnt/data/ningan/button_datasets/outputs/streaming_flow_v2_button_16_8_crop95/checkpoints/020000/pretrained_model/train_config.json",
+        "sha256": "0b6f33d39967f4cb9d0b333bed3b75801e2f5693e61de2f9e6cefcde924651a1"
+      },
+      "DATASET_SPLIT.json": {
+        "source": "/mnt/data/ningan/button_datasets/push_button_merged_260914/meta/button_split_260914.json",
+        "sha256": "e879979767c01b294eb3d67b5ad10502e01be5d3d9768635eb65cc9862771c3d"
+      },
+      "TRAINING_RESULT.md": {
+        "source": "/mnt/data/ningan/button_datasets/push_button_merged_260914/TRAINING_RESULT.md",
+        "sha256": "0042f3ad875430debf52230ddab2eb1deac43d687eff13fd874cb1677489289d"
+      }
+    }
+  }
+}

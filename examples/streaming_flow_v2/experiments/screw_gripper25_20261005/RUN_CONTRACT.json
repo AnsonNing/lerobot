@@ -1,0 +1,24 @@
+{
+  "client_date": "2026-10-05",
+  "dataset_root": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_merged_20261005",
+  "dataset_repo_id": "ningan/cut_pull_screw_all_hover_gripper25_merged_20261005",
+  "split_file": "gripper25_split_20261005.json",
+  "variants": [
+    "8_1",
+    "16_1"
+  ],
+  "optimizer_steps": 20000,
+  "batch_size": 16,
+  "seed": 100000,
+  "save_steps": [
+    5000,
+    10000,
+    15000,
+    20000
+  ],
+  "selection": "lowest full held-out EMA flow loss within each horizon",
+  "extra_weighting": null,
+  "physical_rollouts": false,
+  "previous_action_alignment": true,
+  "independent_resnet18_camera_encoders": true
+}

@@ -137,8 +137,12 @@ class StreamingFlowPolicy(PreTrainedPolicy):
         if action_stats is not None and "min" in action_stats and "max" in action_stats:
             action_min = torch.as_tensor(action_stats["min"]).detach().float()
             action_max = torch.as_tensor(action_stats["max"]).detach().float()
-            self._action_min = action_min.min().expand_as(self._action_min).clone()
-            self._action_max = action_max.max().expand_as(self._action_max).clone()
+            if self.config.action_normalization_mode == "per_dim":
+                self._action_min = action_min.reshape_as(self._action_min).clone()
+                self._action_max = action_max.reshape_as(self._action_max).clone()
+            else:
+                self._action_min = action_min.min().expand_as(self._action_min).clone()
+                self._action_max = action_max.max().expand_as(self._action_max).clone()
 
     def _has_action_stats(self) -> bool:
         if self._action_min.numel() == 0 or self._action_max.numel() == 0:
@@ -251,7 +255,11 @@ class StreamingFlowPolicy(PreTrainedPolicy):
             )
 
         init_action[:, 0, :] = fixed_action
-        if source == "notebook_fixed_center" and not self._has_action_stats() and fixed_action.abs().max() > 1.0:
+        if (
+            source == "notebook_fixed_center"
+            and not self._has_action_stats()
+            and fixed_action.abs().max() > 1.0
+        ):
             return torch.zeros_like(init_action), "zero_action"
         return self._normalized_raw_rollout_action(init_action), source
 
@@ -396,9 +404,7 @@ class StreamingFlowModel(nn.Module):
         if config.image_features:
             num_images = len(config.image_features)
             if config.use_separate_rgb_encoder_per_camera:
-                self.rgb_encoder = nn.ModuleList(
-                    [TemporalImageEncoder(config) for _ in range(num_images)]
-                )
+                self.rgb_encoder = nn.ModuleList([TemporalImageEncoder(config) for _ in range(num_images)])
                 global_cond_dim += num_images * self.rgb_encoder[0].feature_dim
             else:
                 self.rgb_encoder = TemporalImageEncoder(config)
@@ -423,9 +429,7 @@ class StreamingFlowModel(nn.Module):
 
         if self.config.robot_state_feature is not None:
             if OBS_STATE not in batch:
-                raise ValueError(
-                    f"Missing `{OBS_STATE}` in batch. Available keys: {list(batch)}"
-                )
+                raise ValueError(f"Missing `{OBS_STATE}` in batch. Available keys: {list(batch)}")
 
             state = batch[OBS_STATE]
             if state.ndim == 2:
@@ -443,9 +447,7 @@ class StreamingFlowModel(nn.Module):
 
         if self.config.image_features:
             if OBS_IMAGES not in batch:
-                raise ValueError(
-                    f"Missing `{OBS_IMAGES}` in batch. Available keys: {list(batch)}"
-                )
+                raise ValueError(f"Missing `{OBS_IMAGES}` in batch. Available keys: {list(batch)}")
 
             images = batch[OBS_IMAGES]
             if images.ndim == 5:
@@ -479,10 +481,7 @@ class StreamingFlowModel(nn.Module):
             raise ValueError("StreamingFlowModel received no conditioning features.")
 
         raw_cond = torch.cat(cond_feats, dim=-1)
-        if raw_cond.shape[-1] > 1:
-            normalized_cond = F.normalize(raw_cond, dim=-1)
-        else:
-            normalized_cond = raw_cond
+        normalized_cond = F.normalize(raw_cond, dim=-1) if raw_cond.shape[-1] > 1 else raw_cond
         return raw_cond, normalized_cond
 
     def _predict_frequency(self, raw_cond: Tensor, clamp: bool) -> tuple[Tensor, Tensor, Tensor]:
@@ -588,7 +587,9 @@ class StreamingFlowModel(nn.Module):
                 "dt": float(dt),
                 "init_action_mean_abs": float(initial_action.abs().mean().detach().cpu()),
                 "final_action_mean_abs": float(final_action.abs().mean().detach().cpu()),
-                "chunk_delta_mean_abs": float((stacked_chunk[:, 1:] - stacked_chunk[:, :-1]).abs().mean().detach().cpu())
+                "chunk_delta_mean_abs": float(
+                    (stacked_chunk[:, 1:] - stacked_chunk[:, :-1]).abs().mean().detach().cpu()
+                )
                 if stacked_chunk.shape[1] > 1
                 else 0.0,
                 "first_velocity_mean_abs": first_velocity_mean_abs,
@@ -613,7 +614,9 @@ class StreamingFlowModel(nn.Module):
         start_idx = self._trajectory_start_index(batch[ACTION].shape[1])
         trajectory = batch[ACTION][:, start_idx:, :]
         num_train_points = max(1, int(getattr(self.config, "sfp_num_train_points", 4)))
-        time_shape = (trajectory.shape[0], num_train_points) if num_train_points > 1 else (trajectory.shape[0],)
+        time_shape = (
+            (trajectory.shape[0], num_train_points) if num_train_points > 1 else (trajectory.shape[0],)
+        )
         time = torch.rand(time_shape, device=trajectory.device, dtype=torch.float32)
         time = time * 0.999 + 0.001
 
@@ -647,11 +650,16 @@ class StreamingFlowModel(nn.Module):
             global_cond=flat_cond,
             freq=flat_freq,
         )
-        per_sample_loss = F.mse_loss(
-            pred_velocity,
-            flat_target_velocity.unsqueeze(1),
-            reduction="none",
-        ).mean(dim=(1, 2)).reshape(trajectory.shape[0], num_queries).mean(dim=1)
+        per_sample_loss = (
+            F.mse_loss(
+                pred_velocity,
+                flat_target_velocity.unsqueeze(1),
+                reduction="none",
+            )
+            .mean(dim=(1, 2))
+            .reshape(trajectory.shape[0], num_queries)
+            .mean(dim=1)
+        )
 
         if self.config.sfp_freq_reg_weight > 0.0:
             per_sample_loss = per_sample_loss + self.config.sfp_freq_reg_weight * (freq - 1.0).pow(2)
@@ -725,10 +733,9 @@ class TemporalImageEncoder(nn.Module):
         self.pool = nn.AdaptiveAvgPool2d((1, 1))
         self.dropout = nn.Dropout(config.image_dropout)
         self.feature_dim = config.image_feature_dim
-        self.use_imagenet_norm = (
-            config.sfp_use_imagenet_visual_norm
-            and str(config.normalization_mapping.get("VISUAL", "IDENTITY")).endswith("IDENTITY")
-        )
+        self.use_imagenet_norm = config.sfp_use_imagenet_visual_norm and str(
+            config.normalization_mapping.get("VISUAL", "IDENTITY")
+        ).endswith("IDENTITY")
         self.register_buffer(
             "imagenet_mean",
             torch.tensor([0.485, 0.456, 0.406], dtype=torch.float32).view(1, 1, 3, 1, 1),
@@ -739,10 +746,7 @@ class TemporalImageEncoder(nn.Module):
         )
 
         pooled_dim = feature_map_shape[0]
-        if config.n_obs_steps >= 3:
-            proj_in_dim = pooled_dim * 3
-        else:
-            proj_in_dim = pooled_dim * 2
+        proj_in_dim = pooled_dim * 3 if config.n_obs_steps >= 3 else pooled_dim * 2
         self.proj = nn.Linear(proj_in_dim, self.feature_dim)
 
     def train(self, mode: bool = True):
@@ -764,10 +768,7 @@ class TemporalImageEncoder(nn.Module):
         if self.resize is not None:
             obs = self.resize(obs)
         if self.do_crop:
-            if self.training:
-                obs = self.maybe_random_crop(obs)
-            else:
-                obs = self.center_crop(obs)
+            obs = self.maybe_random_crop(obs) if self.training else self.center_crop(obs)
 
         if self.config.freeze_vision_encoder:
             with torch.no_grad():
@@ -798,8 +799,7 @@ class SinusoidalPosEmb(nn.Module):
         x = x * self.scale
         half_dim = self.dim // 2
         freq = torch.exp(
-            torch.arange(half_dim, device=x.device, dtype=x.dtype)
-            * -(math.log(10000.0) / (half_dim - 1))
+            torch.arange(half_dim, device=x.device, dtype=x.dtype) * -(math.log(10000.0) / (half_dim - 1))
         )
         emb = x[:, None] * freq[None, :]
         return torch.cat((emb.sin(), emb.cos()), dim=-1)
@@ -946,7 +946,11 @@ class AdaptiveStreamingFlowUnet(nn.Module):
         )
 
         self.granularity_predictor = GranularityPredictor(global_cond_dim)
-        self.step_scaling = StepScalingLayer(config.embedding_dim * 2)
+        self.step_scaling = (
+            StepScalingLayer(config.embedding_dim * 2)
+            if getattr(config, "sfp_use_step_scaling", True)
+            else None
+        )
 
         downsample_cls = LinearDownsample1d if config.updownsample_type == "linear" else ConvDownsample1d
         self.down_modules = nn.ModuleList()
@@ -1063,7 +1067,11 @@ class AdaptiveStreamingFlowUnet(nn.Module):
 
         freq_embedding = self.freq_encoder(freq)
         cond_feat = torch.cat([0.5 * time_embedding, 0.5 * freq_embedding, global_cond], dim=-1)
-        delta = self.step_scaling(torch.cat([time_embedding, freq_embedding], dim=-1), freq)
+        delta = (
+            self.step_scaling(torch.cat([time_embedding, freq_embedding], dim=-1), freq)
+            if self.step_scaling is not None
+            else None
+        )
 
         skips = []
         for res1, res2, down in self.down_modules:

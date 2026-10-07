@@ -1,0 +1,17 @@
+# Selected versions observed on the working Linux x86_64 CUDA 12.8 environment.
+# Install with pyproject.toml extras, not as a standalone requirements file.
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+torchcodec==0.11.1
+numpy==2.2.6
+pyarrow==24.0.0
+pandas==2.3.3
+av==15.1.0
+draccus==0.10.0
+accelerate==1.13.0
+datasets==4.8.5
+huggingface-hub==1.14.0
+safetensors==0.7.0
+einops==0.8.2
+opencv-python-headless==4.13.0.92
+wandb==0.24.2

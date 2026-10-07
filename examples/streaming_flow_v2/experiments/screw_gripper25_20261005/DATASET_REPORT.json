@@ -1,0 +1,49 @@
+{
+  "source_archive": "/home/ningan/cut_pull_screw_all_hover_gripper_25_assemble_episode.zip",
+  "source_archive_sha256": "455e75f5cc6c943aacfa96f4c2f237de1b6dc2cf69d92686684c87d4251d4ec5",
+  "root": "/mnt/data/ningan/screw_datasets/cut_pull_screw_all_hover_gripper25_merged_20261005",
+  "episodes": 200,
+  "frames": 21845,
+  "fps": 30,
+  "tasks": {
+    "task_index": [
+      0,
+      1
+    ],
+    "task": [
+      "Pull the screwer",
+      "Pull the screw"
+    ]
+  },
+  "video": {
+    "front": {
+      "codec_name": "h264",
+      "width": 640,
+      "height": 480,
+      "avg_frame_rate": "30/1",
+      "nb_frames": "21845"
+    },
+    "side": {
+      "codec_name": "h264",
+      "width": 640,
+      "height": 480,
+      "avg_frame_rate": "30/1",
+      "nb_frames": "21845"
+    }
+  },
+  "metadata_fixes": [],
+  "train_episodes": 180,
+  "train_frames": 19714,
+  "validation_episodes": 20,
+  "validation_frames": 2131,
+  "episode_length_min_median_max": [
+    71,
+    107.0,
+    171
+  ],
+  "normalized_gripper_closing_transition_fraction": 0.07401247401247402,
+  "stationary_all_joint_transition_fraction_tolerance_0_01": 0.189004389004389,
+  "normalization": "State/action stats use train episodes only; internal ImageNet normalization for RGB",
+  "extra_sample_weighting": null,
+  "temporal_edit": "None; supplied action/state/video sequence retained"
+}

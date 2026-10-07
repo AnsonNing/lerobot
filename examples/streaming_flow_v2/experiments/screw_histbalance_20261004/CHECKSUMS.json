@@ -1,0 +1,70 @@
+{
+  "8_1": {
+    "selected_step": 20000,
+    "source": "/home/ningan/training_outputs/screw_histbalance_20261004/8_1/checkpoints/020000/pretrained_model",
+    "files": {
+      "config.json": {
+        "bytes": 3355,
+        "sha256": "d2a230fea73e34901021bf0d04fe430340e95821c47cd163e98f16fc5ecd3763"
+      },
+      "model.safetensors": {
+        "bytes": 847845216,
+        "sha256": "dc03db5d0df6ab9e85c3d3af45242e6cf9a08b5ba713558e7d2fa2e7546359aa"
+      },
+      "policy_postprocessor.json": {
+        "bytes": 1158,
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "policy_postprocessor_step_0_unnormalizer_processor.safetensors": {
+        "bytes": 7544,
+        "sha256": "0ee5cefc44848a0b6d14816ea8ae4e6f11f2d827de416417ded7ddcbfbefe688"
+      },
+      "policy_preprocessor.json": {
+        "bytes": 1524,
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "policy_preprocessor_step_4_normalizer_processor.safetensors": {
+        "bytes": 7552,
+        "sha256": "10c0a3f2a0bbac1fd1c84606c2c1cd5724de6079731d78e4402db62ccca45745"
+      },
+      "train_config.json": {
+        "bytes": 10781,
+        "sha256": "55d091dfb7b13664e0643a88c3a60b7ef89a8b6a83d0130a1e6a5cdd6ba3d26f"
+      }
+    }
+  },
+  "16_1": {
+    "selected_step": 15000,
+    "source": "/home/ningan/training_outputs/screw_histbalance_20261004/16_1/checkpoints/015000/pretrained_model",
+    "files": {
+      "config.json": {
+        "bytes": 3357,
+        "sha256": "01fbd71815a080ad544151c35f9e1a8b743602497b0efab3c6adcf7de7ac3d7e"
+      },
+      "model.safetensors": {
+        "bytes": 847845216,
+        "sha256": "4334de537561711f054ab77d74a012cca25d7b948ad7e54d5d8c6c412d8afe99"
+      },
+      "policy_postprocessor.json": {
+        "bytes": 1158,
+        "sha256": "29eed4e07a302bc178624fe789360cfa186e52232c84021f7a4d16737b4d3456"
+      },
+      "policy_postprocessor_step_0_unnormalizer_processor.safetensors": {
+        "bytes": 7544,
+        "sha256": "0ee5cefc44848a0b6d14816ea8ae4e6f11f2d827de416417ded7ddcbfbefe688"
+      },
+      "policy_preprocessor.json": {
+        "bytes": 1524,
+        "sha256": "7dfc705bad289388d1151bb9f6aabcad8bc081f29a650a7c9edb416951990dc0"
+      },
+      "policy_preprocessor_step_4_normalizer_processor.safetensors": {
+        "bytes": 7552,
+        "sha256": "10c0a3f2a0bbac1fd1c84606c2c1cd5724de6079731d78e4402db62ccca45745"
+      },
+      "train_config.json": {
+        "bytes": 10784,
+        "sha256": "3c0659b38108fdc164abd4763cb76c575b76f76d097af4bcda0c78c6451bbe11"
+      }
+    }
+  }
+}
