@@ -85,6 +85,10 @@ args=(
   "--wandb.enable=false"
 )
 
+# Forward any additional CLI overrides to lerobot-train. Keep these last so
+# callers can override the recipe defaults, e.g. --dataset.video_backend=pyav.
+args+=("$@")
+
 if [[ "${DRY_RUN:-0}" == 1 ]]; then
   printf '%q ' "$python_bin" "${args[@]}"
   printf '\n'
